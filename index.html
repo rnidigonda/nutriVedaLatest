@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NutriVeda — Pure Nutrition, Powerful Life</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script src="config.js"></script>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">Nutri<span>Veda</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="pages/products.html">Products</a></li>
+    <li><a href="index.html#why-us">About</a></li>
+    <li><a href="index.html#testimonials">Reviews</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+    <li id="loginNavItem"><a href="pages/login.html" class="nav-login">👤 Login</a></li>
+    <li><a href="pages/cart.html" class="nav-cart">🛒 <span id="cartCount">0</span></a></li>
+    <li><a href="pages/products.html" class="nav-cta">Shop Now</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <a href="pages/login.html" class="nav-login-mobile" id="loginMobile">👤</a>
+    <a href="pages/cart.html" class="nav-cart-mobile">🛒 <span id="cartCountMobile">0</span></a>
+    <div class="hamburger" id="hamburger" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-circle c1"></div>
+  <div class="hero-bg-circle c2"></div>
+  <div class="hero-content">
+    <div id="welcomeMessage" style="display:none;background:linear-gradient(135deg,rgba(45,90,61,0.1),rgba(245,216,122,0.1));padding:12px 20px;border-radius:12px;margin-bottom:16px;border:1px solid rgba(45,90,61,0.2);">
+      <span style="font-size:14px;color:var(--primary);font-weight:600;">👋 Welcome, <span id="userName"></span>!</span>
+    </div>
+    <div class="hero-badge"><span class="dot"></span> 100% Natural & FSSAI Certified</div>
+    <h1>Fuel Your Body with <em>Pure Nature</em></h1>
+    <p>Premium nutrition products crafted from the finest natural ingredients. Protein, vitamins, herbal blends & kids nutrition — all in one trusted place.</p>
+    <div class="hero-actions">
+      <a href="pages/products.html" class="btn-primary">Explore Products →</a>
+      <a href="index.html#contact" class="btn-secondary">Get in Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num">500<span>+</span></div><div class="stat-label">Happy Customers</div></div>
+      <div class="stat-item"><div class="stat-num">40<span>+</span></div><div class="stat-label">Products</div></div>
+      <div class="stat-item"><div class="stat-num">5<span>★</span></div><div class="stat-label">Avg Rating</div></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card-stack">
+      <div class="product-card-hero side1">
+        <div class="card-icon earth">🌿</div>
+        <div class="card-name">HerbalFlex</div>
+        <div class="card-tag">Herbal Blend</div>
+        <div class="card-price">₹499</div>
+      </div>
+      <div class="product-card-hero main">
+        <div class="card-icon green">💪</div>
+        <div class="card-name">VedaProtein Elite</div>
+        <div class="card-tag">Whey Protein • 1kg</div>
+        <div class="card-price">₹1,299</div>
+        <div class="card-rating">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+      </div>
+      <div class="product-card-hero side2">
+        <div class="card-icon gold">🧡</div>
+        <div class="card-name">GrowStrong</div>
+        <div class="card-tag">Kids Nutrition</div>
+        <div class="card-price">₹649</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="marquee-dot"></span>Free Shipping Above ₹999</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>100% Natural Ingredients</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>FSSAI Certified</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>No Artificial Preservatives</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>GMP Certified Facility</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Trusted by 500+ Customers</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Free Shipping Above ₹999</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>100% Natural Ingredients</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>FSSAI Certified</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>No Artificial Preservatives</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>GMP Certified Facility</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Trusted by 500+ Customers</span>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="categories" id="categories">
+  <div class="section-header reveal">
+    <div class="section-tag">What We Offer</div>
+    <h2 class="section-title">Our Product <em>Categories</em></h2>
+    <p class="section-sub">From daily vitamins to premium proteins — every product crafted with care.</p>
+  </div>
+  <div class="cat-grid">
+    <a href="pages/products.html?cat=protein" class="cat-card reveal">
+      <span class="cat-emoji">💪</span>
+      <div class="cat-name">Protein Powders</div>
+      <div class="cat-count">Whey, Plant & Casein</div>
+      <div class="cat-arrow">→</div>
+    </a>
+    <a href="pages/products.html?cat=vitamins" class="cat-card reveal">
+      <span class="cat-emoji">💊</span>
+      <div class="cat-name">Vitamins & Supplements</div>
+      <div class="cat-count">Daily Essentials & More</div>
+      <div class="cat-arrow">→</div>
+    </a>
+    <a href="pages/products.html?cat=herbal" class="cat-card reveal">
+      <span class="cat-emoji">🌿</span>
+      <div class="cat-name">Herbal Blends</div>
+      <div class="cat-count">Ashwagandha, Turmeric & More</div>
+      <div class="cat-arrow">→</div>
+    </a>
+    <a href="pages/products.html?cat=kids" class="cat-card reveal">
+      <span class="cat-emoji">🧡</span>
+      <div class="cat-name">Kids Nutrition</div>
+      <div class="cat-count">Safe & Delicious for Kids</div>
+      <div class="cat-arrow">→</div>
+    </a>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section class="products" id="products">
+  <div class="section-header reveal">
+    <div class="section-tag">Best Sellers</div>
+    <h2 class="section-title" style="color:var(--cream)">Featured <em>Products</em></h2>
+    <p class="section-sub" style="color:rgba(250,246,237,0.6)">Our most loved nutrition products — trusted by hundreds of families.</p>
+  </div>
+  <div class="products-grid" id="featuredGrid"></div>
+  <div style="text-align:center;margin-top:48px;" class="reveal">
+    <a href="pages/products.html" class="btn-primary" style="display:inline-flex;">View All Products →</a>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-us" id="why-us">
+  <div class="why-grid">
+    <div class="why-features">
+      <div class="section-header reveal" style="text-align:left;margin-bottom:36px;">
+        <div class="section-tag">Why NutriVeda</div>
+        <h2 class="section-title">The <em>NutriVeda</em> Difference</h2>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-icon">🌾</div>
+        <div class="why-text"><h3>Farm-to-Bottle Ingredients</h3><p>We source directly from certified organic farms. Every ingredient is traceable, pure, and free from harmful additives.</p></div>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-icon">🔬</div>
+        <div class="why-text"><h3>Third-Party Lab Tested</h3><p>Every batch is independently tested for purity, potency, and safety before it reaches your hands.</p></div>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-icon">🚚</div>
+        <div class="why-text"><h3>Fast Local Delivery</h3><p>Based in Hyderabad — get your orders delivered within 2–3 business days across Telangana & AP.</p></div>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-icon">💬</div>
+        <div class="why-text"><h3>Personal Nutrition Support</h3><p>Talk directly to Ravindar for personalised product recommendations tailored to your health goals.</p></div>
+      </div>
+    </div>
+    <div class="why-visual reveal">
+      <h2>Your Health is Our <span>Mission</span></h2>
+      <p>At NutriVeda, we believe good nutrition is the foundation of a happy, active life. Everything we make is designed for real people with real goals.</p>
+      <div class="trust-badges">
+        <div class="trust-badge"><div class="icon">✅</div><div class="label">FSSAI Certified</div></div>
+        <div class="trust-badge"><div class="icon">🌿</div><div class="label">100% Natural</div></div>
+        <div class="trust-badge"><div class="icon">🏭</div><div class="label">GMP Facility</div></div>
+        <div class="trust-badge"><div class="icon">🔒</div><div class="label">No Preservatives</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="section-header reveal">
+    <div class="section-tag">Customer Love</div>
+    <h2 class="section-title">What People Are <em>Saying</em></h2>
+  </div>
+  <div class="test-grid">
+    <div class="test-card reveal">
+      <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="test-quote">"NutriVeda's whey protein is the best I've tried. No bloating, great taste, and excellent results in just 6 weeks!"</div>
+      <div class="test-author"><div class="test-avatar">RS</div><div><div class="test-name">Rajesh Sharma</div><div class="test-location">Miyapur, Hyderabad</div></div></div>
+    </div>
+    <div class="test-card reveal">
+      <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="test-quote">"GrowStrong NutriMix for 3 months — my kids' energy levels are amazing and they love the taste!"</div>
+      <div class="test-author"><div class="test-avatar">PL</div><div><div class="test-name">Priya Lakshmi</div><div class="test-location">Kondapur, Hyderabad</div></div></div>
+    </div>
+    <div class="test-card reveal">
+      <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="test-quote">"The AshwaBalance blend has been a game changer for my stress and sleep. Ravindar guided me personally!"</div>
+      <div class="test-author"><div class="test-avatar">AK</div><div><div class="test-name">Anita Kulkarni</div><div class="test-location">Chandanagar, Hyderabad</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <div class="section-tag">Reach Us</div>
+      <h2>Let's Talk <em>Nutrition</em></h2>
+      <p>Have a question about our products? Want a personalised recommendation? Ravindar is here to help.</p>
+      <div class="contact-details">
+        <div class="contact-item"><div class="contact-item-icon">📞</div><div class="contact-item-text"><strong>Phone / WhatsApp</strong><a href="tel:+917893639037">+91 78936 39037</a></div></div>
+        <div class="contact-item"><div class="contact-item-icon">✉️</div><div class="contact-item-text"><strong>Email</strong><a href="mailto:nidigondaravindar@gmail.com">nidigondaravindar@gmail.com</a></div></div>
+        <div class="contact-item"><div class="contact-item-icon">📍</div><div class="contact-item-text"><strong>Address</strong><span>H.No: 12, Tiwari Nagar, Near Miyapur Police Station,<br>Chandanagar, Hyderabad — 500049</span></div></div>
+        <div class="contact-item"><div class="contact-item-icon">⏰</div><div class="contact-item-text"><strong>Business Hours</strong><span>Mon – Sat: 9:00 AM – 7:00 PM</span></div></div>
+      </div>
+    </div>
+    <div class="contact-form reveal" id="contactFormSection">
+      <h3>Send an Enquiry</h3>
+      <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="24de3265-5fbc-4746-9d9a-c0bb2064ecc5">
+        <input type="hidden" name="subject" value="New Enquiry from NutriVeda Website">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name *</label>
+            <input type="text" id="userName" name="userName" placeholder="Full Name" required>
+          </div>
+          <div class="form-group">
+            <label>Phone Number *</label>
+            <input type="tel" id="userPhone" name="userPhone" placeholder="+91 XXXXX XXXXX" required pattern="[0-9]{10}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address *</label>
+          <input type="email" id="userEmail" name="userEmail" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>Product Interest</label>
+          <select id="productInterest" name="productInterest">
+            <option value="">Select a Category</option>
+            <option>Protein Powders</option>
+            <option>Vitamins & Supplements</option>
+            <option>Herbal Blends</option>
+            <option>Kids Nutrition</option>
+            <option>Healthy Snacks</option>
+            <option>Weight Management</option>
+            <option>Immunity Boosters</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Your Message *</label>
+          <textarea id="userMessage" name="userMessage" placeholder="Tell us your health goals or ask about a specific product..." required rows="4"></textarea>
+        </div>
+        <button type="submit" class="btn-submit" id="submitBtn">Send Enquiry →</button>
+        <div id="formStatus" style="margin-top: 15px; text-align: center; display: none;"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="js/data.js?v=4"></script>
+<script src="js/common.js?v=4"></script>
+<script>
+  // Render featured products (first 6)
+  const grid = document.getElementById('featuredGrid');
+  const featured = PRODUCTS.slice(0, 6);
+  featured.forEach(p => {
+    grid.innerHTML += `
+      <div class="prod-card reveal">
+        <div class="prod-img">${p.emoji}<div class="prod-badge">${p.badge}</div></div>
+        <div class="prod-body">
+          <div class="prod-category">${p.category}</div>
+          <div class="prod-name">${p.name}</div>
+          <div class="prod-desc">${p.desc}</div>
+          <div class="prod-footer">
+            <div class="prod-price">₹${p.price.toLocaleString()} <small>₹${p.mrp.toLocaleString()}</small></div>
+            <div style="display:flex;gap:8px;">
+              <a href="pages/product.html?id=${p.id}" class="btn-view">View</a>
+              <button class="btn-add" onclick="addToCartById(${p.id}, this)">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  });
+  initReveal();
+  
+  // Show welcome message if user is logged in
+  const firstName = localStorage.getItem('nv_user_first_name');
+  const isLoggedIn = localStorage.getItem('nv_user_logged_in') === 'true';
+  
+  if (isLoggedIn) {
+    const welcomeMsg = document.getElementById('welcomeMessage');
+    const userNameSpan = document.getElementById('userName');
+    
+    if (welcomeMsg && userNameSpan) {
+      if (firstName && firstName.trim() !== '') {
+        // User has name - show it
+        welcomeMsg.style.display = 'block';
+        userNameSpan.textContent = firstName;
+      } else {
+        // Legacy user without name - prompt to re-login
+        welcomeMsg.style.display = 'block';
+        welcomeMsg.style.background = 'linear-gradient(135deg,rgba(245,216,122,0.15),rgba(245,216,122,0.05))';
+        welcomeMsg.style.borderColor = 'rgba(245,216,122,0.3)';
+        welcomeMsg.innerHTML = `
+          <span style="font-size:14px;color:#856404;font-weight:600;">
+            ℹ️ Please <a href="javascript:void(0)" onclick="logoutUser()" style="color:var(--primary);text-decoration:underline;cursor:pointer;">logout and login again</a> to complete your profile
+          </span>
+        `;
+      }
+    }
+  }
+
+  // ── CONTACT FORM HANDLER (Web3Forms + WhatsApp) ──
+  document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const submitBtn = document.getElementById('submitBtn');
+    const originalText = submitBtn.textContent;
+    
+    // Show loading
+    submitBtn.textContent = 'Sending...';
+    submitBtn.disabled = true;
+    showFormStatus('Sending your enquiry...', 'loading');
+    
+    // Get form data
+    const formData = new FormData(this);
+    
+    // Set the access key for Web3Forms - YOUR VALID KEY
+    formData.set('access_key', '24de3265-5fbc-4746-9d9a-c0bb2064ecc5');
+    formData.set('subject', 'New Enquiry from NutriVeda Website');
+    
+    const userName = formData.get('userName');
+    const userPhone = formData.get('userPhone');
+    const userEmail = formData.get('userEmail');
+    const productInterest = formData.get('productInterest');
+    const userMessage = formData.get('userMessage');
+    
+    console.log('Form submission started...', {userName, userPhone, userEmail});
+    
+    try {
+      // Send via Web3Forms
+      console.log('Sending to Web3Forms:', this.action);
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      });
+      
+      const data = await response.json();
+      console.log('Response:', data);
+      
+      if (data.success) {
+        console.log('Form submission successful!');
+        
+        // Success - send WhatsApp notification
+        sendWhatsAppNotification(userName, userPhone, userEmail, productInterest, userMessage);
+        
+        showFormStatus('Thank you for your interest in NutriVeda, we will be in touch.', 'success');
+        submitBtn.textContent = '✓ Enquiry Sent!';
+        submitBtn.style.background = 'linear-gradient(135deg, #2d5a3d, #3d7a52)';
+        
+        // Reset form
+        setTimeout(() => {
+          this.reset();
+          submitBtn.textContent = originalText;
+          submitBtn.style.background = '';
+          submitBtn.disabled = false;
+          setTimeout(() => {
+            document.getElementById('formStatus').style.display = 'none';
+          }, 2000);
+        }, 2000);
+      } else {
+        console.error('Web3Forms error:', data);
+        throw new Error(data.message || 'Form submission failed');
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      showFormStatus('Failed to send enquiry. Please try calling us directly at +91 78936 39037.', 'error');
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    }
+  });
+  
+  // Function to send WhatsApp notification
+  function sendWhatsAppNotification(name, phone, email, interest, message) {
+    const whatsappMessage = `🔔 *New Enquiry from NutriVeda Website*\n\n` +
+      `👤 *Name:* ${name}\n` +
+      `📞 *Phone:* ${phone}\n` +
+      `📧 *Email:* ${email}\n` +
+      `🛒 *Interest:* ${interest || 'Not specified'}\n` +
+      `💬 *Message:* ${message}`;
+    
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+    const whatsappNumber = '917893639037';
+    const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+    
+    window.open(whatsappURL, '_blank');
+  }
+  
+  // Function to show form status messages
+  function showFormStatus(message, type) {
+    const statusDiv = document.getElementById('formStatus');
+    statusDiv.style.display = 'block';
+    statusDiv.textContent = message;
+    
+    if (type === 'success') {
+      statusDiv.style.color = '#155724';
+      statusDiv.style.background = '#d4edda';
+      statusDiv.style.border = '1px solid #c3e6cb';
+      statusDiv.style.display = 'flex';
+      statusDiv.style.alignItems = 'center';
+      statusDiv.style.justifyContent = 'center';
+      statusDiv.style.gap = '10px';
+      // Add checkmark icon
+      statusDiv.innerHTML = '<span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;background:#28a745;color:white;border-radius:50%;font-weight:bold;font-size:16px;">✓</span>' + message;
+    } else if (type === 'error') {
+      statusDiv.style.color = '#721c24';
+      statusDiv.style.background = '#f8d7da';
+      statusDiv.style.border = '1px solid #f5c6cb';
+    } else if (type === 'loading') {
+      statusDiv.style.color = '#856404';
+      statusDiv.style.background = '#fff3cd';
+      statusDiv.style.border = '1px solid #ffeaa7';
+    }
+    
+    statusDiv.style.padding = '12px';
+    statusDiv.style.borderRadius = '8px';
+    statusDiv.style.fontSize = '14px';
+    statusDiv.style.fontWeight = '500';
+  }
+</script>
+</body>
+</html>

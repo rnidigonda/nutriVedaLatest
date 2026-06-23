@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healthy Snacks — NutriVeda</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+<style>
+  .category-scroll-wrapper { background: var(--cream-light); padding: 20px 0; margin-bottom: 30px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .category-scroll-wrapper::-webkit-scrollbar { height: 6px; }
+  .category-scroll-wrapper::-webkit-scrollbar-track { background: rgba(200,150,12,.1); }
+  .category-scroll-wrapper::-webkit-scrollbar-thumb { background: var(--forest); border-radius: 3px; }
+  .category-scroll { display: flex; gap: 20px; padding: 0 40px; min-width: min-content; }
+  .category-circle { display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; transition: transform .3s; text-decoration: none; min-width: 100px; }
+  .category-circle:hover { transform: translateY(-5px); }
+  .category-circle-img { width: 90px; height: 90px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 3px solid transparent; transition: all .3s; }
+  .category-circle.active .category-circle-img { border-color: var(--forest); box-shadow: 0 6px 20px rgba(45,90,61,0.3); }
+  .category-circle-name { font-size: 0.85rem; font-weight: 600; color: var(--forest); text-align: center; font-family: 'DM Sans', sans-serif; }
+  .collection-header { text-align: center; margin: 40px 0; }
+  .collection-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; color: var(--forest); margin-bottom: 10px; }
+  .collection-desc { font-size: 1rem; color: var(--text-mid); max-width: 600px; margin: 0 auto; }
+  .scroll-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: white; border: 2px solid var(--forest); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; transition: all .3s; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+  .scroll-arrow:hover { background: var(--forest); color: white; transform: translateY(-50%) scale(1.1); }
+  .scroll-arrow.left { left: 10px; }
+  .scroll-arrow.right { right: 10px; }
+  .category-scroll-container { position: relative; }
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+
+<nav id="navbar">
+  <a href="../index.html" class="nav-logo">Nutri<span>Veda</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="products.html">Products</a></li>
+    <li><a href="../index.html#why-us">About</a></li>
+    <li><a href="../index.html#testimonials">Reviews</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+    <li><a href="cart.html" class="nav-cart">🛒 <span id="cartCount">0</span></a></li>
+    <li><a href="cart.html" class="nav-cta">My Cart</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <a href="cart.html" class="nav-cart-mobile">🛒 <span id="cartCountMobile">0</span></a>
+    <div class="hamburger" id="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<div class="page-header" style="padding: 60px 20px 30px;">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a> › <a href="products.html">Products</a> › <span>Healthy Snacks</span>
+  </div>
+</div>
+
+<!-- Category Scroll Bar -->
+<div class="category-scroll-container">
+  <div class="scroll-arrow left" onclick="scrollCategories('left')">‹</div>
+  <div class="scroll-arrow right" onclick="scrollCategories('right')">›</div>
+  <div class="category-scroll-wrapper" id="categoryScroll">
+    <div class="category-scroll">
+      <a href="healthy-snacks.html" class="category-circle active">
+        <div class="category-circle-img">🍬</div>
+        <div class="category-circle-name">Healthy Snacks</div>
+      </a>
+      <a href="kids-nutrition.html" class="category-circle">
+        <div class="category-circle-img">👶</div>
+        <div class="category-circle-name">Kids Specials</div>
+      </a>
+      <a href="bone-health.html" class="category-circle">
+        <div class="category-circle-img">🦴</div>
+        <div class="category-circle-name">Bones Strength</div>
+      </a>
+      <a href="immunity.html" class="category-circle">
+        <div class="category-circle-img">🛡️</div>
+        <div class="category-circle-name">Immunity</div>
+      </a>
+      <a href="weight-management.html" class="category-circle">
+        <div class="category-circle-img">⚖️</div>
+        <div class="category-circle-name">Slimming</div>
+      </a>
+      <a href="health-mix.html" class="category-circle">
+        <div class="category-circle-img">🌾</div>
+        <div class="category-circle-name">Health Mix</div>
+      </a>
+      <a href="tea-blends.html" class="category-circle">
+        <div class="category-circle-img">🍵</div>
+        <div class="category-circle-name">Tea Blends</div>
+      </a>
+      <a href="hair-care.html" class="category-circle">
+        <div class="category-circle-img">💇</div>
+        <div class="category-circle-name">Hair Care</div>
+      </a>
+      <a href="baby-care.html" class="category-circle">
+        <div class="category-circle-img">🧴</div>
+        <div class="category-circle-name">Baby Care</div>
+      </a>
+      <a href="spices.html" class="category-circle">
+        <div class="category-circle-img">🌶️</div>
+        <div class="category-circle-name">Kaaram Podi's</div>
+      </a>
+      <a href="makhana.html" class="category-circle">
+        <div class="category-circle-img">🍿</div>
+        <div class="category-circle-name">Makhana</div>
+      </a>
+      <a href="malts.html" class="category-circle">
+        <div class="category-circle-img">🥛</div>
+        <div class="category-circle-name">Milk Malts</div>
+      </a>
+      <a href="amla.html" class="category-circle">
+        <div class="category-circle-img">🍋</div>
+        <div class="category-circle-name">Amla Sanjeevani</div>
+      </a>
+      <a href="instant-mix.html" class="category-circle">
+        <div class="category-circle-img">🥞</div>
+        <div class="category-circle-name">Instant Mix</div>
+      </a>
+      <a href="cooking.html" class="category-circle">
+        <div class="category-circle-img">🧂</div>
+        <div class="category-circle-name">Cooking</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Collection Header -->
+<div class="collection-header">
+  <h1 class="collection-title">Healthy <em>Snacks</em></h1>
+  <p class="collection-desc">Guilt-free snacking with premium dry fruits, nuts, and traditional Indian sweets. Natural energy for your active lifestyle.</p>
+</div>
+
+<!-- Products Grid -->
+<section class="products-page">
+  <div class="all-products-grid" id="productsGrid"></div>`n  <div style="text-align: center; padding: 40px 20px; color: var(--text-mid); font-size: 0.95rem;" id="productCount"></div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="../js/data.js?v=3"></script>
+<script src="../js/common.js"></script>
+<script>
+  function scrollCategories(direction) {
+    const container = document.getElementById('categoryScroll');
+    const scrollAmount = 300;
+    if (direction === 'left') {
+      container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    } else {
+      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  }
+
+  function renderProducts() {
+    const grid = document.getElementById('productsGrid');
+    const categoryProducts = PRODUCTS.filter(p => {
+      if (typeof p.catKey === 'string') {
+        return p.catKey.split(',').includes('snacks');
+      }
+      return p.catKey === 'snacks';
+    });
+    
+    grid.innerHTML = '';
+    categoryProducts.forEach((p, i) => {
+      const disc = Math.round((1 - p.price/p.mrp)*100);
+      grid.innerHTML += `
+        <div class="aprod-card reveal" style="animation-delay:${i*0.05}s">
+          <div class="aprod-img">${p.emoji}<div class="aprod-badge">${p.badge}</div></div>
+          <div class="aprod-body">
+            <div class="aprod-category">${p.category}</div>
+            <div class="aprod-name">${p.name}</div>
+            <div class="aprod-desc">${p.desc}</div>
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:14px;">
+              <span style="color:var(--gold);font-size:.9rem;">★★★★★</span>
+              <span style="font-size:.78rem;color:var(--text-light);">${p.rating} (${p.reviews} reviews)</span>
+            </div>
+            <div class="aprod-footer">
+              <div class="aprod-price">₹${p.price.toLocaleString()} <small>₹${p.mrp.toLocaleString()}</small>
+                <span style="background:rgba(200,150,12,.12);color:var(--earth);font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:6px;">${disc}% OFF</span>
+              </div>
+              <div class="aprod-actions">
+                <a href="product.html?id=${p.id}" class="btn-aprod-view">View</a>
+                <button class="btn-aprod-add" onclick="addToCartById(${p.id}, this)">+ Cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+    
+    document.getElementById('productCount').textContent = `You're viewing ${categoryProducts.length} of ${categoryProducts.length} products`;
+    initReveal();
+  }
+
+  renderProducts();
+</script>
+</body>
+</html>
+
+

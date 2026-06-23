@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Cart — NutriVeda</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+
+<nav id="navbar">
+  <a href="../index.html" class="nav-logo">Nutri<span>Veda</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="products.html">Products</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+    <li><a href="cart.html" class="nav-cart" style="color:var(--forest)!important;font-weight:700!important;">🛒 <span id="cartCount">0</span></a></li>
+    <li><a href="products.html" class="nav-cta">Shop More</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <a href="cart.html" class="nav-cart-mobile">🛒 <span id="cartCountMobile">0</span></a>
+    <div class="hamburger" id="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a> › <a href="products.html">Products</a> › <span>My Cart</span>
+  </div>
+  <h1>My <em>Cart</em></h1>
+  <p>Review your items before checkout.</p>
+</div>
+
+<section class="cart-page">
+  <div id="cartLayout"></div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="../js/data.js"></script>
+<script src="../js/common.js"></script>
+<script>
+  function renderCart() {
+    const cart = getCart();
+    const layout = document.getElementById('cartLayout');
+
+    if(cart.length === 0) {
+      layout.innerHTML = `
+        <div class="cart-empty">
+          <div class="icon">🛒</div>
+          <h3>Your cart is empty</h3>
+          <p>Explore our premium nutrition products and add something great to your cart!</p>
+          <a href="products.html" class="btn-primary" style="display:inline-flex;">Browse Products →</a>
+        </div>`;
+      return;
+    }
+
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const mrpTotal = cart.reduce((s, i) => s + (i.mrp || i.price) * i.qty, 0);
+    const savings = mrpTotal - subtotal;
+    const shipping = subtotal >= 999 ? 0 : 79;
+    const total = subtotal + shipping;
+
+    layout.innerHTML = `
+      <div class="cart-layout">
+        <div class="cart-items">
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--forest);margin-bottom:24px;">${cart.reduce((s,i)=>s+i.qty,0)} Items in Cart</h3>
+          ${cart.map(item => `
+            <div class="cart-item" id="ci-${item.id}">
+              <div class="cart-item-img">${item.emoji}</div>
+              <div class="cart-item-info">
+                <div class="cart-item-name">${item.name}</div>
+                <div class="cart-item-cat">${item.category}</div>
+                <div class="cart-item-price">₹${(item.price * item.qty).toLocaleString()}</div>
+              </div>
+              <div class="cart-item-right">
+                <button class="cart-remove" onclick="removeItem(${item.id})">✕</button>
+                <div class="qty-ctrl">
+                  <button class="qty-btn" onclick="updateQty(${item.id}, -1)">−</button>
+                  <div class="qty-val" id="qty-${item.id}">${item.qty}</div>
+                  <button class="qty-btn" onclick="updateQty(${item.id}, 1)">+</button>
+                </div>
+                <div style="font-size:.78rem;color:var(--text-light);">₹${item.price.toLocaleString()} each</div>
+              </div>
+            </div>`).join('')}
+          <div style="margin-top:20px;">
+            <a href="products.html" style="color:var(--forest);font-size:.9rem;font-weight:600;text-decoration:none;">← Continue Shopping</a>
+          </div>
+        </div>
+
+        <div class="order-summary">
+          <h3>Order Summary</h3>
+          <div class="summary-row"><div class="label">Subtotal (${cart.reduce((s,i)=>s+i.qty,0)} items)</div><div class="value">₹${subtotal.toLocaleString()}</div></div>
+          <div class="summary-row"><div class="label">MRP Total</div><div class="value" style="text-decoration:line-through;color:var(--text-light)">₹${mrpTotal.toLocaleString()}</div></div>
+          <div class="summary-row"><div class="label" style="color:var(--earth)">Your Savings</div><div class="value" style="color:var(--earth)">−₹${savings.toLocaleString()}</div></div>
+          <div class="summary-row"><div class="label">Shipping</div><div class="value" style="color:${shipping===0?'var(--forest-light)':'var(--text-dark)'}">${shipping===0?'FREE 🎉':'₹'+shipping}</div></div>
+          ${shipping > 0 ? `<div style="background:rgba(200,150,12,.1);color:var(--earth);font-size:.8rem;padding:8px 12px;border-radius:8px;margin-bottom:12px;">Add ₹${(999-subtotal).toLocaleString()} more for FREE shipping!</div>` : ''}
+          <hr class="summary-divider">
+          <div class="summary-total"><span>Total</span><span>₹${total.toLocaleString()}</span></div>
+          ${savings > 0 ? `<div class="summary-saving">🎉 You're saving ₹${savings.toLocaleString()} on this order!</div>` : ''}
+          <button class="btn-checkout" onclick="window.location.href='checkout.html'">Proceed to Checkout →</button>
+          <div class="secure-note">🔒 100% Secure & Encrypted Checkout</div>
+        </div>
+      </div>`;
+  }
+
+  function updateQty(id, delta) {
+    const cart = getCart();
+    const item = cart.find(i => i.id === id);
+    if(!item) return;
+    item.qty = Math.max(1, item.qty + delta);
+    saveCart(cart);
+    renderCart();
+  }
+
+  function removeItem(id) {
+    const cart = getCart().filter(i => i.id !== id);
+    saveCart(cart);
+    renderCart();
+    showToast('Item removed from cart');
+  }
+
+  renderCart();
+</script>
+</body>
+</html>

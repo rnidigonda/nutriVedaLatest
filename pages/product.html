@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product — NutriVeda</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+
+<nav id="navbar">
+  <a href="../index.html" class="nav-logo">Nutri<span>Veda</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="products.html">Products</a></li>
+    <li><a href="../index.html#why-us">About</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+    <li><a href="cart.html" class="nav-cart">🛒 <span id="cartCount">0</span></a></li>
+    <li><a href="products.html" class="nav-cta">Shop More</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <a href="cart.html" class="nav-cart-mobile">🛒 <span id="cartCountMobile">0</span></a>
+    <div class="hamburger" id="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<div id="productContent" style="padding-top:72px;"></div>
+
+<div id="relatedSection"></div>
+<div id="footer-placeholder"></div>
+
+<script src="../js/data.js"></script>
+<script src="../js/common.js"></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const id = parseInt(params.get('id'));
+  const product = PRODUCTS.find(p => p.id === id);
+
+  if(!product) {
+    document.getElementById('productContent').innerHTML = `
+      <div style="text-align:center;padding:120px 5%;">
+        <div style="font-size:4rem;margin-bottom:20px;">🔍</div>
+        <h2 style="font-family:'Playfair Display',serif;color:var(--forest);margin-bottom:12px;">Product Not Found</h2>
+        <a href="products.html" class="btn-primary" style="display:inline-flex;">Browse All Products</a>
+      </div>`;
+  } else {
+    document.title = product.name + ' — NutriVeda';
+    const disc = Math.round((1 - product.price/product.mrp)*100);
+    const starsHtml = '★'.repeat(Math.floor(product.rating)) + (product.rating % 1 ? '½' : '');
+
+    document.getElementById('productContent').innerHTML = `
+      <div class="page-header">
+        <div class="breadcrumb">
+          <a href="../index.html">Home</a> ›
+          <a href="products.html">Products</a> ›
+          <a href="products.html?cat=${product.catKey}">${product.category}</a> ›
+          <span>${product.name}</span>
+        </div>
+      </div>
+      <section class="product-detail">
+        <div class="pd-grid">
+          <div class="pd-visual">${product.emoji}</div>
+          <div class="pd-info">
+            <div class="pd-cat">${product.category}</div>
+            <h1 class="pd-name">${product.name}</h1>
+            <div class="pd-rating">
+              <div class="pd-stars">${'★'.repeat(5)}</div>
+              <div class="pd-review-count">${product.rating}/5 · ${product.reviews} reviews</div>
+            </div>
+            <div class="pd-price-row">
+              <div class="pd-price">₹${product.price.toLocaleString()}</div>
+              <div class="pd-mrp">₹${product.mrp.toLocaleString()}</div>
+              <div class="pd-savings">Save ${disc}%</div>
+            </div>
+            <p class="pd-desc">${product.desc}</p>
+            <div class="pd-tags">
+              ${product.tags.map(t => `<span class="pd-tag">${t}</span>`).join('')}
+            </div>
+            <div class="pd-qty-row">
+              <div class="pd-qty-label">Quantity:</div>
+              <div class="qty-ctrl">
+                <button class="qty-btn" onclick="changeQty(-1)">−</button>
+                <div class="qty-val" id="qtyVal">1</div>
+                <button class="qty-btn" onclick="changeQty(1)">+</button>
+              </div>
+            </div>
+            <div class="pd-actions">
+              <button class="btn-buy-now" onclick="buyNow()">Buy Now — ₹${product.price.toLocaleString()}</button>
+              <button class="btn-cart-full" onclick="addProductToCart()">+ Add to Cart</button>
+            </div>
+            <div class="pd-benefits">
+              <h4>Key Benefits</h4>
+              <ul>${product.benefits.map(b => `<li>${b}</li>`).join('')}</ul>
+            </div>
+            <div class="pd-trust">
+              <div class="pd-trust-item">✅ FSSAI Certified</div>
+              <div class="pd-trust-item">🚚 Free shipping ₹999+</div>
+              <div class="pd-trust-item">↩️ 7-day returns</div>
+              <div class="pd-trust-item">🔒 Secure payment</div>
+            </div>
+          </div>
+        </div>
+      </section>`;
+
+    // Related products
+    const related = PRODUCTS.filter(p => p.catKey === product.catKey && p.id !== product.id).slice(0, 3);
+    if(related.length > 0) {
+      document.getElementById('relatedSection').innerHTML = `
+        <section style="padding:60px 5%;background:var(--cream-dark);">
+          <div class="section-header reveal">
+            <div class="section-tag">You May Also Like</div>
+            <h2 class="section-title">Related <em>Products</em></h2>
+          </div>
+          <div class="all-products-grid">
+            ${related.map(p => `
+              <div class="aprod-card reveal">
+                <div class="aprod-img">${p.emoji}<div class="aprod-badge">${p.badge}</div></div>
+                <div class="aprod-body">
+                  <div class="aprod-category">${p.category}</div>
+                  <div class="aprod-name">${p.name}</div>
+                  <div class="aprod-desc">${p.desc}</div>
+                  <div class="aprod-footer">
+                    <div class="aprod-price">₹${p.price.toLocaleString()} <small>₹${p.mrp.toLocaleString()}</small></div>
+                    <div class="aprod-actions">
+                      <a href="product.html?id=${p.id}" class="btn-aprod-view">View</a>
+                      <button class="btn-aprod-add" onclick="addToCartById(${p.id}, this)">+ Cart</button>
+                    </div>
+                  </div>
+                </div>
+              </div>`).join('')}
+          </div>
+        </section>`;
+      initReveal();
+    }
+  }
+
+  let qty = 1;
+  function changeQty(delta) {
+    qty = Math.max(1, qty + delta);
+    const el = document.getElementById('qtyVal');
+    if(el) el.textContent = qty;
+  }
+
+  function addProductToCart() {
+    const cart = getCart();
+    const existing = cart.find(i => i.id === product.id);
+    if(existing) existing.qty += qty;
+    else cart.push({ id:product.id, name:product.name, price:product.price, mrp:product.mrp, emoji:product.emoji, category:product.category, qty });
+    saveCart(cart);
+    showToast(`${qty}x ${product.name} added to cart! 🛒`);
+  }
+
+  function buyNow() {
+    addProductToCart();
+    window.location.href = 'cart.html';
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmed — NutriVeda</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+<style>
+  .confetti { position:fixed; inset:0; pointer-events:none; z-index:9998; overflow:hidden; }
+  .confetti-piece { position:absolute; width:10px; height:10px; opacity:0; animation:confettiFall linear forwards; border-radius:2px; }
+  @keyframes confettiFall { 0%{opacity:1;transform:translateY(-20px) rotate(0deg)} 100%{opacity:0;transform:translateY(100vh) rotate(720deg)} }
+  .order-items-summary { background:var(--white); border-radius:20px; padding:28px; border:1px solid rgba(200,150,12,.1); max-width:600px; margin:0 auto 32px; text-align:left; }
+  .order-items-summary h4 { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--forest); margin-bottom:16px; }
+  .ord-item { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid rgba(200,150,12,.1); }
+  .ord-item:last-child { border-bottom:none; }
+  .ord-item-emoji { font-size:1.8rem; }
+  .ord-item-name { font-weight:600; font-size:.9rem; color:var(--forest); flex:1; }
+  .ord-item-qty { font-size:.8rem; color:var(--text-light); }
+  .ord-item-price { font-weight:700; font-size:.95rem; color:var(--gold); }
+  .track-steps { display:flex; justify-content:center; gap:0; max-width:600px; margin:0 auto 40px; }
+  .track-step { display:flex; flex-direction:column; align-items:center; flex:1; }
+  .track-step-icon { width:44px; height:44px; border-radius:50%; background:var(--cream-dark); border:2px solid rgba(200,150,12,.2); display:flex; align-items:center; justify-content:center; font-size:1.2rem; margin-bottom:8px; }
+  .track-step.done .track-step-icon { background:var(--forest); border-color:var(--forest); }
+  .track-step-label { font-size:.72rem; font-weight:600; color:var(--text-light); text-transform:uppercase; letter-spacing:.06em; text-align:center; }
+  .track-step.done .track-step-label { color:var(--forest); }
+  .track-line { flex:1; height:2px; background:rgba(200,150,12,.2); margin-top:21px; align-self:flex-start; }
+  .track-line.done { background:var(--forest); }
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="confetti" id="confetti"></div>
+
+<nav id="navbar">
+  <a href="../index.html" class="nav-logo">Nutri<span>Veda</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="products.html">Products</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+    <li><a href="products.html" class="nav-cta">Shop Again</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div class="hamburger" id="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<section class="confirm-page" style="padding-top:120px;">
+  <div class="confirm-icon">🎉</div>
+  <h1>Order <em>Confirmed!</em></h1>
+  <p id="confirmMsg">Thank you for your order! We've received it and will start processing it right away. You'll receive a WhatsApp confirmation shortly.</p>
+
+  <div class="order-id-box">Order ID: <span id="orderId">NV########</span></div>
+
+  <div class="confirm-details" id="confirmDetails"></div>
+
+  <!-- TRACKING STEPS -->
+  <div class="track-steps">
+    <div class="track-step done">
+      <div class="track-step-icon">✅</div>
+      <div class="track-step-label">Order Placed</div>
+    </div>
+    <div class="track-line done"></div>
+    <div class="track-step">
+      <div class="track-step-icon">📦</div>
+      <div class="track-step-label">Processing</div>
+    </div>
+    <div class="track-line"></div>
+    <div class="track-step">
+      <div class="track-step-icon">🚚</div>
+      <div class="track-step-label">Shipped</div>
+    </div>
+    <div class="track-line"></div>
+    <div class="track-step">
+      <div class="track-step-icon">🏠</div>
+      <div class="track-step-label">Delivered</div>
+    </div>
+  </div>
+
+  <div class="order-items-summary" id="orderItemsList">
+    <h4>Items Ordered</h4>
+  </div>
+
+  <div style="background:var(--white);border-radius:20px;padding:28px;max-width:500px;margin:0 auto 40px;border:1px solid rgba(200,150,12,.1);">
+    <h4 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--forest);margin-bottom:16px;">Need help with your order?</h4>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <a href="tel:+917893639037" style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--cream-dark);border-radius:10px;text-decoration:none;color:var(--forest);font-weight:600;font-size:.9rem;">📞 Call Ravindar: +91 78936 39037</a>
+      <a href="mailto:nidigondaravindar@gmail.com" style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--cream-dark);border-radius:10px;text-decoration:none;color:var(--forest);font-weight:600;font-size:.9rem;">✉️ nidigondaravindar@gmail.com</a>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+    <a href="products.html" class="btn-primary">Continue Shopping →</a>
+    <a href="../index.html" class="btn-secondary">Back to Home</a>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="../js/data.js"></script>
+<script src="../js/common.js"></script>
+<script>
+  // Load order data
+  const orderData = JSON.parse(localStorage.getItem('nv_lastOrder') || 'null');
+
+  if(orderData) {
+    document.getElementById('orderId').textContent = orderData.orderId;
+
+    const payLabels = { phonepay:'PhonePe / UPI', card:'Card', netbank:'Net Banking', cod:'Cash on Delivery' };
+    const orderDate = new Date(orderData.timestamp);
+    const deliveryDate = new Date(orderDate);
+    deliveryDate.setDate(deliveryDate.getDate() + 3);
+    const dateStr = deliveryDate.toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
+
+    document.getElementById('confirmDetails').innerHTML = `
+      <div class="confirm-detail-item"><div class="icon">💰</div><div class="label">Amount Paid</div><div class="val">₹${orderData.total.toLocaleString()}</div></div>
+      <div class="confirm-detail-item"><div class="icon">💳</div><div class="label">Payment</div><div class="val">${payLabels[orderData.payment]||orderData.payment}</div></div>
+      <div class="confirm-detail-item"><div class="icon">📅</div><div class="label">Est. Delivery</div><div class="val">${dateStr}</div></div>
+      <div class="confirm-detail-item"><div class="icon">🎁</div><div class="label">You Saved</div><div class="val">₹${orderData.savings.toLocaleString()}</div></div>`;
+
+    const ol = document.getElementById('orderItemsList');
+    orderData.cart.forEach(item => {
+      ol.innerHTML += `
+        <div class="ord-item">
+          <div class="ord-item-emoji">${item.emoji}</div>
+          <div>
+            <div class="ord-item-name">${item.name}</div>
+            <div class="ord-item-qty">Qty: ${item.qty}</div>
+          </div>
+          <div class="ord-item-price">₹${(item.price*item.qty).toLocaleString()}</div>
+        </div>`;
+    });
+  }
+
+  // Confetti animation
+  const confettiEl = document.getElementById('confetti');
+  const colors = ['#c8960c','#1a3a2a','#e8b422','#3d7a52','#f5d87a','#2d5a3d'];
+  for(let i=0; i<80; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random()*100 + 'vw';
+    piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+    piece.style.animationDuration = (1.5 + Math.random()*2) + 's';
+    piece.style.animationDelay = (Math.random()*1.5) + 's';
+    piece.style.width = piece.style.height = (6+Math.random()*10) + 'px';
+    confettiEl.appendChild(piece);
+  }
+</script>
+</body>
+</html>
