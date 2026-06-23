@@ -5,7 +5,7 @@ const CONFIG = {
   
   // Feature Flags
   ENABLE_SMS_OTP: false, // Set to true when backend is ready
-  DEMO_MODE: false, // Set to false for production
+  DEMO_MODE: true, // Set to false for production
   
   // Contact Information
   CONTACT: {
