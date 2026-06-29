@@ -120,7 +120,7 @@ function renderFooter() {
     </div>
     <hr class="footer-divider">
     <div class="footer-bottom">
-      <span>© 2025 NutriVeda. All rights reserved. Owned by Ravindar Nidigonda.</span>
+      <span>© 2025 Nutri Veda - For Healthy Life. All rights reserved. Owned by Ravindar Nidigonda.</span>
       <span>Made with 💚 in Hyderabad</span>
     </div>
   </footer>`;

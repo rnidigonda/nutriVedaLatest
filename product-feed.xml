@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
   <channel>
-    <title>NutriVeda Products</title>
-    <link>https://nutriveda.shop</link>
+    <title>Nutri Veda Products</title>
+    <link>https://nutrivedaforhealth.shop</link>
     <description>Premium Natural Nutrition Products - Protein Powders, Vitamins, Kids Nutrition, Weight Management, Herbal Blends</description>
     
     <!-- Product 1 -->
@@ -10,13 +10,13 @@
       <g:id>1</g:id>
       <g:title>VedaProtein Elite Whey Protein Powder - 24g Protein, Chocolate & Vanilla, 30 Servings</g:title>
       <g:description>Premium whey protein with 24g protein per scoop. Mixes instantly. Chocolate & Vanilla flavors. Ideal for muscle recovery and post-workout nutrition.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=1</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-protein-1.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=1</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-protein-1.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>1299 INR</g:price>
       <g:sale_price>1299 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400011</g:gtin>
       <g:mpn>NVWP001</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Sports Nutrition > Protein Supplements</g:google_product_category>
@@ -28,13 +28,13 @@
       <g:id>2</g:id>
       <g:title>PlantPower Vegan Protein - 20g Plant Protein, Pea & Brown Rice, Lactose-Free</g:title>
       <g:description>100% plant-based protein powder from pea and brown rice blend. 20g protein per serving. Vegan, lactose-free, no artificial colors.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=2</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-protein-2.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=2</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-protein-2.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>1099 INR</g:price>
       <g:sale_price>1099 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400028</g:gtin>
       <g:mpn>NVPP002</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Sports Nutrition > Protein Supplements</g:google_product_category>
@@ -46,13 +46,13 @@
       <g:id>3</g:id>
       <g:title>Daily Vitality Multivitamin - Vitamin D3, B12, Zinc, Iron - 60 Capsules</g:title>
       <g:description>Complete daily multivitamin with Vitamin D3, B12, Zinc & Iron. Supports immunity and overall health. 60 capsules, 60-day supply.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=3</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-vitamin-1.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=3</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-vitamin-1.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>699 INR</g:price>
       <g:sale_price>699 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400035</g:gtin>
       <g:mpn>NVMV003</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements</g:google_product_category>
@@ -64,13 +64,13 @@
       <g:id>4</g:id>
       <g:title>OmegaVeda Fish Oil - 1000mg Omega-3 EPA DHA - Heart & Brain Health - 90 Softgels</g:title>
       <g:description>High-strength Omega-3 fish oil with EPA & DHA. Supports heart, brain & joint health. Lemon flavored, no fishy aftertaste. 90 softgels.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=4</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-omega-1.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=4</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-omega-1.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>549 INR</g:price>
       <g:sale_price>549 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400042</g:gtin>
       <g:mpn>NVFO004</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Fish Oil</g:google_product_category>
@@ -82,13 +82,13 @@
       <g:id>5</g:id>
       <g:title>AshwaBalance Herbal Blend - Ashwagandha, Brahmi, Shatavari - Stress Relief - 60 Capsules</g:title>
       <g:description>Ayurvedic herbal blend with KSM-66 Ashwagandha, Brahmi, and Shatavari. For stress relief, hormonal balance, and mental clarity. 60 veg capsules.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=5</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-herbal-1.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=5</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-herbal-1.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>549 INR</g:price>
       <g:sale_price>549 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400059</g:gtin>
       <g:mpn>NVAB005</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Herbal Supplements</g:google_product_category>
@@ -100,13 +100,13 @@
       <g:id>6</g:id>
       <g:title>TurmerCure Gold Blend - Turmeric Curcumin 95%, Black Pepper, Ginger - Immunity</g:title>
       <g:description>Powerful anti-inflammatory blend with 95% curcumin extract, BioPerine black pepper for absorption, and ginger root. Immunity support.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=6</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-turmeric-1.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=6</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-turmeric-1.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>449 INR</g:price>
       <g:sale_price>449 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400066</g:gtin>
       <g:mpn>NVTC006</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Herbal Supplements</g:google_product_category>
@@ -118,13 +118,13 @@
       <g:id>7</g:id>
       <g:title>GrowStrong Kids NutriMix - DHA, Calcium, Iron - Ages 2-12 - Chocolate & Mango</g:title>
       <g:description>Complete nutrition for kids aged 2-12. DHA for brain development, calcium, vitamin D, iron, and prebiotic fiber. Chocolate and mango flavors kids love.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=7</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-kids-1.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=7</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-kids-1.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>649 INR</g:price>
       <g:sale_price>649 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400073</g:gtin>
       <g:mpn>NVKN007</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Children's Health Supplements</g:google_product_category>
@@ -137,13 +137,13 @@
       <g:id>8</g:id>
       <g:title>JuniorImmune Chewables - Vitamin C, Zinc, Elderberry - Kids Immunity - 30 Tablets</g:title>
       <g:description>Chewable immunity tablets with Vitamin C 250mg, Zinc, Elderberry & Echinacea. Perfect for kids' immune system support. Doctor approved formula.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=8</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-kids-2.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=8</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-kids-2.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>449 INR</g:price>
       <g:sale_price>449 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400080</g:gtin>
       <g:mpn>NVJI008</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Children's Health Supplements</g:google_product_category>
@@ -156,13 +156,13 @@
       <g:id>9</g:id>
       <g:title>Casein NightRecovery - 25g Micellar Casein Protein - Overnight Muscle Recovery</g:title>
       <g:description>Slow-release micellar casein protein for overnight muscle recovery. 25g protein per serving. Rich chocolate flavor. Ideal for night-time nutrition.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=9</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-protein-3.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=9</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-protein-3.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>1399 INR</g:price>
       <g:sale_price>1399 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400097</g:gtin>
       <g:mpn>NVCN009</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Sports Nutrition > Protein Supplements</g:google_product_category>
@@ -174,13 +174,13 @@
       <g:id>10</g:id>
       <g:title>VitaminD3 + K2 Drops - 2000IU D3 with K2 MK-7 - Bone Health - 60 Day Supply</g:title>
       <g:description>Liquid Vitamin D3 2000IU with Vitamin K2 MK-7 for enhanced calcium absorption. Supports bone health and immunity. Unflavored drops.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=10</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-vitamin-2.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=10</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-vitamin-2.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>349 INR</g:price>
       <g:sale_price>349 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400103</g:gtin>
       <g:mpn>NVVD010</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements</g:google_product_category>
@@ -192,13 +192,13 @@
       <g:id>11</g:id>
       <g:title>TriphalaDetox Blend - Amla, Haritaki, Bibhitaki - Gut Health & Detox - 90 Capsules</g:title>
       <g:description>Classic Ayurvedic Triphala blend with Amla, Haritaki, and Bibhitaki. Gentle daily detox, digestion support, and gut health. Antioxidant rich.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=11</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-herbal-2.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=11</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-herbal-2.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>399 INR</g:price>
       <g:sale_price>399 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400110</g:gtin>
       <g:mpn>NVTD011</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Herbal Supplements</g:google_product_category>
@@ -210,13 +210,13 @@
       <g:id>12</g:id>
       <g:title>GrowTall Kids Calcium+ - Calcium, Vitamin D3, Magnesium - Height & Bone - Vanilla</g:title>
       <g:description>Complete bone growth formula with 500mg Calcium, Vitamin D3, and Magnesium. Supports height and bone density for kids aged 5-15. Vanilla flavor.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=12</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-kids-3.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=12</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-kids-3.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>549 INR</g:price>
       <g:sale_price>549 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400127</g:gtin>
       <g:mpn>NVGT012</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Children's Health Supplements</g:google_product_category>
@@ -229,13 +229,13 @@
       <g:id>13</g:id>
       <g:title>30 Days Slimming Kit - Natural Weight Loss Program - Complete Kit</g:title>
       <g:description>100% Natural slimming kit for healthy weight loss. Complete 30-day program with nutritional malts and supplements. Includes diet plan guide. No harmful chemicals.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=13</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-slimming-30day.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=13</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-slimming-30day.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>1399 INR</g:price>
       <g:sale_price>1399 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400134</g:gtin>
       <g:mpn>NVSK013</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Diet & Weight Loss Supplements</g:google_product_category>
@@ -247,13 +247,13 @@
       <g:id>14</g:id>
       <g:title>15 Days Slimming Kit - Natural Weight Loss Starter Pack - Complete Program</g:title>
       <g:description>100% Natural slimming starter kit for healthy weight loss. Perfect 15-day beginner program with natural ingredients. Easy to follow weight management plan.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=14</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-slimming-15day.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=14</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-slimming-15day.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>799 INR</g:price>
       <g:sale_price>799 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400141</g:gtin>
       <g:mpn>NVSK014</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Diet & Weight Loss Supplements</g:google_product_category>
@@ -265,13 +265,13 @@
       <g:id>15</g:id>
       <g:title>Sprouted Sathu Maavu Health Mix - Protein Rich Traditional South Indian Health Mix</g:title>
       <g:description>Traditional South Indian health mix from sprouted grains. The Desi Protein - rich in protein, fiber, and essential nutrients. Easy to prepare nutritious drink.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=15</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-health-mix-1.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=15</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-health-mix-1.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>489 INR</g:price>
       <g:sale_price>489 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400158</g:gtin>
       <g:mpn>NVSM015</g:mpn>
       <g:google_product_category>Food, Beverages & Tobacco > Food Items > Grains, Rice & Cereal > Cereal & Pancake Mixes</g:google_product_category>
@@ -283,13 +283,13 @@
       <g:id>16</g:id>
       <g:title>Veg Goat Leg Soup Mix - Mudavattukal Kilangu - Bone & Joint Health - Vegetarian</g:title>
       <g:description>Traditional vegetarian soup mix for bone and joint health. Bones & Joints Partner - Natural calcium source. 100% vegetarian Ayurvedic recipe.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=16</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-soup-mix.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=16</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-soup-mix.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>299 INR</g:price>
       <g:sale_price>299 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400165</g:gtin>
       <g:mpn>NVVG016</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements</g:google_product_category>
@@ -301,13 +301,13 @@
       <g:id>17</g:id>
       <g:title>Weight Gain Porridge Mix - Wholesome Calories - High Protein Natural Weight Gain Formula</g:title>
       <g:description>Natural weight gain formula with wholesome calories. Rich in proteins, healthy fats, and essential nutrients. Easy to digest high-calorie porridge.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=17</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-weight-gain.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=17</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-weight-gain.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>479 INR</g:price>
       <g:sale_price>479 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400172</g:gtin>
       <g:mpn>NVWG017</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Weight Gain Supplements</g:google_product_category>
@@ -319,13 +319,13 @@
       <g:id>18</g:id>
       <g:title>Nannari Sharbath Syrup - Your Body Coolant - Traditional South Indian Cooling Drink</g:title>
       <g:description>Traditional South Indian cooling drink made from Nannari roots. Perfect natural body coolant for hot summer days. No artificial colors.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=18</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-nannari.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=18</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-nannari.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>329 INR</g:price>
       <g:sale_price>329 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400189</g:gtin>
       <g:mpn>NVNS018</g:mpn>
       <g:google_product_category>Food, Beverages & Tobacco > Beverages > Non-Alcoholic Beverages > Soft Drinks</g:google_product_category>
@@ -337,13 +337,13 @@
       <g:id>19</g:id>
       <g:title>Nalleru Kaaram Podi - Bone & Joints Strength - Traditional Sesame Spice Powder</g:title>
       <g:description>Traditional South Indian spice powder made from Nalleru (sesame) with special herbs. Rich in calcium, supports bone and joint health. Perfect with rice and ghee.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=19</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-nalleru-podi.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=19</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-nalleru-podi.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>199 INR</g:price>
       <g:sale_price>199 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400196</g:gtin>
       <g:mpn>NVNK019</g:mpn>
       <g:google_product_category>Food, Beverages & Tobacco > Food Items > Seasonings & Spices</g:google_product_category>
@@ -355,13 +355,13 @@
       <g:id>20</g:id>
       <g:title>Herbal Hair Dye Natural Black - Instant Herbal Hair Color - Chemical Free - 100% Natural</g:title>
       <g:description>100% herbal hair dye made from henna, indigo, neem, and hibiscus. Natural black color without chemicals. Covers gray hair and nourishes hair roots.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=20</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-hair-dye.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=20</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-hair-dye.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>279 INR</g:price>
       <g:sale_price>279 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400202</g:gtin>
       <g:mpn>NVHD020</g:mpn>
       <g:google_product_category>Health & Beauty > Personal Care > Cosmetics > Hair Care > Hair Color</g:google_product_category>
@@ -373,13 +373,13 @@
       <g:id>21</g:id>
       <g:title>Dryfruit Laddu Dates Punch - Your Super Snack - Healthy Energy Balls - Pure Cow Ghee</g:title>
       <g:description>Healthy energy balls made from dates, dry fruits, and nuts. Pure cow ghee and natural sweetness. Rich in iron & calcium. Perfect snack for all ages.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=21</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-dryfruit-laddu.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=21</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-dryfruit-laddu.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>619 INR</g:price>
       <g:sale_price>619 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400219</g:gtin>
       <g:mpn>NVDL021</g:mpn>
       <g:google_product_category>Food, Beverages & Tobacco > Food Items > Snack Foods > Sweet & Dessert Snacks</g:google_product_category>
@@ -391,13 +391,13 @@
       <g:id>22</g:id>
       <g:title>Weight Gain Combo Pack - Complete Weight Gain Solution - Porridge Mix & Dryfruit Laddu</g:title>
       <g:description>Complete weight gain solution with porridge mix and dryfruit laddu. Natural and wholesome calories for healthy weight gain. High protein and tasty.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=22</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-weight-combo.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=22</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-weight-combo.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>1449 INR</g:price>
       <g:sale_price>1449 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400226</g:gtin>
       <g:mpn>NVWC022</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Weight Gain Supplements</g:google_product_category>
@@ -409,13 +409,13 @@
       <g:id>23</g:id>
       <g:title>Slimming Nutritional Malt - 100% Natural Metabolism Booster - Weight Loss Support</g:title>
       <g:description>100% Natural slimming malt powder. Supports metabolism and healthy weight loss. Rich in nutrients and fiber. No artificial additives. Easy to consume.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=23</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-slimming-malt.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=23</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-slimming-malt.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>379 INR</g:price>
       <g:sale_price>379 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400233</g:gtin>
       <g:mpn>NVSM023</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Diet & Weight Loss Supplements</g:google_product_category>
@@ -427,13 +427,13 @@
       <g:id>24</g:id>
       <g:title>Healthy Snacks Combo - Variety Pack - Natural Laddus & Treats - Family Pack</g:title>
       <g:description>Complete healthy snacking solution with variety of nutritious laddus and treats. Made with natural ingredients. No refined sugar. Perfect for guilt-free everyday snacking.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=24</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-snacks-combo.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=24</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-snacks-combo.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>999 INR</g:price>
       <g:sale_price>999 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400240</g:gtin>
       <g:mpn>NVHC024</g:mpn>
       <g:google_product_category>Food, Beverages & Tobacco > Food Items > Snack Foods</g:google_product_category>
@@ -445,13 +445,13 @@
       <g:id>25</g:id>
       <g:title>Amla Candy - All Time Favorite - Vitamin C Rich - Natural Dried Amla - Immunity Booster</g:title>
       <g:description>Natural dried amla candy packed with Vitamin C. Traditional Indian superfood candy for immunity and digestion. Tangy & sweet taste. All time favorite.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=25</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-amla-candy.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=25</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-amla-candy.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>259 INR</g:price>
       <g:sale_price>259 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400257</g:gtin>
       <g:mpn>NVAC025</g:mpn>
       <g:google_product_category>Food, Beverages & Tobacco > Food Items > Snack Foods > Candy & Chocolate</g:google_product_category>
@@ -463,13 +463,13 @@
       <g:id>26</g:id>
       <g:title>Gond Laddu - Postpartum Snack - Immunity Booster - Pure Cow Ghee - Almonds & Cashews</g:title>
       <g:description>Traditional immunity-boosting sweets made with edible gum, pure cow ghee, almonds, and cashews. Perfect for new mothers. Rich in protein and energy.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=26</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-gond-laddu.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=26</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-gond-laddu.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>599 INR</g:price>
       <g:sale_price>599 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400264</g:gtin>
       <g:mpn>NVGL026</g:mpn>
       <g:google_product_category>Food, Beverages & Tobacco > Food Items > Snack Foods > Sweet & Dessert Snacks</g:google_product_category>
@@ -481,13 +481,13 @@
       <g:id>27</g:id>
       <g:title>Omega 3 Laddu - Flaxseed Laddu - Brain Health & Heart Wellness - Pure Cow Ghee</g:title>
       <g:description>Healthy flaxseed laddus rich in Omega 3 & 6 fatty acids. Made with pure cow ghee for brain health and heart wellness. Natural and nutritious sweet.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=27</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-omega-laddu.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=27</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-omega-laddu.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>499 INR</g:price>
       <g:sale_price>499 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400271</g:gtin>
       <g:mpn>NVOL027</g:mpn>
       <g:google_product_category>Food, Beverages & Tobacco > Food Items > Snack Foods > Sweet & Dessert Snacks</g:google_product_category>
@@ -499,13 +499,13 @@
       <g:id>28</g:id>
       <g:title>Rice Bran Laddu - Vitamin B12 Rich - Energy Booster - Natural Sweetness - Traditional Recipe</g:title>
       <g:description>Vitamin B12-rich laddus made from rice bran. Sweeter way to get essential nutrients for energy and nervous system health. Traditional recipe with natural sweetness.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=28</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-ricebran-laddu.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=28</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-ricebran-laddu.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>419 INR</g:price>
       <g:sale_price>419 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400288</g:gtin>
       <g:mpn>NVRB028</g:mpn>
       <g:google_product_category>Food, Beverages & Tobacco > Food Items > Snack Foods > Sweet & Dessert Snacks</g:google_product_category>
@@ -517,13 +517,13 @@
       <g:id>29</g:id>
       <g:title>Sunnundalu (Cow Ghee) - Andhra Favorite - High Protein Urad Dal Laddu - Traditional</g:title>
       <g:description>Traditional Andhra Pradesh favorite laddu made with urad dal and pure cow ghee. High protein content and energy rich. Delicious authentic Andhra taste.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=29</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-sunnundalu.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=29</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-sunnundalu.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>519 INR</g:price>
       <g:sale_price>519 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400295</g:gtin>
       <g:mpn>NVSU029</g:mpn>
       <g:google_product_category>Food, Beverages & Tobacco > Food Items > Snack Foods > Sweet & Dessert Snacks</g:google_product_category>
@@ -535,13 +535,13 @@
       <g:id>30</g:id>
       <g:title>Sesame Dates Laddu - Calcium & Iron Rich - Bone & Blood Health - Natural Sweetness</g:title>
       <g:description>Nutritious laddus combining sesame seeds and dates. Excellent source of calcium and iron for bone and blood health. Made with natural dates sweetness.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=30</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-sesame-dates-laddu.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=30</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-sesame-dates-laddu.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>499 INR</g:price>
       <g:sale_price>499 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400301</g:gtin>
       <g:mpn>NVSD030</g:mpn>
       <g:google_product_category>Food, Beverages & Tobacco > Food Items > Snack Foods > Sweet & Dessert Snacks</g:google_product_category>
@@ -553,13 +553,13 @@
       <g:id>31</g:id>
       <g:title>Bones & Joints Strength Combo - Complete Bone Care Solution - Multiple Products Value Pack</g:title>
       <g:description>Comprehensive combo pack for bone and joint health. Contains multiple products to support skeletal strength and mobility. Natural ingredients value pack.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=31</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-bone-combo.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=31</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-bone-combo.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>749 INR</g:price>
       <g:sale_price>749 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400318</g:gtin>
       <g:mpn>NVBC031</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements</g:google_product_category>
@@ -571,13 +571,13 @@
       <g:id>32</g:id>
       <g:title>Nalleru Pachadi - Bone Strength Partner - Sesame Chutney Powder - Calcium Rich - Traditional</g:title>
       <g:description>Traditional sesame-based chutney powder for bone and joint strength. Rich in calcium and essential minerals. Easy to use with delicious taste.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=32</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-nalleru-pachadi.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=32</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-nalleru-pachadi.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>299 INR</g:price>
       <g:sale_price>299 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400325</g:gtin>
       <g:mpn>NVNP032</g:mpn>
       <g:google_product_category>Food, Beverages & Tobacco > Food Items > Condiments & Sauces > Chutney</g:google_product_category>
@@ -589,13 +589,13 @@
       <g:id>33</g:id>
       <g:title>Moringa Sesame Kaaram Podi - Iron Rich Spice Powder - Superfood Blend - Traditional Taste</g:title>
       <g:description>Iron-rich spice powder combining moringa and sesame. Moringa superfood with sesame calcium. Flavorful and nutritious addition to your meals. Traditional taste.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=33</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-moringa-podi.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=33</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-moringa-podi.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>199 INR</g:price>
       <g:sale_price>199 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400332</g:gtin>
       <g:mpn>NVMK033</g:mpn>
       <g:google_product_category>Food, Beverages & Tobacco > Food Items > Seasonings & Spices</g:google_product_category>
@@ -607,13 +607,13 @@
       <g:id>34</g:id>
       <g:title>Siridanya Dosa Mix - Traditional Taste - Healthy Grains Millet Dosa - Nutritious Breakfast</g:title>
       <g:description>Healthy grains dosa mix with traditional taste. Made from nutritious millets for a wholesome breakfast. Easy to prepare traditional dosa.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=34</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-siridanya-dosa.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=34</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-siridanya-dosa.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>189 INR</g:price>
       <g:sale_price>189 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400349</g:gtin>
       <g:mpn>NVSD034</g:mpn>
       <g:google_product_category>Food, Beverages & Tobacco > Food Items > Grains, Rice & Cereal > Pancake & Waffle Mixes</g:google_product_category>
@@ -625,13 +625,13 @@
       <g:id>35</g:id>
       <g:title>Sesame Sunflower Kaaram Podi - Calcium Rich Spice Powder - Bone Health - Flavorful Blend</g:title>
       <g:description>Calcium-rich spice powder with sesame and sunflower seeds. Supports bone health with flavorful blend. Traditional preparation for nutritious meals.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=35</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-sesame-sunflower-podi.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=35</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-sesame-sunflower-podi.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>199 INR</g:price>
       <g:sale_price>199 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400356</g:gtin>
       <g:mpn>NVSS035</g:mpn>
       <g:google_product_category>Food, Beverages & Tobacco > Food Items > Seasonings & Spices</g:google_product_category>
@@ -643,13 +643,13 @@
       <g:id>36</g:id>
       <g:title>Moringa Curry Leaves Dosa Mix - Superfood Dosa - Nutritious Breakfast - Traditional Taste</g:title>
       <g:description>Superfood dosa mix combining moringa and curry leaves. Nutritious and flavorful breakfast option. Easy to prepare with traditional taste and health benefits.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=36</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-moringa-dosa.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=36</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-moringa-dosa.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>229 INR</g:price>
       <g:sale_price>229 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400363</g:gtin>
       <g:mpn>NVMD036</g:mpn>
       <g:google_product_category>Food, Beverages & Tobacco > Food Items > Grains, Rice & Cereal > Pancake & Waffle Mixes</g:google_product_category>
@@ -661,13 +661,13 @@
       <g:id>37</g:id>
       <g:title>Black Rice Urad Dal Porridge Mix - Ancient Secret of Strength - Antioxidant Rich - High Protein</g:title>
       <g:description>Ancient secret of strength combining black rice and urad dal. Rich in antioxidants and protein for energy and vitality. Nutrient dense traditional porridge.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=37</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-black-rice-porridge.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=37</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-black-rice-porridge.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>199 INR</g:price>
       <g:sale_price>199 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400370</g:gtin>
       <g:mpn>NVBR037</g:mpn>
       <g:google_product_category>Food, Beverages & Tobacco > Food Items > Grains, Rice & Cereal > Cereal & Pancake Mixes</g:google_product_category>
@@ -679,13 +679,13 @@
       <g:id>38</g:id>
       <g:title>Immunity Booster Kit - Complete Protection - Herbal Teas & Health Mixes - Natural Supplements</g:title>
       <g:description>Complete immunity strengthening kit with herbal teas, health mixes, and natural supplements. Build strong immunity naturally with multiple products value combo.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=38</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-immunity-kit.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=38</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-immunity-kit.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>1111 INR</g:price>
       <g:sale_price>1111 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400387</g:gtin>
       <g:mpn>NVIK038</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements</g:google_product_category>
@@ -697,13 +697,13 @@
       <g:id>39</g:id>
       <g:title>Moringa Powder - Pure Greens - Human Sanjeevani - Vitamin Rich - Daily Wellness - Immunity</g:title>
       <g:description>Pure moringa powder packed with vitamins and minerals. The human sanjeevani. Everyday vitality booster for complete nutrition and immunity. Natural energy.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=39</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-moringa-powder.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=39</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-moringa-powder.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>179 INR</g:price>
       <g:sale_price>179 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400394</g:gtin>
       <g:mpn>NVMP039</g:mpn>
       <g:google_product_category>Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements > Herbal Supplements</g:google_product_category>
@@ -715,13 +715,13 @@
       <g:id>40</g:id>
       <g:title>Herbal Tea Immunity Blend - Adults Immunity - Turmeric & Cinnamon - Caffeine Free - Wellness</g:title>
       <g:description>Immunity-boosting herbal tea blend for adults. Contains turmeric, cinnamon, and traditional herbs for wellness. No caffeine with warming spices for daily wellness.</g:description>
-      <g:link>https://nutriveda.shop/pages/products.html?id=40</g:link>
-      <g:image_link>https://nutriveda.shop/assets/product-herbal-tea.jpg</g:image_link>
+      <g:link>https://nutrivedaforhealth.shop/pages/products.html?id=40</g:link>
+      <g:image_link>https://nutrivedaforhealth.shop/assets/product-herbal-tea.jpg</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>in stock</g:availability>
       <g:price>299 INR</g:price>
       <g:sale_price>299 INR</g:sale_price>
-      <g:brand>NutriVeda</g:brand>
+      <g:brand>Nutri Veda</g:brand>
       <g:gtin>8904245400400</g:gtin>
       <g:mpn>NVHT040</g:mpn>
       <g:google_product_category>Food, Beverages & Tobacco > Beverages > Tea & Infusions > Herbal Tea</g:google_product_category>
@@ -732,3 +732,4 @@
     
   </channel>
 </rss>
+

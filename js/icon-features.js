@@ -1,5 +1,5 @@
 /**
- * NutriVeda Icon Features
+ * Nutri Veda Icon Features
  * Implements functionality for product action icons:
  * - Product Catalog/Details View
  * - Product Image Upload/Camera
@@ -38,7 +38,7 @@ function showProductCatalog(productId = null) {
     <div class="icon-modal-content catalog-content">
       <div class="icon-modal-header">
         <div class="catalog-header-content">
-          <h2>🛍️ NutriVeda Product Catalog</h2>
+          <h2>🛍️ Nutri Veda Product Catalog</h2>
           <div class="catalog-view-switcher">
             <button class="view-btn active" onclick="switchCatalogView('grid')" title="Grid View">
               <span>⊞</span>
@@ -356,7 +356,7 @@ function openImageUpload(context = 'product') {
         <div class="upload-area" id="uploadArea">
           <div class="upload-icon">📸</div>
           <h3>Share Your Product Experience</h3>
-          <p>Upload a photo of your NutriVeda product</p>
+          <p>Upload a photo of your Nutri Veda product</p>
           <input type="file" id="imageInput" accept="image/*" capture="camera" style="display: none;">
           <div class="upload-buttons">
             <button class="btn-upload" onclick="document.getElementById('imageInput').click()">
@@ -470,14 +470,14 @@ function loadRecentUploads() {
 
 function openSocialShare(productId = null) {
   let shareUrl = window.location.href;
-  let shareTitle = 'Check out NutriVeda Products!';
-  let shareText = 'Discover premium quality natural nutrition products at NutriVeda';
+  let shareTitle = 'Check out Nutri Veda Products!';
+  let shareText = 'Discover premium quality natural nutrition products at Nutri Veda';
   
   if (productId) {
     const product = (window.PRODUCTS || []).find(p => p.id === productId);
     if (product) {
       shareTitle = product.name;
-      shareText = `Check out ${product.name} - ${product.category} at NutriVeda for only ₹${product.price}`;
+      shareText = `Check out ${product.name} - ${product.category} at Nutri Veda for only ₹${product.price}`;
     }
   }
   
@@ -613,7 +613,7 @@ function openSupportChat() {
           <div class="chat-message bot">
             <div class="chat-avatar">🤖</div>
             <div class="chat-bubble">
-              <p>Hello! Welcome to NutriVeda Customer Support. How can I help you today?</p>
+              <p>Hello! Welcome to Nutri Veda Customer Support. How can I help you today?</p>
               <span class="chat-time">${getCurrentTime()}</span>
             </div>
           </div>
@@ -683,7 +683,7 @@ function sendQuickReply(topic) {
       case 'Talk to Agent':
         response = "Connecting you to a customer support agent. Please hold...";
         setTimeout(() => {
-          addChatMessage("Hi! I'm Priya from NutriVeda support. How can I assist you today?", 'agent');
+          addChatMessage("Hi! I'm Priya from Nutri Veda support. How can I assist you today?", 'agent');
         }, 2000);
         return;
     }
@@ -715,7 +715,7 @@ function getBotResponse(message) {
   
   // Greetings
   if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey')) {
-    return "Hello! Welcome to NutriVeda Customer Support. I'm here to help you with product information, nutrition advice, orders, and more. How can I assist you today?";
+    return "Hello! Welcome to Nutri Veda Customer Support. I'm here to help you with product information, nutrition advice, orders, and more. How can I assist you today?";
   }
   
   // Product Queries - Protein
@@ -755,7 +755,7 @@ function getBotResponse(message) {
   
   // Ingredients & Quality
   if (msg.includes('ingredient') || msg.includes('natural') || msg.includes('organic')) {
-    return "All NutriVeda products use 100% natural ingredients sourced from certified organic farms. We're FSSAI certified, GMP compliant, and third-party lab tested for purity and potency. No artificial preservatives, colors, or harmful additives. Quality is our top priority!";
+    return "All Nutri Veda products use 100% natural ingredients sourced from certified organic farms. We're FSSAI certified, GMP compliant, and third-party lab tested for purity and potency. No artificial preservatives, colors, or harmful additives. Quality is our top priority!";
   }
   
   // Safety & Side Effects
@@ -800,7 +800,7 @@ function getBotResponse(message) {
   
   // Certificate & Authenticity
   if (msg.includes('certif') || msg.includes('fssai') || msg.includes('authentic') || msg.includes('genuine')) {
-    return "All NutriVeda products are FSSAI certified (License No. on product labels), GMP certified facility, and third-party lab tested. Every product has authenticity seals and batch codes. We're a trusted brand committed to quality and transparency!";
+    return "All Nutri Veda products are FSSAI certified (License No. on product labels), GMP certified facility, and third-party lab tested. Every product has authenticity seals and batch codes. We're a trusted brand committed to quality and transparency!";
   }
   
   // Prescription Needed
@@ -839,8 +839,8 @@ function getBotResponse(message) {
   }
   
   // Company Information
-  if (msg.includes('about') || msg.includes('company') || msg.includes('nutriveda')) {
-    return "NutriVeda is your trusted partner in natural nutrition! We're based in Hyderabad, committed to providing premium quality, 100% natural products. FSSAI certified, GMP compliant, and loved by 500+ customers. Our mission: Pure nutrition for powerful lives!";
+  if (msg.includes('about') || msg.includes('company') || msg.includes('Nutri Veda')) {
+    return "Nutri Veda is your trusted partner in natural nutrition! We're based in Hyderabad, committed to providing premium quality, 100% natural products. FSSAI certified, GMP compliant, and loved by 500+ customers. Our mission: Pure nutrition for powerful lives!";
   }
   
   // Thank You
@@ -855,11 +855,11 @@ function getBotResponse(message) {
   
   // Contact Information Request
   if (msg.includes('contact') || msg.includes('phone') || msg.includes('email') || msg.includes('call') || msg.includes('whatsapp')) {
-    return "📞 For direct assistance, you can reach us at:\n\nPhone/WhatsApp: +91 78936 39037\nEmail: customercare@nutriveda.com\n\nBusiness Hours: Mon-Sat, 9:00 AM - 7:00 PM\n\nOur team will be happy to help you with any questions or concerns!";
+    return "📞 For direct assistance, you can reach us at:\n\nPhone/WhatsApp: +91 78936 39037\nEmail: customercare@Nutri Veda.com\n\nBusiness Hours: Mon-Sat, 9:00 AM - 7:00 PM\n\nOur team will be happy to help you with any questions or concerns!";
   }
   
   // Default Response - Professional Escalation
-  return "I want to make sure you get the best assistance. While I can help with general product information, orders, and common questions, for detailed information specific to your needs, please feel free to:\n\n📞 Call/WhatsApp: +91 78936 39037\n📧 Email: customercare@nutriveda.com\n\nOur expert team is available Mon-Sat, 9 AM - 7 PM to provide personalized guidance. Is there anything else I can help you with right now?";
+  return "I want to make sure you get the best assistance. While I can help with general product information, orders, and common questions, for detailed information specific to your needs, please feel free to:\n\n📞 Call/WhatsApp: +91 78936 39037\n📧 Email: customercare@Nutri Veda.com\n\nOur expert team is available Mon-Sat, 9 AM - 7 PM to provide personalized guidance. Is there anything else I can help you with right now?";
 }
 
 function getCurrentTime() {
@@ -918,3 +918,4 @@ document.addEventListener('click', (e) => {
     closeIconModal();
   }
 });
+

@@ -1,5 +1,5 @@
 // ========================================
-// NutriVeda Code Protection Script
+// Nutri Veda Code Protection Script
 // Protects against casual copying and code theft
 // ========================================
 
@@ -260,6 +260,7 @@
   console.log('%cThis is a browser feature intended for developers.', 'font-size: 16px;');
   console.log('%cIf someone told you to copy-paste something here, it is a scam.', 'font-size: 16px; color: red;');
   console.log('%cPasting code here can compromise your account security.', 'font-size: 16px; color: red;');
-  console.log('%c\nNutriVeda © 2025 - All Rights Reserved', 'font-size: 14px; color: #2d5a3d; font-weight: bold;');
+  console.log('%c\nNutri Veda © 2025 - All Rights Reserved', 'font-size: 14px; color: #2d5a3d; font-weight: bold;');
   
 })();
+
