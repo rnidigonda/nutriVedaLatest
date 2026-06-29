@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Cart — NutriVeda</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/advanced-features.css">
+<style>
+  /* Enhanced Cart Styles */
+  .cart-item-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  
+  .cart-action-btn {
+    background: none;
+    border: none;
+    color: var(--forest);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 6px 0;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .cart-action-btn:hover {
+    color: var(--gold);
+    text-decoration: underline;
+  }
+  
+  .cart-action-divider {
+    color: #ddd;
+    user-select: none;
+  }
+  
+  .save-for-later-section {
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 2px solid #f0f0f0;
+  }
+  
+  .save-for-later-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--forest);
+    margin-bottom: 20px;
+  }
+  
+  .saved-item {
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 20px;
+    position: relative;
+  }
+  
+  .saved-item-img {
+    font-size: 60px;
+    flex-shrink: 0;
+  }
+  
+  .saved-item-info {
+    flex: 1;
+  }
+  
+  .saved-item-name {
+    font-weight: 600;
+    color: var(--forest);
+    margin-bottom: 6px;
+  }
+  
+  .saved-item-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--earth);
+    margin: 8px 0;
+  }
+  
+  .saved-item-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  
+  .recommendations-in-cart {
+    margin-top: 40px;
+    padding: 30px;
+    background: var(--cream-light);
+    border-radius: 16px;
+  }
+  
+  .recommendations-in-cart h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--forest);
+    margin-bottom: 20px;
+  }
+  
+  .recommendation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .recommendation-item {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  
+  .recommendation-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  }
+  
+  .recommendation-item-emoji {
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+  
+  .recommendation-item-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--forest);
+    margin-bottom: 8px;
+    min-height: 40px;
+  }
+  
+  .recommendation-item-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--earth);
+    margin-bottom: 12px;
+  }
+  
+  .recommendation-item-btn {
+    width: 100%;
+    padding: 8px;
+    background: var(--forest);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.3s;
+  }
+  
+  .recommendation-item-btn:hover {
+    background: #2d5016;
+  }
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+
+<nav id="navbar">
+  <a href="../index.html" class="nav-logo">Nutri<span>Veda</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="products.html">Products</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+    <li id="loginNavItem"><a href="login.html" class="nav-login">👤 Login</a></li>
+    <li><a href="cart.html" class="nav-cart" style="color:var(--forest)!important;font-weight:700!important;">🛒 <span id="cartCount">0</span></a></li>
+    <li><a href="products.html" class="nav-cta">Shop More</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <button class="search-icon" id="searchBtn" onclick="toggleSearch()" title="Search Products">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+    </button>
+    <a href="wishlist.html" class="nav-wishlist-mobile" style="position:relative;">❤️ <span class="wishlist-count" style="display:none;">0</span></a>
+    <a href="login.html" class="nav-login-mobile" id="loginMobile">👤</a>
+    <a href="cart.html" class="nav-cart-mobile">🛒 <span id="cartCountMobile">0</span></a>
+    <div class="hamburger" id="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a> › <a href="products.html">Products</a> › <span>My Cart</span>
+  </div>
+  <h1>My <em>Cart</em></h1>
+  <p>Review your items before checkout.</p>
+</div>
+
+<section class="cart-page">
+  <div id="cartLayout"></div>
+  <div id="savedForLaterSection"></div>
+  <div id="recommendationsSection"></div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="../js/data.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/advanced-features.js"></script>
+<script>
+  // Save for Later functionality
+  function getSavedForLater() {
+    return JSON.parse(localStorage.getItem('nv_saved_for_later') || '[]');
+  }
+  
+  function saveSavedForLater(items) {
+    localStorage.setItem('nv_saved_for_later', JSON.stringify(items));
+  }
+  
+  function saveForLater(id) {
+    const cart = getCart();
+    const item = cart.find(i => i.id === id);
+    if (!item) return;
+    
+    // Remove from cart
+    const newCart = cart.filter(i => i.id !== id);
+    saveCart(newCart);
+    
+    // Add to saved for later
+    const saved = getSavedForLater();
+    saved.push(item);
+    saveSavedForLater(saved);
+    
+    renderCart();
+    renderSavedForLater();
+    showToast('Item moved to Save for Later');
+  }
+  
+  function moveToCart(id) {
+    const saved = getSavedForLater();
+    const item = saved.find(i => i.id === id);
+    if (!item) return;
+    
+    // Remove from saved
+    const newSaved = saved.filter(i => i.id !== id);
+    saveSavedForLater(newSaved);
+    
+    // Add to cart
+    const cart = getCart();
+    const existing = cart.find(i => i.id === id);
+    if (existing) {
+      existing.qty += item.qty;
+    } else {
+      cart.push(item);
+    }
+    saveCart(cart);
+    
+    renderCart();
+    renderSavedForLater();
+    showToast('Item moved to Cart');
+  }
+  
+  function removeSavedItem(id) {
+    const saved = getSavedForLater().filter(i => i.id !== id);
+    saveSavedForLater(saved);
+    renderSavedForLater();
+    showToast('Item removed');
+  }
+  
+  function seeMoreLike(productId) {
+    // Get product details
+    const product = PRODUCTS.find(p => p.id === productId);
+    if (product) {
+      // Navigate to products page filtered by category
+      window.location.href = `products.html?category=${product.catKey}`;
+    }
+  }
+  
+  function shareProduct(productId) {
+    const product = PRODUCTS.find(p => p.id === productId);
+    if (!product) return;
+    
+    const shareData = {
+      title: product.name,
+      text: `Check out ${product.name} from NutriVeda`,
+      url: `${window.location.origin}/pages/product.html?id=${productId}`
+    };
+    
+    if (navigator.share) {
+      navigator.share(shareData).catch(() => {});
+    } else {
+      // Fallback: Copy link to clipboard
+      const url = shareData.url;
+      navigator.clipboard.writeText(url).then(() => {
+        showToast('Link copied to clipboard!');
+      });
+    }
+  }
+
+  function renderCart() {
+    const cart = getCart();
+    const layout = document.getElementById('cartLayout');
+
+    if(cart.length === 0) {
+      layout.innerHTML = `
+        <div class="cart-empty">
+          <div class="icon">🛒</div>
+          <h3>Your cart is empty</h3>
+          <p>Explore our premium nutrition products and add something great to your cart!</p>
+          <a href="products.html" class="btn-primary" style="display:inline-flex;">Browse Products →</a>
+        </div>`;
+      renderSavedForLater();
+      return;
+    }
+
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const mrpTotal = cart.reduce((s, i) => s + (i.mrp || i.price) * i.qty, 0);
+    const savings = mrpTotal - subtotal;
+    const shipping = subtotal >= 999 ? 0 : 79;
+    const total = subtotal + shipping;
+
+    layout.innerHTML = `
+      <div class="cart-layout">
+        <div class="cart-items">
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--forest);margin-bottom:24px;">${cart.reduce((s,i)=>s+i.qty,0)} Items in Cart</h3>
+          ${cart.map(item => `
+            <div class="cart-item" id="ci-${item.id}">
+              <div class="cart-item-img">${item.emoji}</div>
+              <div class="cart-item-info">
+                <div class="cart-item-name">${item.name}</div>
+                <div class="cart-item-cat">${item.category}</div>
+                <div class="cart-item-price">₹${(item.price * item.qty).toLocaleString()}</div>
+                
+                <!-- Enhanced Action Buttons -->
+                <div class="cart-item-actions">
+                  <button class="cart-action-btn" onclick="removeItem(${item.id})">
+                    🗑️ Delete
+                  </button>
+                  <span class="cart-action-divider">|</span>
+                  <button class="cart-action-btn" onclick="saveForLater(${item.id})">
+                    💾 Save for later
+                  </button>
+                  <span class="cart-action-divider">|</span>
+                  <button class="cart-action-btn" onclick="seeMoreLike(${item.id})">
+                    👁️ See more like this
+                  </button>
+                  <span class="cart-action-divider">|</span>
+                  <button class="cart-action-btn" onclick="shareProduct(${item.id})">
+                    🔗 Share
+                  </button>
+                </div>
+              </div>
+              <div class="cart-item-right">
+                <button class="cart-remove" onclick="removeItem(${item.id})" title="Remove from cart">✕</button>
+                <div class="qty-ctrl">
+                  <button class="qty-btn" onclick="updateQty(${item.id}, -1)">−</button>
+                  <div class="qty-val" id="qty-${item.id}">${item.qty}</div>
+                  <button class="qty-btn" onclick="updateQty(${item.id}, 1)">+</button>
+                </div>
+                <div style="font-size:.78rem;color:var(--text-light);">₹${item.price.toLocaleString()} each</div>
+              </div>
+            </div>`).join('')}
+          <div style="margin-top:20px;">
+            <a href="products.html" style="color:var(--forest);font-size:.9rem;font-weight:600;text-decoration:none;">← Continue Shopping</a>
+          </div>
+        </div>
+
+        <div class="order-summary">
+          <h3>Order Summary</h3>
+          <div class="summary-row"><div class="label">Subtotal (${cart.reduce((s,i)=>s+i.qty,0)} items)</div><div class="value">₹${subtotal.toLocaleString()}</div></div>
+          <div class="summary-row"><div class="label">MRP Total</div><div class="value" style="text-decoration:line-through;color:var(--text-light)">₹${mrpTotal.toLocaleString()}</div></div>
+          <div class="summary-row"><div class="label" style="color:var(--earth)">Your Savings</div><div class="value" style="color:var(--earth)">−₹${savings.toLocaleString()}</div></div>
+          <div class="summary-row"><div class="label">Shipping</div><div class="value" style="color:${shipping===0?'var(--forest-light)':'var(--text-dark)'}">${shipping===0?'FREE 🎉':'₹'+shipping}</div></div>
+          ${shipping > 0 ? `<div style="background:rgba(200,150,12,.1);color:var(--earth);font-size:.8rem;padding:8px 12px;border-radius:8px;margin-bottom:12px;">Add ₹${(999-subtotal).toLocaleString()} more for FREE shipping!</div>` : ''}
+          <hr class="summary-divider">
+          <div class="summary-total"><span>Total</span><span>₹${total.toLocaleString()}</span></div>
+          ${savings > 0 ? `<div class="summary-saving">🎉 You're saving ₹${savings.toLocaleString()} on this order!</div>` : ''}
+          <button class="btn-checkout" onclick="window.location.href='checkout.html'">Proceed to Checkout →</button>
+          <div class="secure-note">🔒 100% Secure & Encrypted Checkout</div>
+        </div>
+      </div>`;
+    
+    renderSavedForLater();
+    renderRecommendations();
+  }
+  
+  function renderSavedForLater() {
+    const saved = getSavedForLater();
+    const section = document.getElementById('savedForLaterSection');
+    
+    if (saved.length === 0) {
+      section.innerHTML = '';
+      return;
+    }
+    
+    section.innerHTML = `
+      <div class="save-for-later-section">
+        <h3 class="save-for-later-title">💾 Saved for Later (${saved.length} ${saved.length === 1 ? 'item' : 'items'})</h3>
+        ${saved.map(item => `
+          <div class="saved-item">
+            <div class="saved-item-img">${item.emoji}</div>
+            <div class="saved-item-info">
+              <div class="saved-item-name">${item.name}</div>
+              <div style="font-size:13px;color:var(--text-light);margin-bottom:6px;">${item.category}</div>
+              <div class="saved-item-price">₹${item.price.toLocaleString()}</div>
+              <div style="font-size:12px;color:var(--text-light);margin-top:4px;">
+                ${item.qty > 1 ? `Quantity: ${item.qty}` : ''}
+              </div>
+              <div class="saved-item-actions">
+                <button class="cart-action-btn" onclick="moveToCart(${item.id})" style="background:var(--forest);color:white;padding:8px 20px;border-radius:20px;">
+                  🛒 Move to Cart
+                </button>
+                <button class="cart-action-btn" onclick="removeSavedItem(${item.id})">
+                  🗑️ Delete
+                </button>
+                <button class="cart-action-btn" onclick="seeMoreLike(${item.id})">
+                  👁️ See more like this
+                </button>
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+  
+  function renderRecommendations() {
+    const cart = getCart();
+    if (cart.length === 0) return;
+    
+    // Get recommendations based on cart items
+    const cartCategories = [...new Set(cart.map(item => item.category))];
+    const recommendations = PRODUCTS
+      .filter(p => !cart.find(c => c.id === p.id)) // Not in cart
+      .filter(p => cartCategories.includes(p.category)) // Same category
+      .slice(0, 6); // Limit to 6
+    
+    if (recommendations.length === 0) return;
+    
+    const section = document.getElementById('recommendationsSection');
+    section.innerHTML = `
+      <div class="recommendations-in-cart">
+        <h3>🎯 You might also like</h3>
+        <p style="color:var(--text-light);margin-bottom:20px;font-size:14px;">Based on items in your cart</p>
+        <div class="recommendation-grid">
+          ${recommendations.map(product => `
+            <div class="recommendation-item" onclick="window.location.href='product.html?id=${product.id}'">
+              <div class="recommendation-item-emoji">${product.emoji}</div>
+              <div class="recommendation-item-name">${product.name}</div>
+              <div class="recommendation-item-price">₹${product.price.toLocaleString()}</div>
+              <button class="recommendation-item-btn" onclick="event.stopPropagation(); addToCartById(${product.id}, this)">
+                Add to Cart
+              </button>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  function updateQty(id, delta) {
+    const cart = getCart();
+    const item = cart.find(i => i.id === id);
+    if(!item) return;
+    item.qty = Math.max(1, item.qty + delta);
+    saveCart(cart);
+    renderCart();
+  }
+
+  function removeItem(id) {
+    const cart = getCart().filter(i => i.id !== id);
+    saveCart(cart);
+    renderCart();
+    showToast('Item removed from cart');
+  }
+
+  renderCart();
+</script>
+</body>
+</html>

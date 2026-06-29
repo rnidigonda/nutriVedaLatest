@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — NutriVeda</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+<style>
+  .cod-panel { background:var(--cream-dark); border-radius:14px; padding:20px; margin-top:14px; }
+  .cod-panel p { font-size:.88rem; color:var(--text-mid); line-height:1.7; }
+  .card-panel { margin-top:14px; }
+  .card-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .netbanking-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px; }
+  .nb-btn { background:var(--cream-dark); border:1.5px solid rgba(200,150,12,.15); border-radius:10px; padding:12px 8px; text-align:center; cursor:pointer; font-size:.8rem; font-weight:600; color:var(--forest); transition:all .2s; font-family:'DM Sans',sans-serif; }
+  .nb-btn:hover { background:var(--forest); color:var(--gold-pale); }
+  .mini-cart-item { display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid rgba(200,150,12,.1); }
+  .mini-cart-item:last-child { border-bottom:none; }
+  .mini-cart-emoji { width:44px; height:44px; background:linear-gradient(135deg,rgba(61,122,82,.1),rgba(200,150,12,.08)); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0; }
+  .mini-cart-name { font-size:.88rem; font-weight:600; color:var(--forest); flex:1; }
+  .mini-cart-qty { font-size:.78rem; color:var(--text-light); }
+  .mini-cart-price { font-size:.92rem; font-weight:700; color:var(--forest); }
+  .step-content { display:none; }
+  .step-content.active { display:block; }
+  .addr-saved { background:linear-gradient(135deg,rgba(61,122,82,.06),rgba(200,150,12,.04)); border:1.5px solid rgba(61,122,82,.2); border-radius:14px; padding:18px 20px; cursor:pointer; transition:all .3s; }
+  .addr-saved.selected { border-color:var(--forest); background:rgba(26,58,42,.05); }
+  .addr-saved-title { font-weight:700; font-size:.92rem; color:var(--forest); margin-bottom:4px; }
+  .addr-saved-text { font-size:.82rem; color:var(--text-light); line-height:1.6; }
+  .payment-processing { display:none; position:fixed; inset:0; background:rgba(250,246,237,.96); z-index:9999; flex-direction:column; align-items:center; justify-content:center; }
+  .payment-processing.show { display:flex; }
+  .pp-spinner { width:60px; height:60px; border:4px solid rgba(95,37,159,.2); border-top:4px solid #5f259f; border-radius:50%; animation:spin .8s linear infinite; margin-bottom:24px; }
+  @keyframes spin { to{transform:rotate(360deg)} }
+  .pp-proc-logo { font-size:2.5rem; font-weight:900; color:#5f259f; margin-bottom:8px; }
+  .pp-proc-text { font-size:1rem; color:var(--text-mid); }
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="payment-processing" id="paymentProcessing">
+  <div class="pp-proc-logo">PhonePe</div>
+  <div class="pp-spinner"></div>
+  <div class="pp-proc-text">Processing your payment securely...</div>
+  <div style="font-size:.82rem;color:var(--text-light);margin-top:8px;">Do not refresh or close this page</div>
+</div>
+
+<nav id="navbar">
+  <a href="../index.html" class="nav-logo">Nutri<span>Veda</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="products.html">Products</a></li>
+    <li><a href="cart.html" class="nav-cart">🛒 <span id="cartCount">0</span></a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <a href="cart.html" class="nav-cart-mobile">🛒 <span id="cartCountMobile">0</span></a>
+    <div class="hamburger" id="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a> › <a href="cart.html">Cart</a> › <span>Checkout</span>
+  </div>
+  <h1>Secure <em>Checkout</em></h1>
+</div>
+
+<section class="checkout-page">
+  <!-- STEPS -->
+  <div class="checkout-steps" id="checkoutSteps">
+    <div class="step active" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-label">Address</div>
+    </div>
+    <div class="step-line" id="line1"></div>
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-label">Review</div>
+    </div>
+    <div class="step-line" id="line2"></div>
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-label">Payment</div>
+    </div>
+  </div>
+
+  <div class="checkout-layout">
+    <!-- LEFT: STEPS CONTENT -->
+    <div>
+
+      <!-- STEP 1: ADDRESS -->
+      <div class="step-content active" id="sc1">
+        <div class="checkout-section">
+          <h3><span>1</span> Delivery Address</h3>
+
+          <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
+            <div class="addr-saved selected" id="addrSaved" onclick="selectAddr('saved')">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                <div class="addr-saved-title">🏠 Home Address</div>
+                <span style="font-size:.72rem;background:var(--forest);color:var(--gold-pale);padding:3px 10px;border-radius:10px;font-weight:700;">SAVED</span>
+              </div>
+              <div class="addr-saved-text" id="savedAddrText">Loading...</div>
+            </div>
+            <div class="addr-saved" id="addrNew" onclick="selectAddr('new')">
+              <div class="addr-saved-title">➕ Add New Address</div>
+              <div class="addr-saved-text">Enter a different delivery address</div>
+            </div>
+          </div>
+
+          <div id="newAddrForm" style="display:none;">
+            <div class="form-row">
+              <div class="form-group"><label>Full Name *</label><input type="text" id="fname" placeholder="Your full name"></div>
+              <div class="form-group"><label>Phone Number *</label><input type="tel" id="fphone" placeholder="+91 XXXXX XXXXX"></div>
+            </div>
+            <div class="form-group"><label>Address Line 1 *</label><input type="text" id="faddr1" placeholder="House No, Street, Area"></div>
+            <div class="form-group"><label>Address Line 2</label><input type="text" id="faddr2" placeholder="Landmark (optional)"></div>
+            <div class="form-row">
+              <div class="form-group"><label>City *</label><input type="text" id="fcity" placeholder="City" value="Hyderabad"></div>
+              <div class="form-group"><label>State *</label>
+                <select id="fstate">
+                  <option>Telangana</option><option>Andhra Pradesh</option><option>Karnataka</option><option>Tamil Nadu</option><option>Maharashtra</option><option>Delhi</option><option>Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>PIN Code *</label><input type="text" id="fpin" placeholder="6-digit PIN" maxlength="6"></div>
+              <div class="form-group"><label>Address Type</label>
+                <select id="fatype"><option>Home</option><option>Office</option><option>Other</option></select>
+              </div>
+            </div>
+          </div>
+          <button class="btn-submit" onclick="goToStep(2)">Continue to Review →</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: ORDER REVIEW -->
+      <div class="step-content" id="sc2">
+        <div class="checkout-section">
+          <h3><span>2</span> Review Your Order</h3>
+          <div id="reviewItems"></div>
+          <div style="margin-top:20px;padding:16px;background:var(--cream-dark);border-radius:12px;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:.9rem;"><span style="color:var(--text-light)">Delivery to:</span><span id="reviewAddr" style="font-weight:600;text-align:right;max-width:220px;font-size:.85rem;color:var(--forest)"></span></div>
+            <div style="display:flex;justify-content:space-between;font-size:.9rem;"><span style="color:var(--text-light)">Estimated delivery:</span><span style="font-weight:600;color:var(--forest-mid)">2–4 Business Days</span></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;">
+          <button class="btn-secondary" style="flex:1;" onclick="goToStep(1)">← Edit Address</button>
+          <button class="btn-primary" style="flex:2;border:none;cursor:pointer;" onclick="goToStep(3)">Continue to Payment →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: PAYMENT -->
+      <div class="step-content" id="sc3">
+        <div class="checkout-section">
+          <h3><span>3</span> Choose Payment Method</h3>
+          <div class="payment-methods">
+
+            <!-- PHONEPAY -->
+            <div class="payment-option selected" id="po-phonepay" onclick="selectPayment('phonepay')">
+              <input type="radio" name="payment" value="phonepay" checked>
+              <div class="payment-option-icon">📱</div>
+              <div class="payment-option-info">
+                <div class="payment-option-name">PhonePe UPI <span class="phonepay-badge">RECOMMENDED</span></div>
+                <div class="payment-option-sub">Pay via PhonePe, Google Pay, Paytm or any UPI app</div>
+              </div>
+            </div>
+
+            <!-- PHONEPAY PANEL -->
+            <div class="phonepay-panel" id="phonepayPanel">
+              <div class="pp-logo">PhonePe</div>
+              <div class="pp-sub">India's most trusted payment platform</div>
+              <label style="font-size:.82rem;opacity:.8;margin-bottom:6px;display:block;">Enter your UPI ID</label>
+              <input type="text" class="phonepay-upi-input" id="upiId" placeholder="yourname@ybl / @okaxis / @paytm">
+              <div class="pp-options">
+                <button class="pp-option-btn" onclick="fillUpi('@ybl')">PhonePe @ybl</button>
+                <button class="pp-option-btn" onclick="fillUpi('@okaxis')">GPay @okaxis</button>
+                <button class="pp-option-btn" onclick="fillUpi('@paytm')">Paytm @paytm</button>
+                <button class="pp-option-btn" onclick="fillUpi('@oksbi')">SBI @oksbi</button>
+              </div>
+              <div style="margin-top:18px;font-size:.8rem;opacity:.7;display:flex;align-items:center;gap:8px;">
+                <span>🔒</span> Your payment is protected by 256-bit SSL encryption
+              </div>
+              <div style="margin-top:14px;padding:12px;background:rgba(255,255,255,.1);border-radius:10px;">
+                <div style="font-size:.8rem;opacity:.8;margin-bottom:6px;">Pay directly using any UPI app:</div>
+                <div class="upi-apps">
+                  <div class="upi-app" onclick="selectApp('PhonePe')">📱 PhonePe</div>
+                  <div class="upi-app" onclick="selectApp('Google Pay')">G Pay</div>
+                  <div class="upi-app" onclick="selectApp('Paytm')">Paytm</div>
+                  <div class="upi-app" onclick="selectApp('BHIM')">BHIM</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- DEBIT/CREDIT CARD -->
+            <div class="payment-option" id="po-card" onclick="selectPayment('card')">
+              <input type="radio" name="payment" value="card">
+              <div class="payment-option-icon">💳</div>
+              <div class="payment-option-info">
+                <div class="payment-option-name">Debit / Credit Card</div>
+                <div class="payment-option-sub">Visa, Mastercard, RuPay — all cards accepted</div>
+              </div>
+            </div>
+            <div class="card-panel" id="cardPanel" style="display:none;">
+              <div class="checkout-section" style="margin:0;">
+                <div class="form-group"><label>Card Number</label><input type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)"></div>
+                <div class="card-row">
+                  <div class="form-group"><label>Expiry (MM/YY)</label><input type="text" placeholder="MM/YY" maxlength="5"></div>
+                  <div class="form-group"><label>CVV</label><input type="password" placeholder="•••" maxlength="3"></div>
+                </div>
+                <div class="form-group"><label>Name on Card</label><input type="text" placeholder="As printed on card"></div>
+              </div>
+            </div>
+
+            <!-- NET BANKING -->
+            <div class="payment-option" id="po-netbank" onclick="selectPayment('netbank')">
+              <input type="radio" name="payment" value="netbank">
+              <div class="payment-option-icon">🏦</div>
+              <div class="payment-option-info">
+                <div class="payment-option-name">Net Banking</div>
+                <div class="payment-option-sub">All major Indian banks supported</div>
+              </div>
+            </div>
+            <div id="netbankPanel" style="display:none;">
+              <div class="netbanking-grid">
+                <button class="nb-btn" onclick="selectBank(this)">SBI</button>
+                <button class="nb-btn" onclick="selectBank(this)">HDFC</button>
+                <button class="nb-btn" onclick="selectBank(this)">ICICI</button>
+                <button class="nb-btn" onclick="selectBank(this)">Axis</button>
+                <button class="nb-btn" onclick="selectBank(this)">Kotak</button>
+                <button class="nb-btn" onclick="selectBank(this)">Other</button>
+              </div>
+            </div>
+
+            <!-- COD -->
+            <div class="payment-option" id="po-cod" onclick="selectPayment('cod')">
+              <input type="radio" name="payment" value="cod">
+              <div class="payment-option-icon">💵</div>
+              <div class="payment-option-info">
+                <div class="payment-option-name">Cash on Delivery</div>
+                <div class="payment-option-sub">Pay when your order arrives (₹40 COD fee applies)</div>
+              </div>
+            </div>
+            <div class="cod-panel" id="codPanel" style="display:none;">
+              <p>✅ Pay cash when your order is delivered. A COD handling fee of ₹40 will be added.<br><br>Please keep exact change ready for faster delivery.</p>
+            </div>
+
+          </div>
+
+          <div id="payTotal" style="background:var(--cream-dark);border-radius:14px;padding:18px 20px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:.82rem;color:var(--text-light);">Amount to Pay</div>
+              <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:800;color:var(--forest);" id="payTotalAmt">₹0</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:.78rem;color:var(--text-light);">You're saving</div>
+              <div style="font-weight:700;color:var(--earth);" id="payTotalSav">₹0</div>
+            </div>
+          </div>
+
+          <button class="btn-submit" id="payBtn" onclick="processPayment()">🔒 Pay Now →</button>
+          <div class="secure-note" style="margin-top:12px;">🔐 256-bit SSL Encrypted · PCI-DSS Compliant · Your data is safe</div>
+        </div>
+        <button class="btn-secondary" style="margin-top:0;width:100%;" onclick="goToStep(2)">← Back to Review</button>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: ORDER SUMMARY -->
+    <div>
+      <div class="order-summary" id="rightSummary">
+        <h3>Order Summary</h3>
+        <div id="miniCartItems"></div>
+        <hr class="summary-divider">
+        <div class="summary-row"><div class="label">Subtotal</div><div class="value" id="sumSubtotal">₹0</div></div>
+        <div class="summary-row"><div class="label" style="color:var(--earth)">Savings</div><div class="value" style="color:var(--earth)" id="sumSavings">−₹0</div></div>
+        <div class="summary-row"><div class="label">Shipping</div><div class="value" id="sumShipping">₹0</div></div>
+        <div class="summary-row" id="codFeeRow" style="display:none;"><div class="label">COD Fee</div><div class="value">₹40</div></div>
+        <hr class="summary-divider">
+        <div class="summary-total"><span>Total</span><span id="sumTotal">₹0</span></div>
+        <div class="summary-saving" id="sumSavingBadge"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+
+<script src="../js/data.js"></script>
+<script src="../js/common.js"></script>
+<script>
+  let selectedAddr = 'saved';
+  let selectedPayment = 'phonepay';
+  let selectedUpiApp = null;
+  let selectedBankEl = null;
+
+  function calcTotals(isCod) {
+    const cart = getCart();
+    const subtotal = cart.reduce((s,i) => s + i.price*i.qty, 0);
+    const mrpTotal = cart.reduce((s,i) => s + (i.mrp||i.price)*i.qty, 0);
+    const savings = mrpTotal - subtotal;
+    const shipping = subtotal >= 999 ? 0 : 79;
+    const codFee = isCod ? 40 : 0;
+    return { subtotal, mrpTotal, savings, shipping, codFee, total: subtotal+shipping+codFee };
+  }
+
+  function renderSummary(isCod) {
+    const cart = getCart();
+    const t = calcTotals(isCod);
+    document.getElementById('miniCartItems').innerHTML = cart.map(i => `
+      <div class="mini-cart-item">
+        <div class="mini-cart-emoji">${i.emoji}</div>
+        <div>
+          <div class="mini-cart-name">${i.name}</div>
+          <div class="mini-cart-qty">Qty: ${i.qty}</div>
+        </div>
+        <div class="mini-cart-price">₹${(i.price*i.qty).toLocaleString()}</div>
+      </div>`).join('');
+    document.getElementById('sumSubtotal').textContent = '₹'+t.subtotal.toLocaleString();
+    document.getElementById('sumSavings').textContent = '−₹'+t.savings.toLocaleString();
+    document.getElementById('sumShipping').textContent = t.shipping === 0 ? 'FREE 🎉' : '₹'+t.shipping;
+    document.getElementById('sumTotal').textContent = '₹'+t.total.toLocaleString();
+    document.getElementById('sumSavingBadge').textContent = t.savings > 0 ? `🎉 You're saving ₹${t.savings.toLocaleString()}!` : '';
+    document.getElementById('codFeeRow').style.display = isCod ? 'flex' : 'none';
+    document.getElementById('payTotalAmt').textContent = '₹'+t.total.toLocaleString();
+    document.getElementById('payTotalSav').textContent = '₹'+t.savings.toLocaleString();
+  }
+
+  function getAddrText() {
+    if(selectedAddr === 'saved') return document.getElementById('savedAddrText').textContent;
+    const a1 = document.getElementById('faddr1')?.value || '';
+    const city = document.getElementById('fcity')?.value || '';
+    const pin = document.getElementById('fpin')?.value || '';
+    return `${a1}, ${city} ${pin}`;
+  }
+
+  function renderReviewItems() {
+    const cart = getCart();
+    document.getElementById('reviewItems').innerHTML = cart.map(i => `
+      <div class="mini-cart-item">
+        <div class="mini-cart-emoji">${i.emoji}</div>
+        <div style="flex:1">
+          <div class="mini-cart-name">${i.name}</div>
+          <div class="mini-cart-qty">${i.category} · Qty ${i.qty}</div>
+        </div>
+        <div class="mini-cart-price">₹${(i.price*i.qty).toLocaleString()}</div>
+      </div>`).join('');
+    document.getElementById('reviewAddr').textContent = getAddrText();
+  }
+
+  function goToStep(n) {
+    if(n === 1) { }
+    else if(n === 2) {
+      if(selectedAddr === 'new') {
+        const req = ['fname','fphone','faddr1','fcity','fpin'];
+        for(const f of req) {
+          if(!document.getElementById(f)?.value?.trim()) {
+            showToast('Please fill all required address fields'); return;
+          }
+        }
+      }
+      renderReviewItems();
+    } else if(n === 3) { }
+
+    [1,2,3].forEach(i => {
+      const sc = document.getElementById('sc'+i);
+      if(sc) sc.classList.toggle('active', i === n);
+      const st = document.getElementById('step'+i);
+      if(st) {
+        st.classList.remove('active','done');
+        if(i === n) st.classList.add('active');
+        else if(i < n) st.classList.add('done');
+      }
+    });
+    [1,2].forEach(i => {
+      const line = document.getElementById('line'+i);
+      if(line) line.classList.toggle('done', i < n);
+    });
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function selectAddr(type) {
+    selectedAddr = type;
+    document.getElementById('addrSaved').classList.toggle('selected', type==='saved');
+    document.getElementById('addrNew').classList.toggle('selected', type==='new');
+    document.getElementById('newAddrForm').style.display = type==='new' ? 'block' : 'none';
+  }
+
+  function selectPayment(type) {
+    selectedPayment = type;
+    ['phonepay','card','netbank','cod'].forEach(t => {
+      document.getElementById('po-'+t).classList.toggle('selected', t===type);
+      document.getElementById('po-'+t).querySelector('input').checked = t===type;
+    });
+    document.getElementById('phonepayPanel').style.display = type==='phonepay' ? 'block' : 'none';
+    document.getElementById('cardPanel').style.display = type==='card' ? 'block' : 'none';
+    document.getElementById('netbankPanel').style.display = type==='netbank' ? 'block' : 'none';
+    document.getElementById('codPanel').style.display = type==='cod' ? 'block' : 'none';
+    renderSummary(type==='cod');
+    const btn = document.getElementById('payBtn');
+    if(type==='cod') btn.textContent = '✓ Place Order (Pay on Delivery)';
+    else if(type==='phonepay') btn.textContent = '📱 Pay via PhonePe / UPI →';
+    else btn.textContent = '🔒 Pay Now →';
+  }
+
+  function fillUpi(suffix) {
+    const inp = document.getElementById('upiId');
+    const base = inp.value.split('@')[0] || 'yourname';
+    inp.value = base + suffix;
+  }
+
+  function selectApp(app) {
+    selectedUpiApp = app;
+    showToast(`${app} selected for payment`);
+  }
+
+  function selectBank(btn) {
+    if(selectedBankEl) selectedBankEl.style.background = '';
+    btn.style.background = 'var(--forest)';
+    btn.style.color = 'var(--gold-pale)';
+    selectedBankEl = btn;
+  }
+
+  function formatCard(inp) {
+    let v = inp.value.replace(/\D/g,'').substring(0,16);
+    inp.value = v.replace(/(.{4})/g,'$1 ').trim();
+  }
+
+  function processPayment() {
+    const cart = getCart();
+    if(cart.length === 0) { showToast('Your cart is empty!'); return; }
+
+    if(selectedPayment === 'phonepay') {
+      const upi = document.getElementById('upiId').value.trim();
+      if(!upi && !selectedUpiApp) { showToast('Please enter your UPI ID or select a UPI app'); return; }
+    }
+
+    // Show processing overlay
+    const overlay = document.getElementById('paymentProcessing');
+    overlay.classList.add('show');
+
+    // Simulate payment processing (2.5s) then redirect to confirmation
+    setTimeout(() => {
+      overlay.classList.remove('show');
+      const t = calcTotals(selectedPayment==='cod');
+      const orderId = 'NV' + Date.now().toString().slice(-8);
+      const orderData = {
+        orderId, cart, total: t.total, savings: t.savings,
+        payment: selectedPayment, addr: getAddrText(),
+        timestamp: new Date().toISOString()
+      };
+      localStorage.setItem('nv_lastOrder', JSON.stringify(orderData));
+      localStorage.removeItem('nv_cart');
+      window.location.href = 'confirmation.html';
+    }, 2500);
+  }
+
+  // INIT
+  const cart = getCart();
+  if(cart.length === 0) { window.location.href = 'cart.html'; }
+
+  // Set saved address
+  document.getElementById('savedAddrText').textContent = 'H.No: 12, Tiwari Nagar, Near Miyapur Police Station, Chandanagar, Hyderabad — 500049';
+
+  renderSummary(false);
+</script>
+</body>
+</html>

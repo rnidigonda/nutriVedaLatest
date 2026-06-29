@@ -1,0 +1,80 @@
+# ===================================
+# NutriVeda - GitHub Deployment
+# Exclude unnecessary documentation & test files
+# ===================================
+
+# Documentation files (keep only README.md and HOW_TO_RUN_APPLICATION.md)
+*.md
+!README.md
+!HOW_TO_RUN_APPLICATION.md
+
+# Test files
+test-*.html
+*-test.html
+*_TEST.html
+FEATURES_DEMO.html
+OTP_TEST_DEMO.html
+
+# Configuration templates
+*-template.js
+*-template.txt
+firebase-config-template.js
+google-apps-script-*.js
+
+# Text files (instructions, lists, etc.)
+*.txt
+
+# Deployment scripts
+*.bat
+*.ps1
+
+# Unnecessary folders
+/admin/
+/config/
+/docs/
+/public/
+/scripts/
+/src/
+/tests/
+
+# IDE settings
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
+
+# Archives
+*.zip
+*.rar
+*.tar.gz
+*.7z
+
+# Node modules (if added later)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Environment variables (if added)
+.env
+.env.local
+.env.production
+
+# Temporary files
+*.tmp
+*.temp
+~*
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Server files
+SERVER_RUNNING.txt

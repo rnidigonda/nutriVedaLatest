@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login / Sign Up - NutriVeda</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css?v=4">
+<style>
+  .login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(45, 90, 61, 0.05) 0%, rgba(245, 216, 122, 0.05) 100%);
+    padding: 60px 20px;
+  }
+  
+  .login-card {
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(45, 90, 61, 0.08);
+    max-width: 440px;
+    width: 100%;
+    padding: 48px 40px;
+    position: relative;
+    overflow: visible;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .login-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--primary), var(--gold));
+  }
+  
+  .login-header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  
+  .login-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 8px;
+  }
+  
+  .login-logo span {
+    color: var(--gold);
+  }
+  
+  .login-subtitle {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-bottom: 24px;
+  }
+  
+  .login-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  
+  .login-desc {
+    font-size: 14px;
+    color: var(--text-light);
+  }
+  
+  .login-form {
+    margin-top: 32px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e5e5e5;
+    border-radius: 12px;
+    font-size: 15px;
+    transition: all 0.3s;
+    font-family: inherit;
+  }
+  
+  .form-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: rgba(45, 90, 61, 0.02);
+  }
+  
+  .phone-input-group {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .country-code {
+    width: 80px;
+    padding: 14px 12px;
+    border: 2px solid #e5e5e5;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    background: #f8f8f8;
+  }
+  
+  .otp-input-group {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+  
+  .otp-box {
+    width: 56px;
+    height: 56px;
+    border: 2px solid #e5e5e5;
+    border-radius: 12px;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  
+  .otp-box:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: rgba(45, 90, 61, 0.02);
+  }
+  
+  .btn-submit {
+    width: 100%;
+    padding: 16px;
+    background: #2d5a3d;
+    background: linear-gradient(135deg, #2d5a3d, #3d7a52);
+    color: #ffffff !important;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 8px;
+    text-align: center;
+    line-height: 1.5;
+    display: block;
+  }
+  
+  .btn-submit:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(45, 90, 61, 0.3);
+  }
+  
+  .btn-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  .btn-secondary {
+    width: 100%;
+    padding: 16px;
+    background: white;
+    color: #2d5a3d !important;
+    border: 2px solid #2d5a3d;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 12px;
+    text-align: center;
+    line-height: 1.5;
+    display: block;
+  }
+  
+  .btn-secondary:hover {
+    background: #2d5a3d;
+    color: white !important;
+  }
+  
+  .resend-timer {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--text-light);
+  }
+  
+  .resend-link {
+    color: var(--primary);
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .resend-link:hover {
+    text-decoration: underline;
+  }
+  
+  .status-message {
+    padding: 14px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    text-align: center;
+    display: none;
+  }
+  
+  .status-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+  
+  .status-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+  
+  .status-info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+  }
+  
+  .back-link {
+    text-align: center;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e5e5;
+  }
+  
+  .back-link a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+  }
+  
+  .back-link a:hover {
+    color: var(--primary);
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .terms-text {
+    font-size: 12px;
+    color: var(--text-light);
+    text-align: center;
+    margin-top: 20px;
+    line-height: 1.6;
+  }
+  
+  .terms-text a {
+    color: var(--primary);
+    text-decoration: none;
+  }
+  
+  .terms-text a:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+<script src="../config.js"></script>
+<script>
+  // Check configuration on page load
+  window.addEventListener('DOMContentLoaded', function() {
+    const otpNotice = document.getElementById('otpNotice');
+    const otpNoticeText = document.getElementById('otpNoticeText');
+    const demoOtpDisplay = document.getElementById('demoOtpDisplay');
+    
+    if (CONFIG.DEMO_MODE) {
+      otpNotice.style.display = 'block';
+      otpNotice.style.background = '#fff3cd';
+      otpNotice.style.borderColor = '#ffeaa7';
+      otpNotice.querySelector('strong').style.color = '#856404';
+      otpNoticeText.textContent = 'Demo Mode: OTP will appear on screen (not sent via SMS)';
+      otpNoticeText.style.color = '#856404';
+    } else if (!CONFIG.ENABLE_SMS_OTP) {
+      otpNotice.style.display = 'block';
+      otpNoticeText.textContent = 'SMS OTP is currently disabled. Please contact support.';
+    } else {
+      otpNotice.style.display = 'block';
+      otpNoticeText.textContent = 'You will receive a 6-digit OTP via SMS';
+    }
+  });
+</script>
+
+<div class="login-container">
+  <div class="login-card">
+    <!-- Environment Indicator -->
+    <div id="environmentBadge" style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); z-index: 10;"></div>
+    
+    <!-- Logo -->
+    <div class="login-header">
+      <div class="login-logo">Nutri<span>Veda</span></div>
+      <div class="login-subtitle">Pure Nutrition, Powerful Life</div>
+    </div>
+    
+    <!-- Status Message -->
+    <div id="statusMessage" class="status-message"></div>
+    
+    <!-- Step 1: Phone Number Input -->
+    <div id="phoneStep">
+      <div class="login-title">Login / Sign Up</div>
+      <p class="login-desc">Enter your mobile number to continue</p>
+      
+      <!-- Info Notice -->
+      <div id="otpNotice" style="background:#d1ecf1;border:1px solid #bee5eb;border-radius:8px;padding:12px;margin:16px 0;font-size:13px;color:#0c5460;display:none;">
+        <strong>📱 Note:</strong> <span id="otpNoticeText"></span>
+      </div>
+      
+      <form id="phoneForm" class="login-form">
+        <div class="form-group">
+          <label class="form-label">Mobile Number</label>
+          <div class="phone-input-group">
+            <input type="text" class="country-code" value="+91" readonly>
+            <input 
+              type="tel" 
+              id="phoneNumber" 
+              class="form-input" 
+              placeholder="Enter 10-digit mobile number"
+              pattern="[0-9]{10}"
+              maxlength="10"
+              required
+            >
+          </div>
+        </div>
+        
+        <button type="submit" class="btn-submit" id="sendOtpBtn">
+          Send OTP
+        </button>
+        
+        <p class="terms-text">
+          By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+        </p>
+      </form>
+    </div>
+    
+    <!-- Step 2: User Details -->
+    <div id="detailsStep" class="hidden">
+      <div class="login-title">Complete Your Profile</div>
+      <p class="login-desc">We need a few details to personalize your experience</p>
+      
+      <form id="detailsForm" class="login-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name *</label>
+            <input 
+              type="text" 
+              id="firstName" 
+              class="form-input" 
+              placeholder="Enter first name"
+              required
+              minlength="2"
+            >
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name *</label>
+            <input 
+              type="text" 
+              id="lastName" 
+              class="form-input" 
+              placeholder="Enter last name"
+              required
+              minlength="2"
+            >
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Email Address *</label>
+          <input 
+            type="email" 
+            id="userEmail" 
+            class="form-input" 
+            placeholder="your@email.com"
+            required
+          >
+        </div>
+        
+        <button type="submit" class="btn-submit" id="saveDetailsBtn">
+          Continue to Verify
+        </button>
+        
+        <button type="button" class="btn-secondary" id="backToPhoneBtn">
+          ← Back
+        </button>
+      </form>
+    </div>
+    
+    <!-- Step 3: OTP Verification -->
+    <div id="otpStep" class="hidden">
+      <div class="login-title">Verify OTP</div>
+      <p class="login-desc">Enter the 6-digit code sent to <strong id="displayPhone"></strong></p>
+      
+      <!-- OTP Display (only in demo mode) -->
+      <div id="demoOtpDisplay" style="background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); border: 3px solid #28a745; border-radius: 16px; padding: 24px; margin: 20px 0; text-align: center; display: none; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2); animation: fadeIn 0.3s ease;">
+        <div style="display: inline-block; background: #28a745; color: white; padding: 6px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 12px; letter-spacing: 1px;">
+          🧪 DEMO MODE - TESTING ENVIRONMENT
+        </div>
+        <div style="font-size: 14px; color: #155724; font-weight: 600; margin-bottom: 12px;">Your Test OTP Code:</div>
+        <div id="displayOtp" style="font-size: 48px; font-weight: 900; letter-spacing: 12px; color: #155724; font-family: 'Courier New', monospace; margin: 16px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);"></div>
+        <div style="font-size: 12px; color: #155724; margin-top: 12px; line-height: 1.6;">
+          📋 Copy this code to the boxes below<br>
+          <span style="font-size: 11px; opacity: 0.8;">⚠️ In production, OTP will be sent via SMS to your mobile</span>
+        </div>
+      </div>
+      
+      <form id="otpForm" class="login-form">
+        <div class="form-group">
+          <div class="otp-input-group">
+            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
+            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
+            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
+            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
+            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
+            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn-submit" id="verifyOtpBtn">
+          Verify & Continue
+        </button>
+        
+        <button type="button" class="btn-secondary" id="changeNumberBtn">
+          Change Number
+        </button>
+        
+        <div class="resend-timer">
+          <span id="timerText">Resend OTP in <strong id="countdown">30</strong>s</span>
+          <a href="#" id="resendLink" class="resend-link hidden">Resend OTP</a>
+        </div>
+      </form>
+    </div>
+    
+    <div class="back-link">
+      <a href="../index.html">← Back to Home</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Elements
+  const phoneStep = document.getElementById('phoneStep');
+  const detailsStep = document.getElementById('detailsStep');
+  const otpStep = document.getElementById('otpStep');
+  const phoneForm = document.getElementById('phoneForm');
+  const detailsForm = document.getElementById('detailsForm');
+  const otpForm = document.getElementById('otpForm');
+  const phoneInput = document.getElementById('phoneNumber');
+  const firstNameInput = document.getElementById('firstName');
+  const lastNameInput = document.getElementById('lastName');
+  const userEmailInput = document.getElementById('userEmail');
+  const displayPhone = document.getElementById('displayPhone');
+  const statusMessage = document.getElementById('statusMessage');
+  const sendOtpBtn = document.getElementById('sendOtpBtn');
+  const saveDetailsBtn = document.getElementById('saveDetailsBtn');
+  const verifyOtpBtn = document.getElementById('verifyOtpBtn');
+  const changeNumberBtn = document.getElementById('changeNumberBtn');
+  const backToPhoneBtn = document.getElementById('backToPhoneBtn');
+  const resendLink = document.getElementById('resendLink');
+  const timerText = document.getElementById('timerText');
+  const countdown = document.getElementById('countdown');
+  const otpBoxes = document.querySelectorAll('.otp-box');
+  const demoOtpDisplay = document.getElementById('demoOtpDisplay');
+  
+  let otpTimer;
+  let generatedOtp = '';
+  let userPhone = '';
+  let userFirstName = '';
+  let userLastName = '';
+  let userEmail = '';
+  
+  // API Functions
+  async function sendOTPAPI(phoneNumber, firstName) {
+    if (!CONFIG.ENABLE_SMS_OTP) {
+      throw new Error('SMS OTP is not enabled');
+    }
+    
+    const response = await fetch(`${CONFIG.API_BASE_URL}/send-otp`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        phoneNumber: phoneNumber,
+        firstName: firstName
+      })
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to send OTP');
+    }
+    
+    return await response.json();
+  }
+  
+  async function verifyOTPAPI(phoneNumber, otp) {
+    if (!CONFIG.ENABLE_SMS_OTP) {
+      throw new Error('SMS OTP is not enabled');
+    }
+    
+    const response = await fetch(`${CONFIG.API_BASE_URL}/verify-otp`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        phoneNumber: phoneNumber,
+        otp: otp
+      })
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to verify OTP');
+    }
+    
+    return await response.json();
+  }
+  
+  // Show status message
+  function showStatus(message, type) {
+    statusMessage.textContent = message;
+    statusMessage.className = `status-message status-${type}`;
+    statusMessage.style.display = 'block';
+    
+    setTimeout(() => {
+      statusMessage.style.display = 'none';
+    }, 5000);
+  }
+  
+  // Start countdown timer
+  function startTimer(seconds) {
+    let timeLeft = seconds;
+    timerText.style.display = 'block';
+    resendLink.classList.add('hidden');
+    
+    otpTimer = setInterval(() => {
+      timeLeft--;
+      countdown.textContent = timeLeft;
+      
+      if (timeLeft <= 0) {
+        clearInterval(otpTimer);
+        timerText.style.display = 'none';
+        resendLink.classList.remove('hidden');
+      }
+    }, 1000);
+  }
+  
+  // Generate random 6-digit OTP (demo mode only)
+  function generateOtp() {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+  }
+  
+  // Check if running in demo mode (localhost)
+  function isDemoEnvironment() {
+    const hostname = window.location.hostname;
+    return hostname === 'localhost' || 
+           hostname === '127.0.0.1' || 
+           hostname.includes('192.168.') ||
+           CONFIG.DEMO_MODE === true;
+  }
+  
+  // Send OTP (Step 1 → Step 2: Details)
+  phoneForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const phone = phoneInput.value.trim();
+    
+    // Validate phone number
+    if (!/^[6-9]\d{9}$/.test(phone)) {
+      showStatus('Please enter a valid 10-digit Indian mobile number', 'error');
+      return;
+    }
+    
+    sendOtpBtn.textContent = 'Please wait...';
+    sendOtpBtn.disabled = true;
+    
+    // Store phone and move to details step
+    userPhone = phone;
+    phoneStep.classList.add('hidden');
+    detailsStep.classList.remove('hidden');
+    
+    sendOtpBtn.textContent = 'Send OTP';
+    sendOtpBtn.disabled = false;
+  });
+  
+  // Save Details (Step 2 → Step 3: OTP)
+  detailsForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const firstName = firstNameInput.value.trim();
+    const lastName = lastNameInput.value.trim();
+    const email = userEmailInput.value.trim();
+    
+    // Validate
+    if (firstName.length < 2 || lastName.length < 2) {
+      showStatus('Names must be at least 2 characters', 'error');
+      return;
+    }
+    
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showStatus('Please enter a valid email address', 'error');
+      return;
+    }
+    
+    saveDetailsBtn.textContent = 'Sending OTP...';
+    saveDetailsBtn.disabled = true;
+    
+    // Store details
+    userFirstName = firstName;
+    userLastName = lastName;
+    userEmail = email;
+    
+    try {
+      // Auto-detect environment: localhost = demo, production = SMS
+      const isDemo = isDemoEnvironment();
+      
+      if (isDemo || CONFIG.DEMO_MODE) {
+        // ========================================
+        // DEMO MODE (Localhost/Testing)
+        // ========================================
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        generatedOtp = generateOtp();
+        
+        // Show OTP prominently on screen
+        demoOtpDisplay.style.display = 'block';
+        document.getElementById('displayOtp').textContent = generatedOtp;
+        
+        displayPhone.textContent = `+91 ${userPhone}`;
+        detailsStep.classList.add('hidden');
+        otpStep.classList.remove('hidden');
+        startTimer(30);
+        showStatus(`📱 Demo OTP: ${generatedOtp} (visible below)`, 'success');
+        
+        // Also show in console for easy access
+        console.log('%c🔐 DEMO MODE - Your OTP Code', 'background: #2d5a3d; color: #f5d87a; font-size: 16px; padding: 10px; border-radius: 5px;');
+        console.log(`%cOTP: ${generatedOtp}`, 'font-size: 24px; font-weight: bold; color: #2d5a3d;');
+        console.log('%cℹ️ In production, this will be sent via SMS', 'color: #666; font-style: italic;');
+        
+      } else if (CONFIG.ENABLE_SMS_OTP) {
+        // ========================================
+        // PRODUCTION MODE (Real SMS)
+        // ========================================
+        const result = await sendOTPAPI(userPhone, firstName);
+        
+        if (result.success) {
+          displayPhone.textContent = `+91 ${userPhone}`;
+          detailsStep.classList.add('hidden');
+          otpStep.classList.remove('hidden');
+          startTimer(30);
+          showStatus(`📱 OTP sent to +91 ${userPhone}`, 'success');
+        } else {
+          throw new Error(result.message || 'Failed to send OTP');
+        }
+        
+      } else {
+        throw new Error('SMS OTP is currently disabled. Please contact support.');
+      }
+      
+      // Focus first OTP box
+      otpBoxes[0].focus();
+      
+    } catch (error) {
+      console.error('Error sending OTP:', error);
+      showStatus(error.message || 'Failed to send OTP. Please try again.', 'error');
+    } finally {
+      saveDetailsBtn.textContent = 'Continue to Verify';
+      saveDetailsBtn.disabled = false;
+    }
+  });
+  
+  // Back to phone
+  backToPhoneBtn.addEventListener('click', function() {
+    detailsStep.classList.add('hidden');
+    phoneStep.classList.remove('hidden');
+  });
+  
+  // OTP input handling
+  otpBoxes.forEach((box, index) => {
+    box.addEventListener('input', (e) => {
+      if (e.target.value) {
+        // Move to next box
+        if (index < otpBoxes.length - 1) {
+          otpBoxes[index + 1].focus();
+        }
+      }
+    });
+    
+    box.addEventListener('keydown', (e) => {
+      // Move to previous box on backspace
+      if (e.key === 'Backspace' && !e.target.value && index > 0) {
+        otpBoxes[index - 1].focus();
+      }
+    });
+    
+    // Only allow numbers
+    box.addEventListener('keypress', (e) => {
+      if (!/[0-9]/.test(e.key)) {
+        e.preventDefault();
+      }
+    });
+  });
+  
+  // Verify OTP
+  otpForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const enteredOtp = Array.from(otpBoxes).map(box => box.value).join('');
+    
+    if (enteredOtp.length !== 6) {
+      showStatus('Please enter complete 6-digit OTP', 'error');
+      return;
+    }
+    
+    verifyOtpBtn.textContent = 'Verifying...';
+    verifyOtpBtn.disabled = true;
+    
+    try {
+      let verified = false;
+      
+      // Auto-detect environment
+      const isDemo = isDemoEnvironment();
+      
+      if (isDemo || CONFIG.DEMO_MODE) {
+        // ========================================
+        // DEMO MODE (Localhost/Testing)
+        // ========================================
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        verified = (enteredOtp === generatedOtp);
+        
+        if (!verified) {
+          console.log('%c❌ Invalid OTP', 'background: #e74c3c; color: white; font-size: 14px; padding: 8px; border-radius: 5px;');
+          console.log(`Expected: ${generatedOtp}, Got: ${enteredOtp}`);
+        }
+        
+      } else if (CONFIG.ENABLE_SMS_OTP) {
+        // ========================================
+        // PRODUCTION MODE (Real SMS)
+        // ========================================
+        const result = await verifyOTPAPI(userPhone, enteredOtp);
+        verified = result.success;
+        
+      } else {
+        throw new Error('SMS OTP is currently disabled');
+      }
+      
+      if (verified) {
+        // OTP verified successfully
+        console.log('%c✅ OTP Verified Successfully!', 'background: #2ecc71; color: white; font-size: 16px; padding: 10px; border-radius: 5px;');
+        showStatus('Login successful! Redirecting...', 'success');
+        
+        // Store user session with all details
+        localStorage.setItem('nv_user_phone', userPhone);
+        localStorage.setItem('nv_user_first_name', userFirstName);
+        localStorage.setItem('nv_user_last_name', userLastName);
+        localStorage.setItem('nv_user_email', userEmail);
+        localStorage.setItem('nv_user_logged_in', 'true');
+        localStorage.setItem('nv_user_login_time', new Date().toISOString());
+        
+        // Save user data to Google Sheets
+        saveUserToGoogleSheets(userPhone, userFirstName, userLastName, userEmail);
+        
+        // Redirect to home page after 1.5 seconds
+        setTimeout(() => {
+          window.location.href = '../index.html';
+        }, 1500);
+      } else {
+        throw new Error('Invalid OTP');
+      }
+      
+    } catch (error) {
+      console.error('Error verifying OTP:', error);
+      showStatus(error.message || 'Invalid OTP. Please try again.', 'error');
+      verifyOtpBtn.textContent = 'Verify & Continue';
+      verifyOtpBtn.disabled = false;
+      
+      // Clear OTP boxes
+      otpBoxes.forEach(box => box.value = '');
+      otpBoxes[0].focus();
+    }
+  });
+  
+  // Change number
+  changeNumberBtn.addEventListener('click', function() {
+    otpStep.classList.add('hidden');
+    detailsStep.classList.remove('hidden');
+    clearInterval(otpTimer);
+    
+    // Clear OTP boxes
+    otpBoxes.forEach(box => box.value = '');
+  });
+  
+  // Resend OTP
+  resendLink.addEventListener('click', async function(e) {
+    e.preventDefault();
+    
+    try {
+      // Auto-detect environment
+      const isDemo = isDemoEnvironment();
+      
+      if (isDemo || CONFIG.DEMO_MODE) {
+        // ========================================
+        // DEMO MODE (Localhost/Testing)
+        // ========================================
+        generatedOtp = generateOtp();
+        
+        document.getElementById('displayOtp').textContent = generatedOtp;
+        showStatus(`📱 New Demo OTP: ${generatedOtp}`, 'success');
+        
+        console.log('%c🔐 NEW DEMO OTP', 'background: #2d5a3d; color: #f5d87a; font-size: 16px; padding: 10px; border-radius: 5px;');
+        console.log(`%cOTP: ${generatedOtp}`, 'font-size: 24px; font-weight: bold; color: #2d5a3d;');
+        
+      } else if (CONFIG.ENABLE_SMS_OTP) {
+        // ========================================
+        // PRODUCTION MODE (Real SMS)
+        // ========================================
+        const result = await sendOTPAPI(userPhone, userFirstName);
+        
+        if (result.success) {
+          showStatus('📱 New OTP sent successfully!', 'success');
+        } else {
+          throw new Error(result.message || 'Failed to resend OTP');
+        }
+      }
+      
+      startTimer(30);
+      
+      // Clear OTP boxes
+      otpBoxes.forEach(box => box.value = '');
+      otpBoxes[0].focus();
+      
+    } catch (error) {
+      console.error('Error resending OTP:', error);
+      showStatus(error.message || 'Failed to resend OTP', 'error');
+    }
+  });
+  
+  // Check if already logged in
+  window.addEventListener('DOMContentLoaded', function() {
+    const isLoggedIn = localStorage.getItem('nv_user_logged_in');
+    if (isLoggedIn === 'true') {
+      window.location.href = '../index.html';
+    }
+    
+    // Show environment badge
+    const environmentBadge = document.getElementById('environmentBadge');
+    const isDemo = isDemoEnvironment();
+    
+    if (isDemo) {
+      environmentBadge.innerHTML = `
+        <div style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); 
+                    color: white; 
+                    padding: 8px 24px; 
+                    border-radius: 20px; 
+                    font-size: 12px; 
+                    font-weight: 700; 
+                    letter-spacing: 1px;
+                    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+                    display: inline-block;">
+          🧪 DEMO MODE - TESTING
+        </div>
+      `;
+    } else if (CONFIG.ENABLE_SMS_OTP) {
+      environmentBadge.innerHTML = `
+        <div style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%); 
+                    color: white; 
+                    padding: 8px 24px; 
+                    border-radius: 20px; 
+                    font-size: 12px; 
+                    font-weight: 700; 
+                    letter-spacing: 1px;
+                    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.4);
+                    display: inline-block;">
+          🔒 PRODUCTION - SMS ENABLED
+        </div>
+      `;
+    }
+  });
+  
+  // ========================================
+  // SAVE USER TO GOOGLE SHEETS
+  // ========================================
+  async function saveUserToGoogleSheets(phone, firstName, lastName, email) {
+    // TODO: Replace this URL with your Google Apps Script Web App URL
+    // Instructions:
+    // 1. Create Google Sheet "NutriVeda Users"
+    // 2. Go to Extensions → Apps Script
+    // 3. Paste code from google-apps-script-user-storage.js
+    // 4. Deploy as Web App
+    // 5. Copy the URL and paste below
+    
+    const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+    
+    // Skip if URL not configured
+    if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+      console.log('Google Sheets integration not configured yet.');
+      console.log('User data:', {phone, firstName, lastName, email});
+      return;
+    }
+    
+    try {
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', // Required for Google Apps Script
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          action: 'register',
+          phone: phone,
+          firstName: firstName,
+          lastName: lastName,
+          email: email
+        })
+      });
+      
+      console.log('User data sent to Google Sheets');
+      
+    } catch (error) {
+      console.error('Failed to save user to Google Sheets:', error);
+      // Don't block login if saving fails
+    }
+  }
+</script>
+
+</body>
+</html>
