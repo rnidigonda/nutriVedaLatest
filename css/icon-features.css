@@ -1092,33 +1092,69 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 14px 20px;
-  border-radius: 8px;
-  border: none;
+  gap: 10px;
+  padding: 16px 20px;
+  border-radius: 50px;
+  border: 2px solid #e0e0e0;
+  background: white;
   cursor: pointer;
   font-size: 1rem;
+  font-weight: 500;
   transition: all 0.3s;
-  color: white;
+  color: #2F4F4F;
 }
 
 .share-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  border-color: currentColor;
 }
 
-.share-btn .share-icon {
-  font-size: 1.3rem;
+.share-icon-svg {
+  width: 24px;
+  height: 24px;
+  transition: all 0.3s;
 }
 
-.share-btn.facebook { background: #1877F2; }
-.share-btn.twitter { background: #1DA1F2; }
-.share-btn.whatsapp { background: #25D366; }
-.share-btn.instagram { background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF); }
-.share-btn.linkedin { background: #0A66C2; }
-.share-btn.telegram { background: #0088cc; }
-.share-btn.email { background: #EA4335; }
-.share-btn.copy { background: #666; }
+.share-btn.facebook { border-color: #1877F2; }
+.share-btn.facebook:hover { background: #1877F2; color: white; }
+.share-btn.facebook .share-icon-svg { color: #1877F2; }
+.share-btn.facebook:hover .share-icon-svg { color: white; }
+
+.share-btn.twitter { border-color: #1DA1F2; }
+.share-btn.twitter:hover { background: #1DA1F2; color: white; }
+.share-btn.twitter .share-icon-svg { color: #1DA1F2; }
+.share-btn.twitter:hover .share-icon-svg { color: white; }
+
+.share-btn.whatsapp { border-color: #25D366; }
+.share-btn.whatsapp:hover { background: #25D366; color: white; }
+.share-btn.whatsapp .share-icon-svg { color: #25D366; }
+.share-btn.whatsapp:hover .share-icon-svg { color: white; }
+
+.share-btn.instagram { border-color: #E4405F; }
+.share-btn.instagram:hover { background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF); color: white; border-color: #E4405F; }
+.share-btn.instagram .share-icon-svg { color: #E4405F; }
+.share-btn.instagram:hover .share-icon-svg { color: white; }
+
+.share-btn.linkedin { border-color: #0A66C2; }
+.share-btn.linkedin:hover { background: #0A66C2; color: white; }
+.share-btn.linkedin .share-icon-svg { color: #0A66C2; }
+.share-btn.linkedin:hover .share-icon-svg { color: white; }
+
+.share-btn.telegram { border-color: #0088cc; }
+.share-btn.telegram:hover { background: #0088cc; color: white; }
+.share-btn.telegram .share-icon-svg { color: #0088cc; }
+.share-btn.telegram:hover .share-icon-svg { color: white; }
+
+.share-btn.email { border-color: #EA4335; }
+.share-btn.email:hover { background: #EA4335; color: white; }
+.share-btn.email .share-icon-svg { color: #EA4335; }
+.share-btn.email:hover .share-icon-svg { color: white; }
+
+.share-btn.copy { border-color: #666; }
+.share-btn.copy:hover { background: #666; color: white; }
+.share-btn.copy .share-icon-svg { color: #666; }
+.share-btn.copy:hover .share-icon-svg { color: white; }
 
 .native-share {
   text-align: center;
