@@ -245,8 +245,55 @@
 
 <script src="../js/data.js?v=3"></script>
 <script src="../js/common.js"></script>
-<script src="../js/advanced-features.js?v=1"></script>
+<script src="../js/advanced-features.js?v=2"></script>
 <script>
+  // Helper function to add product to cart
+  function addToCartById(productId, button) {
+    const product = PRODUCTS.find(p => p.id === productId);
+    if (!product) return;
+    
+    // Get existing cart
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    
+    // Check if product already in cart
+    const existingItem = cart.find(item => item.id === productId);
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        emoji: product.emoji,
+        quantity: 1
+      });
+    }
+    
+    // Save cart
+    localStorage.setItem('cart', JSON.stringify(cart));
+    
+    // Update cart count
+    if (typeof updateCartCount === 'function') {
+      updateCartCount();
+    }
+    
+    // Show success feedback
+    if (button) {
+      const originalText = button.textContent;
+      button.textContent = '✓ Added!';
+      button.style.background = '#4CAF50';
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.style.background = '';
+      }, 2000);
+    }
+    
+    // Show notification
+    if (typeof WishlistManager !== 'undefined') {
+      WishlistManager.showNotification(`${product.name} added to cart!`, 'success');
+    }
+  }
+  
   function renderWishlist() {
     const wishlist = JSON.parse(localStorage.getItem('nutriveda_wishlist') || '[]');
     const grid = document.getElementById('wishlistGrid');
@@ -276,7 +323,7 @@
           <div class="wishlist-item-image">
             ${product.emoji}
           </div>
-          <button class="wishlist-remove-btn" onclick="removeFromWishlist(${product.id})">
+          <button class="wishlist-remove-btn" onclick="removeFromWishlist(${product.id})" title="Remove from wishlist">
             ×
           </button>
           <div class="wishlist-item-info">
@@ -285,14 +332,14 @@
             <div class="wishlist-item-category">${product.category}</div>
             <div class="wishlist-item-price">
               <span class="current">₹${product.price}</span>
-              <span class="mrp">₹${product.mrp}</span>
+              ${product.mrp > product.price ? `<span class="mrp">₹${product.mrp}</span>` : ''}
             </div>
             <div class="wishlist-item-actions">
               <button class="wishlist-add-cart-btn" onclick="addToCartById(${product.id}, this)">
-                Add to Cart
+                🛒 Add to Cart
               </button>
               <a href="product.html?id=${product.id}" class="wishlist-view-btn">
-                View
+                👁 View
               </a>
             </div>
           </div>
@@ -302,21 +349,15 @@
   }
   
   function removeFromWishlist(productId) {
-    let wishlist = JSON.parse(localStorage.getItem('nutriveda_wishlist') || '[]');
-    wishlist = wishlist.filter(id => id !== productId);
-    localStorage.setItem('nutriveda_wishlist', JSON.stringify(wishlist));
-    
-    // Update count badge
-    window.dispatchEvent(new Event('wishlistUpdated'));
-    
-    // Re-render
-    renderWishlist();
-    
-    // Show notification
     if (typeof WishlistManager !== 'undefined') {
-      WishlistManager.showNotification('Removed from wishlist');
+      WishlistManager.removeFromWishlist(productId);
+      // Re-render after a short delay to show notification
+      setTimeout(renderWishlist, 100);
     }
   }
+  
+  // Listen for wishlist updates
+  window.addEventListener('wishlistUpdated', renderWishlist);
   
   // Render on page load
   if (typeof PRODUCTS !== 'undefined') {

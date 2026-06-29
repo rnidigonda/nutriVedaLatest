@@ -22,6 +22,8 @@
     saveWishlist(wishlist) {
       localStorage.setItem(this.storageKey, JSON.stringify(wishlist));
       this.updateWishlistCount();
+      // Dispatch event for other components
+      window.dispatchEvent(new CustomEvent('wishlistUpdated', { detail: { wishlist } }));
     },
     
     addToWishlist(productId) {
@@ -29,9 +31,10 @@
       if (!wishlist.includes(productId)) {
         wishlist.push(productId);
         this.saveWishlist(wishlist);
-        this.showNotification('Added to wishlist! ❤️');
+        this.showNotification('Added to wishlist! ❤️', 'success');
         return true;
       }
+      this.showNotification('Already in wishlist', 'info');
       return false;
     },
     
@@ -39,11 +42,30 @@
       let wishlist = this.getWishlist();
       wishlist = wishlist.filter(id => id !== productId);
       this.saveWishlist(wishlist);
-      this.showNotification('Removed from wishlist');
+      this.showNotification('Removed from wishlist', 'info');
+    },
+    
+    toggleWishlist(productId) {
+      if (this.isInWishlist(productId)) {
+        this.removeFromWishlist(productId);
+        return false;
+      } else {
+        this.addToWishlist(productId);
+        return true;
+      }
     },
     
     isInWishlist(productId) {
       return this.getWishlist().includes(productId);
+    },
+    
+    clearWishlist() {
+      if (confirm('Are you sure you want to clear your entire wishlist?')) {
+        localStorage.removeItem(this.storageKey);
+        this.updateWishlistCount();
+        this.showNotification('Wishlist cleared', 'info');
+        window.dispatchEvent(new Event('wishlistUpdated'));
+      }
     },
     
     updateWishlistCount() {
@@ -55,38 +77,57 @@
       });
     },
     
-    showNotification(message) {
+    showNotification(message, type = 'success') {
       const notification = document.createElement('div');
-      notification.className = 'wishlist-notification';
-      notification.textContent = message;
+      notification.className = `wishlist-notification ${type}`;
+      
+      const icon = type === 'success' ? '✓' : type === 'info' ? 'ℹ' : '⚠';
+      notification.innerHTML = `
+        <span class="notif-icon">${icon}</span>
+        <span class="notif-message">${message}</span>
+      `;
+      
       document.body.appendChild(notification);
       
       setTimeout(() => notification.classList.add('show'), 10);
       setTimeout(() => {
         notification.classList.remove('show');
         setTimeout(() => notification.remove(), 300);
-      }, 2000);
+      }, 2500);
     },
     
     initWishlistButtons() {
+      // Handle wishlist button clicks with event delegation
       document.addEventListener('click', (e) => {
         const wishlistBtn = e.target.closest('.wishlist-btn');
         if (wishlistBtn) {
           e.preventDefault();
-          const productId = parseInt(wishlistBtn.dataset.productId);
+          e.stopPropagation(); // Prevent card click
           
-          if (this.isInWishlist(productId)) {
-            this.removeFromWishlist(productId);
-            wishlistBtn.classList.remove('active');
-          } else {
-            this.addToWishlist(productId);
+          const productId = parseInt(wishlistBtn.dataset.productId);
+          const isAdded = this.toggleWishlist(productId);
+          
+          // Update button state with animation
+          if (isAdded) {
             wishlistBtn.classList.add('active');
+            wishlistBtn.classList.add('pulse');
+            setTimeout(() => wishlistBtn.classList.remove('pulse'), 600);
+          } else {
+            wishlistBtn.classList.remove('active');
           }
+          
+          // Update all buttons for this product
+          this.updateButtonsForProduct(productId);
         }
       });
       
       // Update all wishlist buttons on page load
       this.updateAllWishlistButtons();
+      
+      // Listen for wishlist updates from other pages
+      window.addEventListener('wishlistUpdated', () => {
+        this.updateAllWishlistButtons();
+      });
     },
     
     updateAllWishlistButtons() {
@@ -94,10 +135,40 @@
         const productId = parseInt(btn.dataset.productId);
         if (this.isInWishlist(productId)) {
           btn.classList.add('active');
+          const icon = btn.querySelector('.wishlist-icon');
+          if (icon) icon.textContent = '❤';
+        } else {
+          btn.classList.remove('active');
+          const icon = btn.querySelector('.wishlist-icon');
+          if (icon) icon.textContent = '♡';
         }
       });
+    },
+    
+    updateButtonsForProduct(productId) {
+      const isInWishlist = this.isInWishlist(productId);
+      document.querySelectorAll(`.wishlist-btn[data-product-id="${productId}"]`).forEach(btn => {
+        if (isInWishlist) {
+          btn.classList.add('active');
+          const icon = btn.querySelector('.wishlist-icon');
+          if (icon) icon.textContent = '❤';
+        } else {
+          btn.classList.remove('active');
+          const icon = btn.querySelector('.wishlist-icon');
+          if (icon) icon.textContent = '♡';
+        }
+      });
+    },
+    
+    getWishlistProducts() {
+      const wishlist = this.getWishlist();
+      if (typeof PRODUCTS === 'undefined') return [];
+      return wishlist.map(id => PRODUCTS.find(p => p.id === id)).filter(Boolean);
     }
   };
+
+  // Make WishlistManager globally available
+  window.WishlistManager = WishlistManager;
 
   // ============================================
   // FEATURE 2: STICKY ADD TO CART BAR
