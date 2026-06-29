@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="48" fill="#2d5016" stroke="#4caf50" stroke-width="2"/>
+  
+  <!-- Leaf design - representing natural nutrition -->
+  <g transform="translate(50, 50)">
+    <!-- Main leaf -->
+    <path d="M 0,-25 Q 15,-20 20,-5 Q 22,10 15,20 Q 10,25 0,28 Q -10,25 -15,20 Q -22,10 -20,-5 Q -15,-20 0,-25 Z" 
+          fill="#8bc34a" stroke="#4caf50" stroke-width="1.5"/>
+    
+    <!-- Leaf veins -->
+    <line x1="0" y1="-25" x2="0" y2="28" stroke="#2d5016" stroke-width="1.5"/>
+    <line x1="0" y1="-15" x2="12" y2="-5" stroke="#2d5016" stroke-width="1"/>
+    <line x1="0" y1="-5" x2="15" y2="5" stroke="#2d5016" stroke-width="1"/>
+    <line x1="0" y1="5" x2="12" y2="15" stroke="#2d5016" stroke-width="1"/>
+    <line x1="0" y1="-15" x2="-12" y2="-5" stroke="#2d5016" stroke-width="1"/>
+    <line x1="0" y1="-5" x2="-15" y2="5" stroke="#2d5016" stroke-width="1"/>
+    <line x1="0" y1="5" x2="-12" y2="15" stroke="#2d5016" stroke-width="1"/>
+    
+    <!-- Small wellness dots around the leaf -->
+    <circle cx="-18" cy="-18" r="2" fill="#ffd700"/>
+    <circle cx="18" cy="-18" r="2" fill="#ffd700"/>
+    <circle cx="22" cy="0" r="2" fill="#ffd700"/>
+  </g>
+</svg>
