@@ -1136,21 +1136,6 @@
 .share-btn.instagram .share-icon-svg { color: #E4405F; }
 .share-btn.instagram:hover .share-icon-svg { color: white; }
 
-.share-btn.linkedin { border-color: #0A66C2; }
-.share-btn.linkedin:hover { background: #0A66C2; color: white; }
-.share-btn.linkedin .share-icon-svg { color: #0A66C2; }
-.share-btn.linkedin:hover .share-icon-svg { color: white; }
-
-.share-btn.telegram { border-color: #0088cc; }
-.share-btn.telegram:hover { background: #0088cc; color: white; }
-.share-btn.telegram .share-icon-svg { color: #0088cc; }
-.share-btn.telegram:hover .share-icon-svg { color: white; }
-
-.share-btn.email { border-color: #EA4335; }
-.share-btn.email:hover { background: #EA4335; color: white; }
-.share-btn.email .share-icon-svg { color: #EA4335; }
-.share-btn.email:hover .share-icon-svg { color: white; }
-
 .share-btn.copy { border-color: #666; }
 .share-btn.copy:hover { background: #666; color: white; }
 .share-btn.copy .share-icon-svg { color: #666; }
