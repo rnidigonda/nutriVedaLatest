@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Configuration Test - NutriVeda</title>
+<script src="config.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #2d5a3d 0%, #3d7a52 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .container {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    max-width: 600px;
+    width: 100%;
+    padding: 40px;
+  }
+  .logo {
+    font-size: 32px;
+    font-weight: 700;
+    color: #2d5a3d;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .logo span { color: #f5d87a; }
+  h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .status {
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    text-align: center;
+    font-weight: 600;
+  }
+  .status.success {
+    background: #d4edda;
+    color: #155724;
+    border: 2px solid #28a745;
+  }
+  .status.warning {
+    background: #fff3cd;
+    color: #856404;
+    border: 2px solid #ffc107;
+  }
+  .status.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 2px solid #dc3545;
+  }
+  .config-item {
+    background: #f8f9fa;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .config-label {
+    font-weight: 600;
+    color: #555;
+  }
+  .config-value {
+    font-family: monospace;
+    color: #2d5a3d;
+    font-weight: 600;
+  }
+  .badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .badge.green { background: #d4edda; color: #155724; }
+  .badge.yellow { background: #fff3cd; color: #856404; }
+  .badge.red { background: #f8d7da; color: #721c24; }
+  .recommendation {
+    background: #e7f3ff;
+    border-left: 4px solid #0066cc;
+    padding: 16px;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  .recommendation h3 {
+    font-size: 16px;
+    color: #0066cc;
+    margin-bottom: 8px;
+  }
+  .recommendation p {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+  }
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background: #2d5a3d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    text-decoration: none;
+    text-align: center;
+  }
+  .btn:hover {
+    background: #3d7a52;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="logo">Nutri<span>Veda</span></div>
+  <h1>Configuration Test</h1>
+  
+  <div id="overallStatus" class="status"></div>
+  
+  <div class="config-item">
+    <span class="config-label">Demo Mode:</span>
+    <span id="demoMode" class="config-value"></span>
+  </div>
+  
+  <div class="config-item">
+    <span class="config-label">SMS OTP:</span>
+    <span id="smsOtp" class="config-value"></span>
+  </div>
+  
+  <div class="config-item">
+    <span class="config-label">API URL:</span>
+    <span id="apiUrl" class="config-value"></span>
+  </div>
+  
+  <div class="config-item">
+    <span class="config-label">Web3Forms Key:</span>
+    <span id="web3Key" class="config-value"></span>
+  </div>
+  
+  <div class="config-item">
+    <span class="config-label">Contact Phone:</span>
+    <span id="phone" class="config-value"></span>
+  </div>
+  
+  <div class="config-item">
+    <span class="config-label">Version:</span>
+    <span id="version" class="config-value"></span>
+  </div>
+  
+  <div id="recommendation" class="recommendation"></div>
+  
+  <a href="index.html" class="btn">Go to Website →</a>
+</div>
+
+<script>
+  // Display configuration
+  document.getElementById('demoMode').innerHTML = CONFIG.DEMO_MODE ? 
+    '<span class="badge yellow">Enabled</span>' : 
+    '<span class="badge green">Disabled</span>';
+  
+  document.getElementById('smsOtp').innerHTML = CONFIG.ENABLE_SMS_OTP ? 
+    '<span class="badge green">Enabled</span>' : 
+    '<span class="badge red">Disabled</span>';
+  
+  document.getElementById('apiUrl').textContent = CONFIG.API_BASE_URL || 'Not set';
+  document.getElementById('web3Key').textContent = CONFIG.WEB3FORMS_ACCESS_KEY.substring(0, 8) + '...';
+  document.getElementById('phone').textContent = CONFIG.CONTACT.phone;
+  document.getElementById('version').textContent = 'v' + CONFIG.VERSION;
+  
+  // Determine overall status
+  const overallStatus = document.getElementById('overallStatus');
+  const recommendation = document.getElementById('recommendation');
+  
+  if (CONFIG.DEMO_MODE && CONFIG.ENABLE_SMS_OTP) {
+    overallStatus.className = 'status error';
+    overallStatus.innerHTML = '⚠️ Configuration Issue Detected';
+    recommendation.innerHTML = `
+      <h3>⚠️ Conflicting Settings</h3>
+      <p>Both DEMO_MODE and ENABLE_SMS_OTP are enabled. This will cause issues.</p>
+      <p><strong>Fix:</strong> In config.js, set either DEMO_MODE or ENABLE_SMS_OTP to false (not both true).</p>
+    `;
+  } else if (CONFIG.DEMO_MODE) {
+    overallStatus.className = 'status warning';
+    overallStatus.innerHTML = '⚠️ Demo Mode Active';
+    recommendation.innerHTML = `
+      <h3>📱 Demo Mode</h3>
+      <p>OTP will be displayed on screen (not sent via SMS). This is good for testing.</p>
+      <p><strong>For production:</strong> Set DEMO_MODE: false in config.js</p>
+    `;
+  } else if (CONFIG.ENABLE_SMS_OTP) {
+    if (CONFIG.API_BASE_URL.includes('your-api-gateway-url')) {
+      overallStatus.className = 'status error';
+      overallStatus.innerHTML = '❌ API URL Not Configured';
+      recommendation.innerHTML = `
+        <h3>🔧 API Configuration Required</h3>
+        <p>SMS OTP is enabled but API URL is not set.</p>
+        <p><strong>Fix:</strong> Update API_BASE_URL in config.js with your Lambda API Gateway URL.</p>
+        <p><strong>Guide:</strong> See docs/LAMBDA_OTP_API.md for setup instructions.</p>
+      `;
+    } else {
+      overallStatus.className = 'status success';
+      overallStatus.innerHTML = '✅ Production Mode - SMS OTP Enabled';
+      recommendation.innerHTML = `
+        <h3>🎉 Production Ready!</h3>
+        <p>Your website is configured for production with real SMS OTP.</p>
+        <p><strong>Before deploying:</strong> Test the login flow to ensure SMS is being sent correctly.</p>
+      `;
+    }
+  } else {
+    overallStatus.className = 'status success';
+    overallStatus.innerHTML = '✅ Production Mode - Login Disabled';
+    recommendation.innerHTML = `
+      <h3>🚀 Ready to Deploy!</h3>
+      <p>Your website is ready for deployment. Login is currently disabled.</p>
+      <p><strong>Features working:</strong> Products, Cart, Checkout, Contact Form</p>
+      <p><strong>To enable login:</strong> Set up backend API (see docs/LAMBDA_OTP_API.md) or enable DEMO_MODE for testing.</p>
+    `;
+  }
+</script>
+
+</body>
+</html>
