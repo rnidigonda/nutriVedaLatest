@@ -3,9 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login / Sign Up - NutriVeda</title>
+<title>Login / Sign Up - Nutri Veda</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/styles.css?v=4">
+
+<!-- EmailJS Library for Production Email OTP -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script type="text/javascript" src="../emailjs-config.js"></script>
 <style>
   .login-container {
     min-height: 100vh;
@@ -490,46 +494,118 @@
   let userPhone = '';
   let userFirstName = '';
   let userLastName = '';
+  let sentOtps = {}; // Store OTPs for verification (production)
+  
+  // Initialize EmailJS (production)
+  if (typeof emailjs !== 'undefined' && typeof EMAILJS_CONFIG !== 'undefined') {
+    if (EMAILJS_CONFIG.IS_CONFIGURED) {
+      emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+      console.log('✅ EmailJS initialized for production');
+    }
+  }
   
   // API Functions (for production)
   async function sendEmailOTPAPI(email, firstName) {
-    // TODO: In production, integrate with email service (SendGrid, AWS SES, etc.)
-    const response = await fetch(`${CONFIG.API_BASE_URL || '/api'}/send-email-otp`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: email,
-        firstName: firstName
-      })
-    });
+    // Generate OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
     
-    if (!response.ok) {
-      throw new Error('Failed to send OTP');
+    // Store OTP with timestamp (expires in 5 minutes)
+    const expiryTime = Date.now() + (5 * 60 * 1000); // 5 minutes
+    sentOtps[email] = {
+      otp: otp,
+      expiry: expiryTime,
+      attempts: 0
+    };
+    
+    try {
+      // Check if EmailJS is configured
+      if (!EMAILJS_CONFIG.IS_CONFIGURED) {
+        throw new Error('EmailJS not configured. Please set up your API keys in emailjs-config.js');
+      }
+      
+      // Send email using EmailJS
+      const templateParams = {
+        to_email: email,
+        firstName: firstName,
+        otp: otp
+      };
+      
+      const response = await emailjs.send(
+        EMAILJS_CONFIG.SERVICE_ID,
+        EMAILJS_CONFIG.TEMPLATE_ID,
+        templateParams
+      );
+      
+      console.log('✅ Email sent successfully:', response);
+      
+      return {
+        success: true,
+        message: 'OTP sent successfully'
+      };
+      
+    } catch (error) {
+      console.error('❌ Error sending email:', error);
+      
+      // If EmailJS fails, show helpful error
+      if (error.text) {
+        throw new Error(`Email service error: ${error.text}`);
+      }
+      
+      throw new Error('Failed to send OTP email. Please try again or contact support.');
     }
-    
-    return await response.json();
   }
   
   async function verifyEmailOTPAPI(email, otp) {
-    // TODO: In production, verify with backend
-    const response = await fetch(`${CONFIG.API_BASE_URL || '/api'}/verify-email-otp`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: email,
-        otp: otp
-      })
+    return new Promise((resolve) => {
+      // Check if OTP exists for this email
+      if (!sentOtps[email]) {
+        resolve({
+          success: false,
+          message: 'No OTP found for this email'
+        });
+        return;
+      }
+      
+      const otpData = sentOtps[email];
+      
+      // Check if OTP expired
+      if (Date.now() > otpData.expiry) {
+        delete sentOtps[email];
+        resolve({
+          success: false,
+          message: 'OTP expired. Please request a new one.'
+        });
+        return;
+      }
+      
+      // Check attempts (max 5)
+      if (otpData.attempts >= 5) {
+        delete sentOtps[email];
+        resolve({
+          success: false,
+          message: 'Too many attempts. Please request a new OTP.'
+        });
+        return;
+      }
+      
+      // Increment attempts
+      otpData.attempts++;
+      
+      // Verify OTP
+      if (otpData.otp === otp) {
+        // Clear OTP after successful verification
+        delete sentOtps[email];
+        resolve({
+          success: true,
+          message: 'OTP verified successfully'
+        });
+      } else {
+        resolve({
+          success: false,
+          message: `Invalid OTP. ${5 - otpData.attempts} attempts remaining.`
+        });
+      }
     });
-    
-    if (!response.ok) {
-      throw new Error('Failed to verify OTP');
-    }
-    
-    return await response.json();
   }
   
   // Show status message
@@ -569,10 +645,12 @@
   // Check if running in demo mode (localhost)
   function isDemoEnvironment() {
     const hostname = window.location.hostname;
+    const protocol = window.location.protocol;
     return hostname === 'localhost' || 
            hostname === '127.0.0.1' || 
+           hostname === '' ||  // file:// protocol has empty hostname
+           protocol === 'file:' ||
            hostname.includes('192.168.') ||
-           hostname.includes('file://') ||
            (typeof CONFIG !== 'undefined' && CONFIG.DEMO_MODE === true);
   }
   
@@ -628,14 +706,21 @@
     userLastName = lastName;
     userPhone = phone;
     
+    // Auto-detect environment: localhost = demo, production = Email API
+    const isDemo = isDemoEnvironment();
+    
+    console.log('Environment check:', {
+      hostname: window.location.hostname,
+      protocol: window.location.protocol,
+      isDemo: isDemo
+    });
+    
     try {
-      // Auto-detect environment: localhost = demo, production = Email API
-      const isDemo = isDemoEnvironment();
-      
       if (isDemo) {
         // ========================================
         // DEMO MODE (Localhost/Testing)
         // ========================================
+        console.log('🧪 Running in DEMO MODE');
         await new Promise(resolve => setTimeout(resolve, 1000));
         generatedOtp = generateOtp();
         
@@ -659,6 +744,13 @@
         // ========================================
         // PRODUCTION MODE (Real Email)
         // ========================================
+        console.log('🔒 Running in PRODUCTION MODE');
+        
+        // Check if EmailJS is configured
+        if (!EMAILJS_CONFIG.IS_CONFIGURED) {
+          throw new Error('Email service not configured yet. Please set up EmailJS or run in demo mode (localhost).');
+        }
+        
         const result = await sendEmailOTPAPI(userEmail, firstName);
         
         if (result.success) {
@@ -666,7 +758,7 @@
           detailsStep.classList.add('hidden');
           otpStep.classList.remove('hidden');
           startTimer(30);
-          showStatus(`📧 OTP sent to ${userEmail}`, 'success');
+          showStatus(`📧 OTP sent to ${userEmail}. Check your inbox!`, 'success');
         } else {
           throw new Error(result.message || 'Failed to send OTP');
         }
@@ -806,10 +898,12 @@
   resendLink.addEventListener('click', async function(e) {
     e.preventDefault();
     
+    // Auto-detect environment
+    const isDemo = isDemoEnvironment();
+    
+    console.log('Resending OTP - Demo mode:', isDemo);
+    
     try {
-      // Auto-detect environment
-      const isDemo = isDemoEnvironment();
-      
       if (isDemo) {
         // ========================================
         // DEMO MODE (Localhost/Testing)
@@ -826,10 +920,16 @@
         // ========================================
         // PRODUCTION MODE (Real Email)
         // ========================================
+        
+        // Check if EmailJS is configured
+        if (!EMAILJS_CONFIG.IS_CONFIGURED) {
+          throw new Error('Email service not configured yet.');
+        }
+        
         const result = await sendEmailOTPAPI(userEmail, userFirstName);
         
         if (result.success) {
-          showStatus('📧 New OTP sent successfully!', 'success');
+          showStatus('📧 New OTP sent successfully! Check your email.', 'success');
         } else {
           throw new Error(result.message || 'Failed to resend OTP');
         }
