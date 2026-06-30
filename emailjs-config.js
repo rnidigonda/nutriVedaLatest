@@ -13,7 +13,7 @@ const EMAILJS_CONFIG = {
   PUBLIC_KEY: 'q9iLRAFk-h5pK4c-Y',  // Your public key (refreshed)
   
   // Get from EmailJS Dashboard > Email Services
-  SERVICE_ID: 'service_9crmjxe',  // Your Gmail service ID (CORRECTED)
+  SERVICE_ID: 'service_i7o0wsp',  // Your Gmail service ID (CORRECT & ACTIVE)
   
   // Get from EmailJS Dashboard > Email Templates
   TEMPLATE_ID: 'template_2m1zrm9',  // Your template ID
