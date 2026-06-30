@@ -11,7 +11,7 @@ const CONFIG = {
   CONTACT: {
     phone: '+917893639037',
     whatsapp: '917893639037',
-    email: 'customercare@nutriveda.com',
+    email: 'customercare.nutriveda@gmail.com',
     address: 'H.No: 12, Tiwari Nagar, Near Miyapur Police Station, Chandanagar, Hyderabad — 500049'
   },
   

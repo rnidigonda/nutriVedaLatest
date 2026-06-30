@@ -422,7 +422,7 @@ To enable production email OTP:
 
 **Owner:** Ravindar Nidigonda  
 **Location:** Chandanagar, Hyderabad 500049  
-**Email:** customercare@nutriveda.com  
+**Email:** customercare.nutriveda@gmail.com  
 **Phone:** +91 78936 39037  
 **Website:** https://nutriveda.shop  
 
