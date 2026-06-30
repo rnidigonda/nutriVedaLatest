@@ -290,19 +290,18 @@
     const otpNoticeText = document.getElementById('otpNoticeText');
     const demoOtpDisplay = document.getElementById('demoOtpDisplay');
     
-    if (CONFIG.DEMO_MODE) {
+    const isDemo = isDemoEnvironment();
+    
+    if (isDemo) {
       otpNotice.style.display = 'block';
       otpNotice.style.background = '#fff3cd';
       otpNotice.style.borderColor = '#ffeaa7';
       otpNotice.querySelector('strong').style.color = '#856404';
-      otpNoticeText.textContent = 'Demo Mode: OTP will appear on screen (not sent via SMS)';
+      otpNoticeText.textContent = 'Demo Mode: OTP will appear on screen (not sent via email)';
       otpNoticeText.style.color = '#856404';
-    } else if (!CONFIG.ENABLE_SMS_OTP) {
-      otpNotice.style.display = 'block';
-      otpNoticeText.textContent = 'SMS OTP is currently disabled. Please contact support.';
     } else {
       otpNotice.style.display = 'block';
-      otpNoticeText.textContent = 'You will receive a 6-digit OTP via SMS';
+      otpNoticeText.textContent = 'You will receive a 6-digit OTP via email';
     }
   });
 </script>
@@ -321,35 +320,30 @@
     <!-- Status Message -->
     <div id="statusMessage" class="status-message"></div>
     
-    <!-- Step 1: Phone Number Input -->
-    <div id="phoneStep">
+    <!-- Step 1: Email Input -->
+    <div id="emailStep">
       <div class="login-title">Login / Sign Up</div>
-      <p class="login-desc">Enter your mobile number to continue</p>
+      <p class="login-desc">Enter your email address to continue</p>
       
       <!-- Info Notice -->
       <div id="otpNotice" style="background:#d1ecf1;border:1px solid #bee5eb;border-radius:8px;padding:12px;margin:16px 0;font-size:13px;color:#0c5460;display:none;">
-        <strong>📱 Note:</strong> <span id="otpNoticeText"></span>
+        <strong>📧 Note:</strong> <span id="otpNoticeText"></span>
       </div>
       
-      <form id="phoneForm" class="login-form">
+      <form id="emailForm" class="login-form">
         <div class="form-group">
-          <label class="form-label">Mobile Number</label>
-          <div class="phone-input-group">
-            <input type="text" class="country-code" value="+91" readonly>
-            <input 
-              type="tel" 
-              id="phoneNumber" 
-              class="form-input" 
-              placeholder="Enter 10-digit mobile number"
-              pattern="[0-9]{10}"
-              maxlength="10"
-              required
-            >
-          </div>
+          <label class="form-label">Email Address</label>
+          <input 
+            type="email" 
+            id="emailAddress" 
+            class="form-input" 
+            placeholder="your@email.com"
+            required
+          >
         </div>
         
-        <button type="submit" class="btn-submit" id="sendOtpBtn">
-          Send OTP
+        <button type="submit" class="btn-submit" id="sendEmailOtpBtn">
+          Send OTP to Email
         </button>
         
         <p class="terms-text">
@@ -364,7 +358,7 @@
       <p class="login-desc">We need a few details to personalize your experience</p>
       
       <form id="detailsForm" class="login-form">
-        <div class="form-row">
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
           <div class="form-group">
             <label class="form-label">First Name *</label>
             <input 
@@ -390,21 +384,25 @@
         </div>
         
         <div class="form-group">
-          <label class="form-label">Email Address *</label>
-          <input 
-            type="email" 
-            id="userEmail" 
-            class="form-input" 
-            placeholder="your@email.com"
-            required
-          >
+          <label class="form-label">Mobile Number (Optional)</label>
+          <div class="phone-input-group">
+            <input type="text" class="country-code" value="+91" readonly>
+            <input 
+              type="tel" 
+              id="phoneNumber" 
+              class="form-input" 
+              placeholder="Enter 10-digit mobile number"
+              pattern="[0-9]{10}"
+              maxlength="10"
+            >
+          </div>
         </div>
         
         <button type="submit" class="btn-submit" id="saveDetailsBtn">
           Continue to Verify
         </button>
         
-        <button type="button" class="btn-secondary" id="backToPhoneBtn">
+        <button type="button" class="btn-secondary" id="backToEmailBtn">
           ← Back
         </button>
       </form>
@@ -413,7 +411,7 @@
     <!-- Step 3: OTP Verification -->
     <div id="otpStep" class="hidden">
       <div class="login-title">Verify OTP</div>
-      <p class="login-desc">Enter the 6-digit code sent to <strong id="displayPhone"></strong></p>
+      <p class="login-desc">Enter the 6-digit code sent to <strong id="displayEmail"></strong></p>
       
       <!-- OTP Display (only in demo mode) -->
       <div id="demoOtpDisplay" style="background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); border: 3px solid #28a745; border-radius: 16px; padding: 24px; margin: 20px 0; text-align: center; display: none; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2); animation: fadeIn 0.3s ease;">
@@ -424,7 +422,7 @@
         <div id="displayOtp" style="font-size: 48px; font-weight: 900; letter-spacing: 12px; color: #155724; font-family: 'Courier New', monospace; margin: 16px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);"></div>
         <div style="font-size: 12px; color: #155724; margin-top: 12px; line-height: 1.6;">
           📋 Copy this code to the boxes below<br>
-          <span style="font-size: 11px; opacity: 0.8;">⚠️ In production, OTP will be sent via SMS to your mobile</span>
+          <span style="font-size: 11px; opacity: 0.8;">⚠️ In production, OTP will be sent via email</span>
         </div>
       </div>
       
@@ -444,8 +442,8 @@
           Verify & Continue
         </button>
         
-        <button type="button" class="btn-secondary" id="changeNumberBtn">
-          Change Number
+        <button type="button" class="btn-secondary" id="changeEmailBtn">
+          Change Email
         </button>
         
         <div class="resend-timer">
@@ -463,23 +461,23 @@
 
 <script>
   // Elements
-  const phoneStep = document.getElementById('phoneStep');
+  const emailStep = document.getElementById('emailStep');
   const detailsStep = document.getElementById('detailsStep');
   const otpStep = document.getElementById('otpStep');
-  const phoneForm = document.getElementById('phoneForm');
+  const emailForm = document.getElementById('emailForm');
   const detailsForm = document.getElementById('detailsForm');
   const otpForm = document.getElementById('otpForm');
+  const emailInput = document.getElementById('emailAddress');
   const phoneInput = document.getElementById('phoneNumber');
   const firstNameInput = document.getElementById('firstName');
   const lastNameInput = document.getElementById('lastName');
-  const userEmailInput = document.getElementById('userEmail');
-  const displayPhone = document.getElementById('displayPhone');
+  const displayEmail = document.getElementById('displayEmail');
   const statusMessage = document.getElementById('statusMessage');
-  const sendOtpBtn = document.getElementById('sendOtpBtn');
+  const sendEmailOtpBtn = document.getElementById('sendEmailOtpBtn');
   const saveDetailsBtn = document.getElementById('saveDetailsBtn');
   const verifyOtpBtn = document.getElementById('verifyOtpBtn');
-  const changeNumberBtn = document.getElementById('changeNumberBtn');
-  const backToPhoneBtn = document.getElementById('backToPhoneBtn');
+  const changeEmailBtn = document.getElementById('changeEmailBtn');
+  const backToEmailBtn = document.getElementById('backToEmailBtn');
   const resendLink = document.getElementById('resendLink');
   const timerText = document.getElementById('timerText');
   const countdown = document.getElementById('countdown');
@@ -488,10 +486,456 @@
   
   let otpTimer;
   let generatedOtp = '';
+  let userEmail = '';
   let userPhone = '';
   let userFirstName = '';
   let userLastName = '';
-  let userEmail = '';
+  
+  // API Functions (for production)
+  async function sendEmailOTPAPI(email, firstName) {
+    // TODO: In production, integrate with email service (SendGrid, AWS SES, etc.)
+    const response = await fetch(`${CONFIG.API_BASE_URL || '/api'}/send-email-otp`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        firstName: firstName
+      })
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to send OTP');
+    }
+    
+    return await response.json();
+  }
+  
+  async function verifyEmailOTPAPI(email, otp) {
+    // TODO: In production, verify with backend
+    const response = await fetch(`${CONFIG.API_BASE_URL || '/api'}/verify-email-otp`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        otp: otp
+      })
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to verify OTP');
+    }
+    
+    return await response.json();
+  }
+  
+  // Show status message
+  function showStatus(message, type) {
+    statusMessage.textContent = message;
+    statusMessage.className = `status-message status-${type}`;
+    statusMessage.style.display = 'block';
+    
+    setTimeout(() => {
+      statusMessage.style.display = 'none';
+    }, 5000);
+  }
+  
+  // Start countdown timer
+  function startTimer(seconds) {
+    let timeLeft = seconds;
+    timerText.style.display = 'block';
+    resendLink.classList.add('hidden');
+    
+    otpTimer = setInterval(() => {
+      timeLeft--;
+      countdown.textContent = timeLeft;
+      
+      if (timeLeft <= 0) {
+        clearInterval(otpTimer);
+        timerText.style.display = 'none';
+        resendLink.classList.remove('hidden');
+      }
+    }, 1000);
+  }
+  
+  // Generate random 6-digit OTP (demo mode only)
+  function generateOtp() {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+  }
+  
+  // Check if running in demo mode (localhost)
+  function isDemoEnvironment() {
+    const hostname = window.location.hostname;
+    return hostname === 'localhost' || 
+           hostname === '127.0.0.1' || 
+           hostname.includes('192.168.') ||
+           hostname.includes('file://') ||
+           (typeof CONFIG !== 'undefined' && CONFIG.DEMO_MODE === true);
+  }
+  
+  // Step 1: Email Input
+  emailForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const email = emailInput.value.trim().toLowerCase();
+    
+    // Validate email
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showStatus('Please enter a valid email address', 'error');
+      return;
+    }
+    
+    sendEmailOtpBtn.textContent = 'Please wait...';
+    sendEmailOtpBtn.disabled = true;
+    
+    // Store email and move to details step
+    userEmail = email;
+    emailStep.classList.add('hidden');
+    detailsStep.classList.remove('hidden');
+    
+    sendEmailOtpBtn.textContent = 'Send OTP to Email';
+    sendEmailOtpBtn.disabled = false;
+  });
+  
+  // Step 2: Save Details and Send OTP
+  detailsForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const firstName = firstNameInput.value.trim();
+    const lastName = lastNameInput.value.trim();
+    const phone = phoneInput.value.trim();
+    
+    // Validate
+    if (firstName.length < 2 || lastName.length < 2) {
+      showStatus('Names must be at least 2 characters', 'error');
+      return;
+    }
+    
+    // Validate phone if provided
+    if (phone && !/^[6-9]\d{9}$/.test(phone)) {
+      showStatus('Please enter a valid 10-digit Indian mobile number or leave it empty', 'error');
+      return;
+    }
+    
+    saveDetailsBtn.textContent = 'Sending OTP...';
+    saveDetailsBtn.disabled = true;
+    
+    // Store details
+    userFirstName = firstName;
+    userLastName = lastName;
+    userPhone = phone;
+    
+    try {
+      // Auto-detect environment: localhost = demo, production = Email API
+      const isDemo = isDemoEnvironment();
+      
+      if (isDemo) {
+        // ========================================
+        // DEMO MODE (Localhost/Testing)
+        // ========================================
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        generatedOtp = generateOtp();
+        
+        // Show OTP prominently on screen
+        demoOtpDisplay.style.display = 'block';
+        document.getElementById('displayOtp').textContent = generatedOtp;
+        
+        displayEmail.textContent = userEmail;
+        detailsStep.classList.add('hidden');
+        otpStep.classList.remove('hidden');
+        startTimer(30);
+        showStatus(`📧 Demo OTP: ${generatedOtp} (visible below)`, 'success');
+        
+        // Also show in console for easy access
+        console.log('%c🔐 DEMO MODE - Your OTP Code', 'background: #2d5a3d; color: #f5d87a; font-size: 16px; padding: 10px; border-radius: 5px;');
+        console.log(`%cOTP: ${generatedOtp}`, 'font-size: 24px; font-weight: bold; color: #2d5a3d;');
+        console.log(`%c📧 Email: ${userEmail}`, 'font-size: 14px; color: #666;');
+        console.log('%cℹ️ In production, this will be sent via email', 'color: #666; font-style: italic;');
+        
+      } else {
+        // ========================================
+        // PRODUCTION MODE (Real Email)
+        // ========================================
+        const result = await sendEmailOTPAPI(userEmail, firstName);
+        
+        if (result.success) {
+          displayEmail.textContent = userEmail;
+          detailsStep.classList.add('hidden');
+          otpStep.classList.remove('hidden');
+          startTimer(30);
+          showStatus(`📧 OTP sent to ${userEmail}`, 'success');
+        } else {
+          throw new Error(result.message || 'Failed to send OTP');
+        }
+      }
+      
+      // Focus first OTP box
+      otpBoxes[0].focus();
+      
+    } catch (error) {
+      console.error('Error sending OTP:', error);
+      showStatus(error.message || 'Failed to send OTP. Please try again.', 'error');
+    } finally {
+      saveDetailsBtn.textContent = 'Continue to Verify';
+      saveDetailsBtn.disabled = false;
+    }
+  });
+  
+  // Back to email
+  backToEmailBtn.addEventListener('click', function() {
+    detailsStep.classList.add('hidden');
+    emailStep.classList.remove('hidden');
+  });
+  
+  // OTP input handling
+  otpBoxes.forEach((box, index) => {
+    box.addEventListener('input', (e) => {
+      if (e.target.value) {
+        // Move to next box
+        if (index < otpBoxes.length - 1) {
+          otpBoxes[index + 1].focus();
+        }
+      }
+    });
+    
+    box.addEventListener('keydown', (e) => {
+      // Move to previous box on backspace
+      if (e.key === 'Backspace' && !e.target.value && index > 0) {
+        otpBoxes[index - 1].focus();
+      }
+    });
+    
+    // Only allow numbers
+    box.addEventListener('keypress', (e) => {
+      if (!/[0-9]/.test(e.key)) {
+        e.preventDefault();
+      }
+    });
+  });
+  
+  // Verify OTP
+  otpForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const enteredOtp = Array.from(otpBoxes).map(box => box.value).join('');
+    
+    if (enteredOtp.length !== 6) {
+      showStatus('Please enter complete 6-digit OTP', 'error');
+      return;
+    }
+    
+    verifyOtpBtn.textContent = 'Verifying...';
+    verifyOtpBtn.disabled = true;
+    
+    try {
+      let verified = false;
+      
+      // Auto-detect environment
+      const isDemo = isDemoEnvironment();
+      
+      if (isDemo) {
+        // ========================================
+        // DEMO MODE (Localhost/Testing)
+        // ========================================
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        verified = (enteredOtp === generatedOtp);
+        
+        if (!verified) {
+          console.log('%c❌ Invalid OTP', 'background: #e74c3c; color: white; font-size: 14px; padding: 8px; border-radius: 5px;');
+          console.log(`Expected: ${generatedOtp}, Got: ${enteredOtp}`);
+        }
+        
+      } else {
+        // ========================================
+        // PRODUCTION MODE (Real Email)
+        // ========================================
+        const result = await verifyEmailOTPAPI(userEmail, enteredOtp);
+        verified = result.success;
+      }
+      
+      if (verified) {
+        // OTP verified successfully
+        console.log('%c✅ OTP Verified Successfully!', 'background: #2ecc71; color: white; font-size: 16px; padding: 10px; border-radius: 5px;');
+        showStatus('Login successful! Redirecting...', 'success');
+        
+        // Store user session with all details
+        localStorage.setItem('nv_user_email', userEmail);
+        localStorage.setItem('nv_user_first_name', userFirstName);
+        localStorage.setItem('nv_user_last_name', userLastName);
+        localStorage.setItem('nv_user_phone', userPhone || '');
+        localStorage.setItem('nv_user_logged_in', 'true');
+        localStorage.setItem('nv_user_login_time', new Date().toISOString());
+        
+        // Save user data to Google Sheets
+        saveUserToGoogleSheets(userEmail, userFirstName, userLastName, userPhone);
+        
+        // Redirect to home page after 1.5 seconds
+        setTimeout(() => {
+          window.location.href = '../index.html';
+        }, 1500);
+      } else {
+        throw new Error('Invalid OTP');
+      }
+      
+    } catch (error) {
+      console.error('Error verifying OTP:', error);
+      showStatus(error.message || 'Invalid OTP. Please try again.', 'error');
+      verifyOtpBtn.textContent = 'Verify & Continue';
+      verifyOtpBtn.disabled = false;
+      
+      // Clear OTP boxes
+      otpBoxes.forEach(box => box.value = '');
+      otpBoxes[0].focus();
+    }
+  });
+  
+  // Change email
+  changeEmailBtn.addEventListener('click', function() {
+    otpStep.classList.add('hidden');
+    detailsStep.classList.remove('hidden');
+    clearInterval(otpTimer);
+    
+    // Clear OTP boxes
+    otpBoxes.forEach(box => box.value = '');
+  });
+  
+  // Resend OTP
+  resendLink.addEventListener('click', async function(e) {
+    e.preventDefault();
+    
+    try {
+      // Auto-detect environment
+      const isDemo = isDemoEnvironment();
+      
+      if (isDemo) {
+        // ========================================
+        // DEMO MODE (Localhost/Testing)
+        // ========================================
+        generatedOtp = generateOtp();
+        
+        document.getElementById('displayOtp').textContent = generatedOtp;
+        showStatus(`📧 New Demo OTP: ${generatedOtp}`, 'success');
+        
+        console.log('%c🔐 NEW DEMO OTP', 'background: #2d5a3d; color: #f5d87a; font-size: 16px; padding: 10px; border-radius: 5px;');
+        console.log(`%cOTP: ${generatedOtp}`, 'font-size: 24px; font-weight: bold; color: #2d5a3d;');
+        
+      } else {
+        // ========================================
+        // PRODUCTION MODE (Real Email)
+        // ========================================
+        const result = await sendEmailOTPAPI(userEmail, userFirstName);
+        
+        if (result.success) {
+          showStatus('📧 New OTP sent successfully!', 'success');
+        } else {
+          throw new Error(result.message || 'Failed to resend OTP');
+        }
+      }
+      
+      startTimer(30);
+      
+      // Clear OTP boxes
+      otpBoxes.forEach(box => box.value = '');
+      otpBoxes[0].focus();
+      
+    } catch (error) {
+      console.error('Error resending OTP:', error);
+      showStatus(error.message || 'Failed to resend OTP', 'error');
+    }
+  });
+  
+  // Check if already logged in
+  window.addEventListener('DOMContentLoaded', function() {
+    const isLoggedIn = localStorage.getItem('nv_user_logged_in');
+    if (isLoggedIn === 'true') {
+      window.location.href = '../index.html';
+    }
+    
+    // Show environment badge
+    const environmentBadge = document.getElementById('environmentBadge');
+    const isDemo = isDemoEnvironment();
+    
+    if (isDemo) {
+      environmentBadge.innerHTML = `
+        <div style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); 
+                    color: white; 
+                    padding: 8px 24px; 
+                    border-radius: 20px; 
+                    font-size: 12px; 
+                    font-weight: 700; 
+                    letter-spacing: 1px;
+                    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+                    display: inline-block;">
+          🧪 DEMO MODE - EMAIL OTP
+        </div>
+      `;
+    } else {
+      environmentBadge.innerHTML = `
+        <div style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%); 
+                    color: white; 
+                    padding: 8px 24px; 
+                    border-radius: 20px; 
+                    font-size: 12px; 
+                    font-weight: 700; 
+                    letter-spacing: 1px;
+                    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.4);
+                    display: inline-block;">
+          🔒 PRODUCTION - EMAIL OTP
+        </div>
+      `;
+    }
+    
+    // Update OTP notice text
+    const otpNoticeText = document.getElementById('otpNoticeText');
+    if (isDemo) {
+      otpNoticeText.textContent = 'Demo Mode: OTP will appear on screen (not sent via email)';
+    } else {
+      otpNoticeText.textContent = 'You will receive a 6-digit OTP via email';
+    }
+    document.getElementById('otpNotice').style.display = 'block';
+  });
+  
+  // ========================================
+  // SAVE USER TO GOOGLE SHEETS
+  // ========================================
+  async function saveUserToGoogleSheets(email, firstName, lastName, phone) {
+    // TODO: Replace this URL with your Google Apps Script Web App URL
+    const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+    
+    // Skip if URL not configured
+    if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+      console.log('Google Sheets integration not configured yet.');
+      console.log('User data:', {email, firstName, lastName, phone});
+      return;
+    }
+    
+    try {
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', // Required for Google Apps Script
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          action: 'register',
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
+          phone: phone
+        })
+      });
+      
+      console.log('User data sent to Google Sheets');
+      
+    } catch (error) {
+      console.error('Failed to save user to Google Sheets:', error);
+      // Don't block login if saving fails
+    }
+  }
+</script>
   
   // API Functions
   async function sendOTPAPI(phoneNumber, firstName) {

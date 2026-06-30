@@ -167,11 +167,13 @@ function updateNavForUser() {
   if (isUserLoggedIn()) {
     // User is logged in - replace login button with account menu
     const phone = getUserPhone();
+    const email = getUserEmail();
     const firstName = getUserFirstName();
     const lastName = getUserLastName();
     
     // Prioritize first name, fallback to "User" if not available
     const displayName = firstName || 'User';
+    const contactInfo = email || (phone ? `+91 ${phone}` : 'No contact');
     
     // Update desktop nav
     if (loginNavItem) {
@@ -207,8 +209,8 @@ function updateNavForUser() {
             <div style="font-weight:600;color:var(--primary);font-size:15px;margin-bottom:4px;">
               ${firstName} ${lastName}
             </div>
-            <div style="font-size:12px;color:#666;">📱 +91 ${phone}</div>
-            <div style="font-size:12px;color:#666;">📧 ${getUserEmail()}</div>
+            <div style="font-size:12px;color:#666;">📧 ${email}</div>
+            ${phone ? `<div style="font-size:12px;color:#666;">📱 +91 ${phone}</div>` : ''}
           </div>
           <a href="#" id="logoutBtn" style="display:flex;align-items:center;gap:8px;padding:12px 16px;color:var(--text);text-decoration:none;transition:all 0.3s;border-radius:8px;font-size:14px;margin-top:4px;">
             <span style="font-size:18px;">🚪</span> Logout
