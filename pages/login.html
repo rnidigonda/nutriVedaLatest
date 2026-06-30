@@ -293,7 +293,6 @@
     const otpNotice = document.getElementById('otpNotice');
     const otpNoticeText = document.getElementById('otpNoticeText');
     const demoOtpDisplay = document.getElementById('demoOtpDisplay');
-    const environmentBadge = document.getElementById('environmentBadge');
     
     // Check if EmailJS is configured
     const isEmailJSConfigured = typeof EMAILJS_CONFIG !== 'undefined' && EMAILJS_CONFIG.IS_CONFIGURED;
@@ -319,8 +318,6 @@
     
     if (!isEmailJSConfigured && isProductionDomain) {
       // Production domain but EmailJS not configured - show warning
-      environmentBadge.innerHTML = '<span style="background: #ffc107; color: #000; padding: 6px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);">⚠️ DEMO MODE - EmailJS Not Configured</span>';
-      
       otpNotice.style.display = 'block';
       otpNotice.style.background = '#fff3cd';
       otpNotice.style.borderColor = '#ffc107';
@@ -328,8 +325,6 @@
       
     } else if (isDemo) {
       // Demo mode (localhost or not configured)
-      environmentBadge.innerHTML = '<span style="background: #28a745; color: white; padding: 6px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);">🧪 DEMO MODE - Testing</span>';
-      
       otpNotice.style.display = 'block';
       otpNotice.style.background = '#fff3cd';
       otpNotice.style.borderColor = '#ffeaa7';
@@ -339,8 +334,6 @@
       
     } else {
       // Production mode with EmailJS configured
-      environmentBadge.innerHTML = '<span style="background: linear-gradient(135deg, #2d5a3d, #3d7a52); color: white; padding: 6px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; box-shadow: 0 2px 8px rgba(45, 90, 61, 0.3);">🔒 PRODUCTION - Email OTP</span>';
-      
       otpNotice.style.display = 'block';
       otpNoticeText.textContent = 'You will receive a 6-digit OTP via email';
     }
@@ -349,9 +342,6 @@
 
 <div class="login-container">
   <div class="login-card">
-    <!-- Environment Indicator -->
-    <div id="environmentBadge" style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); z-index: 10;"></div>
-    
     <!-- Logo -->
     <div class="login-header">
       <div class="login-logo">Nutri<span>Veda</span></div>
@@ -1001,42 +991,10 @@
       window.location.href = '../index.html';
     }
     
-    // Show environment badge
-    const environmentBadge = document.getElementById('environmentBadge');
+    // Update OTP notice text based on environment
+    const otpNoticeText = document.getElementById('otpNoticeText');
     const isDemo = isDemoEnvironment();
     
-    if (isDemo) {
-      environmentBadge.innerHTML = `
-        <div style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); 
-                    color: white; 
-                    padding: 8px 24px; 
-                    border-radius: 20px; 
-                    font-size: 12px; 
-                    font-weight: 700; 
-                    letter-spacing: 1px;
-                    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
-                    display: inline-block;">
-          🧪 DEMO MODE - EMAIL OTP
-        </div>
-      `;
-    } else {
-      environmentBadge.innerHTML = `
-        <div style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%); 
-                    color: white; 
-                    padding: 8px 24px; 
-                    border-radius: 20px; 
-                    font-size: 12px; 
-                    font-weight: 700; 
-                    letter-spacing: 1px;
-                    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.4);
-                    display: inline-block;">
-          🔒 PRODUCTION - EMAIL OTP
-        </div>
-      `;
-    }
-    
-    // Update OTP notice text
-    const otpNoticeText = document.getElementById('otpNoticeText');
     if (isDemo) {
       otpNoticeText.textContent = 'Demo Mode: OTP will appear on screen (not sent via email)';
     } else {
@@ -1454,40 +1412,6 @@
     const isLoggedIn = localStorage.getItem('nv_user_logged_in');
     if (isLoggedIn === 'true') {
       window.location.href = '../index.html';
-    }
-    
-    // Show environment badge
-    const environmentBadge = document.getElementById('environmentBadge');
-    const isDemo = isDemoEnvironment();
-    
-    if (isDemo) {
-      environmentBadge.innerHTML = `
-        <div style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); 
-                    color: white; 
-                    padding: 8px 24px; 
-                    border-radius: 20px; 
-                    font-size: 12px; 
-                    font-weight: 700; 
-                    letter-spacing: 1px;
-                    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
-                    display: inline-block;">
-          🧪 DEMO MODE - TESTING
-        </div>
-      `;
-    } else if (CONFIG.ENABLE_SMS_OTP) {
-      environmentBadge.innerHTML = `
-        <div style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%); 
-                    color: white; 
-                    padding: 8px 24px; 
-                    border-radius: 20px; 
-                    font-size: 12px; 
-                    font-weight: 700; 
-                    letter-spacing: 1px;
-                    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.4);
-                    display: inline-block;">
-          🔒 PRODUCTION - SMS ENABLED
-        </div>
-      `;
     }
   });
   
