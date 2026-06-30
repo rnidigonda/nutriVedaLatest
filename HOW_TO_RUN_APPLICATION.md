@@ -1,503 +1,463 @@
-# 🚀 How to Run NutriVeda Application
+# 🚀 How to Run Nutri Veda Application
 
-## Complete Step-by-Step Guide
-
----
-
-## 📋 **Prerequisites**
-
-Before running the application, ensure you have:
-- ✅ Node.js installed (we have v24.15.0)
-- ✅ Terminal/Command Prompt access
-- ✅ Modern web browser (Chrome, Firefox, Edge, Safari)
+**Last Updated:** June 30, 2026
 
 ---
 
-## 🚀 **Method 1: Using http-server (Recommended)**
+## ✅ CURRENT STATUS: DEPLOYED & READY
 
-### **Step 1: Open Terminal/Command Prompt**
-- Press `Windows + R`
-- Type `cmd` and press Enter
-- Or use VS Code integrated terminal
+### 🎯 What's Done
+✅ All code deployed to GitHub Pages  
+✅ Email OTP system implemented  
+✅ Demo mode working (localhost)  
+✅ Production code ready  
+✅ Git repository clean  
 
-### **Step 2: Navigate to Project Directory**
-```bash
-cd c:\vs_workSpace\nutriveda-website
-```
-
-### **Step 3: Start the Server**
-```bash
-npx http-server nutriveda -p 8080 -o
-```
-
-**What this does:**
-- `npx` - Runs the package without installing globally
-- `http-server` - Simple HTTP server
-- `nutriveda` - Folder to serve
-- `-p 8080` - Port number 8080
-- `-o` - Automatically opens browser
-
-### **Step 4: Server Started!**
-
-You should see:
-```
-Starting up http-server, serving nutriveda
-http-server version: 14.1.1
-
-Available on:
-  http://192.168.0.6:8080
-  http://127.0.0.1:8080
-Hit CTRL-C to stop the server
-```
-
-✅ **Browser opens automatically!**  
-✅ **Application is now running!**
-
-### **Step 5: Access the Application**
-
-The browser should open automatically to:
-- **http://localhost:8080**
-- **http://127.0.0.1:8080**
-
-If browser doesn't open, manually go to: **http://localhost:8080**
+### ⏳ What's Pending
+⏳ EmailJS configuration (10 minutes setup)
 
 ---
 
-## 🌐 **Method 2: Using Live Server (VS Code Extension)**
+## 🌐 Live Application
 
-### **Step 1: Install Live Server Extension**
+**Production URL:** https://rnidigonda.github.io/nutriVedaLatest/
+
+### Key Pages
+- **Home:** https://rnidigonda.github.io/nutriVedaLatest/
+- **Login:** https://rnidigonda.github.io/nutriVedaLatest/pages/login.html
+- **Cart:** https://rnidigonda.github.io/nutriVedaLatest/cart.html
+- **Wishlist:** https://rnidigonda.github.io/nutriVedaLatest/pages/wishlist.html
+- **Checkout:** https://rnidigonda.github.io/nutriVedaLatest/checkout.html
+
+---
+
+## 🧪 Local Testing (Demo Mode)
+
+### Method 1: Direct File Opening
+1. Navigate to: `c:\vs_workSpace\nutriveda-website\nutriveda\`
+2. Double-click `index.html`
+3. Browser will open with demo mode active
+
+### Method 2: Live Server (Recommended)
 1. Open VS Code
-2. Go to Extensions (Ctrl+Shift+X)
-3. Search for "Live Server"
-4. Click "Install" on "Live Server" by Ritwick Dey
+2. Install "Live Server" extension if not installed
+3. Right-click `index.html`
+4. Select "Open with Live Server"
+5. Browser opens at `http://localhost:5500`
 
-### **Step 2: Open Project**
-1. Open the `nutriveda` folder in VS Code
-2. Find `index.html` in the file explorer
+### What Works in Demo Mode?
+✅ Browse all products  
+✅ Add to cart  
+✅ Wishlist  
+✅ **Email OTP login** (OTP shown on screen)  
+✅ Image search  
+✅ Social sharing  
+✅ All navigation  
 
-### **Step 3: Start Live Server**
-- **Option A:** Right-click on `index.html` → "Open with Live Server"
-- **Option B:** Click "Go Live" button in bottom-right corner of VS Code
-- **Option C:** Press `Alt+L` then `Alt+O`
-
-### **Step 4: Application Opens!**
-- Usually opens at: **http://127.0.0.1:5500**
-- Browser opens automatically
-- Auto-reloads when you save files
+**Note:** In demo mode, OTP appears on screen in a green box. No real email is sent.
 
 ---
 
-## 🐍 **Method 3: Using Python (If Available)**
+## 📧 Email OTP Status
 
-### **If you have Python 3:**
+### Current Behavior
+
+#### On Localhost (Demo Mode)
+- User enters email address
+- User fills in name and phone (optional)
+- Clicks "Continue to Verify"
+- **OTP appears on screen** (green box)
+- Also visible in browser console (F12)
+- User enters OTP and logs in
+
+#### On Live Site (Production - After EmailJS Setup)
+- User enters email address
+- User fills in name and phone (optional)
+- Clicks "Continue to Verify"
+- **Real email sent with OTP**
+- User checks inbox
+- User enters OTP and logs in
+
+---
+
+## 🔧 Enable Production Email OTP (10 Minutes)
+
+### Step 1: Create EmailJS Account
+1. Go to: **https://www.emailjs.com/**
+2. Click "Sign Up Free"
+3. Use your email (e.g., rnidigonda@gmail.com)
+4. Verify email and login
+
+### Step 2: Connect Gmail Service
+1. Dashboard → **Email Services** → **Add New Service**
+2. Select **Gmail**
+3. Click **Connect Account**
+4. Authorize your Gmail
+5. **Copy Service ID** (e.g., `service_abc123`)
+6. Click **Create Service**
+
+### Step 3: Create Email Template
+1. Dashboard → **Email Templates** → **Create New**
+2. **Template Name:** Nutri Veda OTP Login
+3. **Template ID:** `template_otp_login` (exact name)
+4. **Subject:** `Your Nutri Veda Login OTP - {{otp}}`
+5. **Content:** Copy HTML from README.md
+6. Click **Save**
+
+### Step 4: Get API Keys
+1. Dashboard → **Account** → **General**
+2. Copy your **Public Key** (starts with `user_...`)
+3. Note your Service ID from step 2
+
+### Step 5: Update Configuration File
+1. Open: `c:\vs_workSpace\nutriveda-website\nutriveda\emailjs-config.js`
+2. Replace values:
+
+```javascript
+const EMAILJS_CONFIG = {
+  PUBLIC_KEY: 'user_YOUR_ACTUAL_KEY',     // ← Paste your public key
+  SERVICE_ID: 'service_YOUR_ACTUAL_ID',   // ← Paste your service ID
+  TEMPLATE_ID: 'template_otp_login',      // ← Keep this as is
+  IS_CONFIGURED: true  // ← Change from false to true ⚠️ IMPORTANT
+};
+```
+
+3. **Save the file**
+
+### Step 6: Deploy to GitHub
 ```bash
 cd c:\vs_workSpace\nutriveda-website\nutriveda
-python -m http.server 8080
+git add emailjs-config.js
+git commit -m "Configure EmailJS for production email OTP"
+git push origin main
 ```
 
-### **If you have Python 2:**
-```bash
-cd c:\vs_workSpace\nutriveda-website\nutriveda
-python -m SimpleHTTPServer 8080
-```
-
-Then open browser to: **http://localhost:8080**
+### Step 7: Test on Live Site
+1. Wait **2-3 minutes** for GitHub Pages to rebuild
+2. Open: https://rnidigonda.github.io/nutriVedaLatest/pages/login.html
+3. Enter your **real email address**
+4. Fill in details
+5. Click "Continue to Verify"
+6. **Check your email inbox** 📧
+7. You'll receive OTP email within 30 seconds
+8. Enter OTP and login!
 
 ---
 
-## 🎯 **Recommended: Method 1 (http-server)**
+## 🧪 Test Login System
 
-**Why?**
-- ✅ Easy to use
-- ✅ Works without installation (npx)
-- ✅ Opens browser automatically
-- ✅ Fast and reliable
-- ✅ No configuration needed
+### Local Test (Demo Mode)
+1. Open `pages/login.html` locally
+2. Enter email: `test@example.com`
+3. Enter first name: `John`
+4. Enter last name: `Doe`
+5. Phone: Leave empty (optional)
+6. Click "Continue to Verify"
+7. **Look for green box on screen** showing OTP
+8. Also check browser console (F12) for OTP
+9. Copy the 6-digit OTP
+10. Paste into OTP boxes
+11. Click "Verify & Continue"
+12. You should be redirected to home page
+13. Top-right should show "Hi, John"
+
+**Expected Demo OTP Display:**
+```
+🧪 DEMO MODE - TESTING ENVIRONMENT
+Your Test OTP Code:
+123456
+📋 Copy this code to the boxes below
+```
+
+### Live Test (After EmailJS Setup)
+1. Go to: https://rnidigonda.github.io/nutriVedaLatest/pages/login.html
+2. Enter your **real email address**
+3. Enter your real name
+4. Phone: Optional
+5. Click "Continue to Verify"
+6. **Open your email inbox**
+7. Look for email from EmailJS
+8. Copy 6-digit OTP from email
+9. Enter OTP on website
+10. Click "Verify & Continue"
+11. You should be redirected to home page
+12. Top-right should show "Hi, YourName"
 
 ---
 
-## 📂 **Project Structure**
+## 📁 Project Structure
 
 ```
-nutriveda/
-├── index.html              ← Homepage (Start here)
+nutriveda-website/nutriveda/
+├── index.html              # Home page
+├── cart.html               # Shopping cart
+├── checkout.html           # Checkout page
+├── confirmation.html       # Order confirmation
+├── emailjs-config.js       # ⚠️ UPDATE THIS FOR PRODUCTION
+├── config.js               # Global configuration
+├── README.md               # Setup instructions
+├── HOW_TO_RUN_APPLICATION.md  # This file
+│
 ├── pages/
-│   ├── products.html       ← All products page
-│   ├── cart.html          ← Shopping cart
-│   ├── login.html         ← Login/Register
+│   ├── login.html          # Email OTP login
+│   ├── wishlist.html       # Wishlist page
+│   ├── baby-care.html      # Category pages...
 │   └── ...
-├── css/
-│   ├── styles.css         ← Main styles
-│   ├── advanced-features.css
-│   └── icon-features.css
+│
 ├── js/
-│   ├── data.js            ← Product data (66+ products)
-│   ├── common.js          ← Shared functions
-│   ├── advanced-features.js
-│   └── icon-features.js   ← Catalog, chat, etc.
+│   ├── common.js           # Shared utilities
+│   └── icon-features.js    # Floating icons
+│
+├── css/
+│   ├── styles.css          # Main styles
+│   └── advanced-features.css
+│
 └── assets/
-    └── images/
+    └── images/             # Product images
 ```
 
 ---
 
-## 🧪 **Testing the Application**
+## 🔍 Verify Deployment
 
-### **After Starting Server:**
-
-1. **Homepage Should Load**
-   - URL: http://localhost:8080
-   - Shows NutriVeda homepage
-   - "Fuel Your Body with Pure Nature"
-
-2. **Test Navigation**
-   - Click "PRODUCTS" in navbar
-   - Click "ABOUT"
-   - Click "REVIEWS"
-   - Click "CONTACT"
-
-3. **Test Floating Icons (Right Side)**
-   - 📘 **Blue icon** → Product Catalog opens
-   - 📷 **Gray icon** → Upload Image opens
-   - 🐦 **Pink icon** → Social Share opens
-   - 💬 **White icon** → Customer Support opens
-
-4. **Test Product Catalog**
-   - Click 📘 icon
-   - Should show products with 3 view options
-   - Try view switcher buttons (⊞ ☰ 📖)
-   - Try filter buttons (All, Protein, Kids, etc.)
-   - Try search box
-   - Try clicking products
-
-5. **Test Other Features**
-   - Login/Register
-   - Add to Cart
-   - Wishlist
-   - Search products
-   - Browse categories
-
----
-
-## 🛑 **Stopping the Server**
-
-### **Method 1 (http-server):**
-- Press `Ctrl + C` in terminal
-- Type `Y` if asked "Terminate batch job?"
-
-### **Method 2 (Live Server):**
-- Click "Port: 5500" in VS Code status bar
-- Or press `Alt+L` then `Alt+C`
-
-### **Method 3 (Python):**
-- Press `Ctrl + C` in terminal
-
----
-
-## ⚡ **Quick Start Commands**
-
-### **Full Command (One Line):**
+### Check Git Status
 ```bash
-cd c:\vs_workSpace\nutriveda-website && npx http-server nutriveda -p 8080 -o
-```
-
-### **Or Create a Batch File:**
-
-1. Create `start-server.bat` in `nutriveda-website` folder:
-```batch
-@echo off
-echo Starting NutriVeda Application...
-npx http-server nutriveda -p 8080 -o
-```
-
-2. Double-click `start-server.bat` to start!
-
----
-
-## 🔧 **Troubleshooting**
-
-### **Problem: Port 8080 is already in use**
-
-**Solution 1:** Use different port
-```bash
-npx http-server nutriveda -p 8081 -o
-```
-
-**Solution 2:** Kill existing process
-```bash
-netstat -ano | findstr :8080
-taskkill /PID <PID_NUMBER> /F
-```
-
-### **Problem: npx not found**
-
-**Solution:** Install Node.js
-- Download from: https://nodejs.org
-- Install LTS version
-- Restart terminal
-- Try again
-
-### **Problem: Browser doesn't open automatically**
-
-**Solution:** Manually open browser
-- Go to: http://localhost:8080
-- Or: http://127.0.0.1:8080
-
-### **Problem: Page shows 404 Not Found**
-
-**Solution:** Check you're in correct directory
-```bash
-# Should see index.html when you list files
 cd c:\vs_workSpace\nutriveda-website\nutriveda
-dir
+git status
 ```
 
-### **Problem: Icons not working after starting**
+**Expected Output:**
+```
+On branch main
+Your branch is up to date with 'origin/main'.
+nothing to commit, working tree clean
+```
 
-**Solution:** Hard refresh browser
-- Windows: `Ctrl + Shift + R` or `Ctrl + F5`
-- Mac: `Cmd + Shift + R`
-
-### **Problem: CSS/JS not loading (old version showing)**
-
-**Solution:** Clear browser cache
-1. Press `F12` (DevTools)
-2. Right-click refresh button
-3. Select "Empty Cache and Hard Reload"
-
----
-
-## 📱 **Accessing from Mobile Device**
-
-### **Step 1: Find Your Computer's IP**
+### Check Latest Commits
 ```bash
-ipconfig
-```
-Look for "IPv4 Address" (e.g., 192.168.0.6)
-
-### **Step 2: Start Server**
-```bash
-npx http-server nutriveda -p 8080
+git log --oneline -5
 ```
 
-### **Step 3: On Mobile**
-- Connect to same WiFi network
-- Open browser
-- Go to: `http://YOUR_IP:8080`
-- Example: `http://192.168.0.6:8080`
+**Expected Output:**
+```
+87d566c Update README with EmailJS setup
+a94b3eb Added production email OTP with EmailJS
+d1ad879 Changed login from mobile to EMAIL OTP
+...
+```
+
+### Check Live Site
+1. Open: https://rnidigonda.github.io/nutriVedaLatest/
+2. Should see "Nutri Veda" branding
+3. Top-right should have "Login" button
+4. Footer should show "Owned by Ravindar Nidigonda"
 
 ---
 
-## 🎯 **Recommended Workflow**
+## 🔐 Login System Details
 
-### **For Development:**
-```bash
-# Terminal 1: Start server
-npx http-server nutriveda -p 8080
+### What Happens When User Logs In?
 
-# Edit files in VS Code
-# Browser at: http://localhost:8080
-# Refresh browser to see changes (Ctrl+R)
+1. **User enters email** → Stored temporarily
+2. **User enters name & phone** → Stored temporarily
+3. **OTP generated** → 6 random digits
+4. **Email sent** (production) or **OTP displayed** (demo)
+5. **User enters OTP** → Verified (max 5 attempts)
+6. **OTP expires** → After 5 minutes
+7. **Login successful** → Data saved to localStorage:
+   - `nv_user_email`
+   - `nv_user_first_name`
+   - `nv_user_last_name`
+   - `nv_user_phone`
+   - `nv_user_logged_in`
+   - `nv_user_login_time`
+
+### Where is User Data Used?
+- **Navbar:** Shows "Hi, FirstName"
+- **Account Dropdown:** Shows full name and email
+- **Cart Page:** Pre-fills checkout form
+- **Checkout:** Auto-fills email and phone
+
+### Logout
+- Click "Logout" in account dropdown
+- Clears all localStorage
+- Redirects to home page
+
+---
+
+## 🆘 Troubleshooting
+
+### Issue: Demo mode not showing OTP
+**Check:**
+1. Open browser console (F12)
+2. Look for: `🔐 DEMO MODE - Your OTP Code`
+3. OTP should be in console and on screen
+4. Check if running on localhost or file://
+
+**Fix:**
+- Make sure you're NOT on github.io (that's production)
+- Use localhost or file:// for demo mode
+
+### Issue: Production site not sending email
+**Check:**
+1. Is `emailjs-config.js` updated?
+2. Is `IS_CONFIGURED: true`?
+3. Are API keys correct?
+4. Check browser console for errors
+5. Check EmailJS dashboard for quota/errors
+
+**Fix:**
+1. Update `emailjs-config.js` with real keys
+2. Set `IS_CONFIGURED: true`
+3. Commit and push to GitHub
+4. Wait 2-3 minutes
+5. Clear browser cache
+6. Try again
+
+### Issue: "Email service not configured"
+**Fix:**
+- Update `emailjs-config.js`
+- Set `IS_CONFIGURED: true`
+- Commit and push
+
+### Issue: Email not received
+**Check:**
+1. Spam folder
+2. Email address correct?
+3. EmailJS dashboard for logs
+4. Quota (200/month on free plan)
+
+### Issue: Invalid OTP
+**Check:**
+1. OTP expires after 5 minutes
+2. Max 5 attempts per OTP
+3. Copy OTP carefully (6 digits only)
+4. In demo mode, check console for OTP
+
+### Issue: Still shows demo mode on live site
+**Fix:**
+1. Clear browser cache (Ctrl+Shift+Delete)
+2. Try incognito/private window
+3. Verify URL is github.io (not file://)
+
+---
+
+## 📊 Browser Console Messages
+
+### Demo Mode (Localhost) - Expected Messages
+```
+🧪 Running in DEMO MODE
+🔐 DEMO MODE - Your OTP Code
+OTP: 123456
+📧 Email: user@example.com
+ℹ️ In production, this will be sent via email
 ```
 
-### **For Testing:**
-```bash
-# Start server with auto-open
-npx http-server nutriveda -p 8080 -o
+### Production Mode - Expected Messages
+```
+🔒 Running in PRODUCTION MODE
+✅ EmailJS initialized for production
+✅ Email sent successfully
+```
 
-# Test all features
-# Test on different browsers
-# Test on mobile (optional)
+### Not Configured - Warning Messages
+```
+⚠️ EmailJS Not Configured
+To enable production email OTP:
+1. Sign up at https://www.emailjs.com/
+2. Get your API keys
+3. Update emailjs-config.js with your keys
 ```
 
 ---
 
-## 📊 **Server Options**
+## ✅ Quick Checklist
 
-### **Basic:**
-```bash
-npx http-server nutriveda -p 8080
-```
+### Before EmailJS Setup
+- [x] Code deployed to GitHub
+- [x] Demo mode working locally
+- [x] All features tested
+- [ ] EmailJS account created
+- [ ] API keys obtained
+- [ ] Configuration file updated
+- [ ] Production email tested
 
-### **With Auto-Open:**
-```bash
-npx http-server nutriveda -p 8080 -o
-```
-
-### **With CORS Enabled:**
-```bash
-npx http-server nutriveda -p 8080 --cors
-```
-
-### **With Caching Disabled:**
-```bash
-npx http-server nutriveda -p 8080 -c-1
-```
-
-### **Silent Mode:**
-```bash
-npx http-server nutriveda -p 8080 -s
-```
+### After EmailJS Setup
+- [ ] EmailJS account active
+- [ ] Gmail service connected
+- [ ] Email template created
+- [ ] API keys copied
+- [ ] `emailjs-config.js` updated
+- [ ] `IS_CONFIGURED: true` set
+- [ ] Changes pushed to GitHub
+- [ ] Live site tested
+- [ ] Email OTP received
+- [ ] Login successful
 
 ---
 
-## 🌟 **Features to Test**
+## 💡 Tips
 
-### **Core Features:**
-- [x] Homepage loads
-- [x] Navigation works
-- [x] Floating icons work
-- [x] Product catalog opens
-- [x] 3 view modes (Grid, List, Magazine)
-- [x] Category filters work
-- [x] Search products works
-- [x] Upload image modal works
-- [x] Social share modal works
-- [x] Customer support chat works
+### For Testing
+1. Use Chrome DevTools (F12) to debug
+2. Check console for detailed logs
+3. Test demo mode first (locally)
+4. Then test production (live site)
 
-### **Advanced Features:**
-- [x] Login/Register
-- [x] Add to cart
-- [x] Wishlist functionality
-- [x] Sticky cart bar
-- [x] Quick view products
-- [x] Live search
-- [x] Product recommendations
-- [x] Chatbot responses
+### For EmailJS
+1. Free plan = 200 emails/month (plenty!)
+2. Keep template ID as `template_otp_login`
+3. Use Gmail for reliability
+4. Check spam if email not received
+
+### For Deployment
+1. Always commit changes
+2. Wait 2-3 min after push
+3. Clear cache after deployment
+4. Test in incognito mode
 
 ---
 
-## 📝 **Environment Information**
+## 📞 Contact & Support
 
-Your current setup:
-- **OS:** Windows
-- **Platform:** win32
-- **Shell:** cmd
-- **Node.js:** v24.15.0
-- **Project Path:** `c:\vs_workSpace\nutriveda-website\nutriveda`
+**Owner:** Ravindar Nidigonda  
+**Location:** Chandanagar, Hyderabad 500049  
+**Email:** customercare@nutriveda.com  
+**Phone:** +91 78936 39037  
+**Website:** https://nutriveda.shop  
 
----
-
-## 🎉 **Success Checklist**
-
-After starting the server, you should see:
-
-- [x] Terminal shows "Available on: http://127.0.0.1:8080"
-- [x] Browser opens automatically (or open manually)
-- [x] Homepage displays correctly
-- [x] NutriVeda logo visible
-- [x] Navigation menu works
-- [x] 4 floating icons visible on right side
-- [x] No console errors (F12 → Console tab)
-- [x] All CSS loaded (no unstyled content)
-- [x] All JavaScript loaded (icons clickable)
+**Repository:** https://github.com/rnidigonda/nutriVedaLatest  
+**Live Site:** https://rnidigonda.github.io/nutriVedaLatest/  
 
 ---
 
-## 🔗 **Important URLs**
+## 🎉 Summary
 
-### **Local Development:**
-- Homepage: http://localhost:8080
-- Products: http://localhost:8080/pages/products.html
-- Cart: http://localhost:8080/pages/cart.html
-- Login: http://localhost:8080/pages/login.html
+### What Works Now
+✅ Full e-commerce website  
+✅ Email OTP login (demo mode)  
+✅ Shopping cart & wishlist  
+✅ Product catalog  
+✅ Checkout system  
+✅ All deployed to GitHub Pages  
 
-### **Alternative Localhost:**
-- http://127.0.0.1:8080
-- http://127.0.0.1:8080/pages/products.html
+### What You Need to Do
+⏳ Create EmailJS account (FREE)  
+⏳ Get API keys (2 minutes)  
+⏳ Update `emailjs-config.js` (1 minute)  
+⏳ Push to GitHub (1 minute)  
+⏳ Test on live site (2 minutes)  
 
-### **Network Access:**
-- http://[YOUR_IP]:8080
-- Example: http://192.168.0.6:8080
-
----
-
-## 🚀 **Quick Start Summary**
-
-### **Fastest Way to Run:**
-
-```bash
-# 1. Open terminal
-# 2. Run this command:
-cd c:\vs_workSpace\nutriveda-website && npx http-server nutriveda -p 8080 -o
-```
-
-**Done!** Application opens in browser automatically! 🎉
+**Total Time:** 10 minutes ⚡
 
 ---
 
-## 💡 **Pro Tips**
+## 🚀 Ready to Launch!
 
-1. **Keep Terminal Open**
-   - Server runs as long as terminal is open
-   - Don't close terminal while using app
+Your application is **fully deployed and working**!
 
-2. **Multiple Terminals**
-   - Open new terminal for other commands
-   - Keep server running in first terminal
+Just configure EmailJS (10 minutes) and you'll have production email OTP.
 
-3. **Auto-Refresh**
-   - Use Live Server extension for auto-refresh
-   - Or press Ctrl+R to refresh manually
+**Start here:** https://www.emailjs.com/
 
-4. **DevTools**
-   - Press F12 to open DevTools
-   - Check Console for errors
-   - Check Network tab for file loading
-
-5. **Hard Refresh**
-   - Use `Ctrl+Shift+R` after code changes
-   - Ensures latest files are loaded
-
----
-
-## 📖 **Next Steps**
-
-After running the application:
-
-1. **Explore Features**
-   - Test product catalog
-   - Try all 3 view modes
-   - Test chatbot
-   - Browse products
-
-2. **Test Responsiveness**
-   - Resize browser window
-   - Test on mobile (optional)
-   - Check all breakpoints
-
-3. **Review Documentation**
-   - Read feature guides in project folder
-   - Check COMPLETE_FEATURES_SUMMARY.md
-   - Review DEPLOYMENT guides
-
-4. **Prepare for Production**
-   - Review PRODUCTION_DEPLOYMENT_GUIDE.md
-   - Test all features thoroughly
-   - Prepare files for upload
-
----
-
-## ✅ **You're All Set!**
-
-**To start the application right now:**
-
-```bash
-cd c:\vs_workSpace\nutriveda-website
-npx http-server nutriveda -p 8080 -o
-```
-
-**Then:**
-- Browser opens automatically to http://localhost:8080
-- Test all features
-- Enjoy your NutriVeda application!
-
----
-
-**Last Updated:** June 25, 2026  
-**Status:** ✅ READY TO RUN  
-**Server:** http-server (npx)  
-**Port:** 8080  
-**Auto-Open:** YES  
-
-🎉 **Happy Testing!** 🎉
+Good luck with your launch! 🎊
