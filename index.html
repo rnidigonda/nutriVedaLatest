@@ -809,18 +809,20 @@
         const productInterest = document.getElementById('productInterest').value || 'Not specified';
         const userMessage = document.getElementById('userMessage').value;
         
-        // Use the OTP template temporarily (template_2m1zrm9) with modified parameters
-        // This will send to customercare.nutriveda@gmail.com
+        // Prepare EmailJS template parameters for contact form
         const templateParams = {
           to_email: 'customercare.nutriveda@gmail.com',
-          firstName: userName,
-          otp: `NEW ENQUIRY FROM WEBSITE\n\nCustomer: ${userName}\nEmail: ${userEmail}\nPhone: +91 ${userPhone}\nProduct Interest: ${productInterest}\n\nMessage:\n${userMessage}\n\nPlease respond to: ${userEmail}`
+          from_name: userName,
+          from_email: userEmail,
+          phone: userPhone,
+          product_interest: productInterest,
+          message: userMessage
         };
         
-        // Send email using the OTP template
+        // Send email using the contact form template
         const response = await emailjs.send(
           EMAILJS_CONFIG.SERVICE_ID,
-          EMAILJS_CONFIG.TEMPLATE_ID,  // Use existing OTP template
+          'template_contact_form',  // New dedicated contact form template
           templateParams,
           EMAILJS_CONFIG.PUBLIC_KEY
         );
