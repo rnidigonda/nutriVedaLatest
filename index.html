@@ -337,6 +337,11 @@
 <link rel="stylesheet" href="css/styles.css">
 <link rel="stylesheet" href="css/advanced-features.css?v=1">
 <link rel="stylesheet" href="css/icon-features.css?v=3">
+
+<!-- EmailJS Library for Contact Form -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script type="text/javascript" src="emailjs-config.js"></script>
+
 <script src="config.js"></script>
 </head>
 <body>
@@ -761,6 +766,16 @@
 
 <!-- Contact Form Handler -->
 <script>
+  // Initialize EmailJS
+  if (typeof emailjs !== 'undefined' && typeof EMAILJS_CONFIG !== 'undefined') {
+    if (EMAILJS_CONFIG.IS_CONFIGURED) {
+      emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+      console.log('✅ EmailJS initialized for contact form');
+    } else {
+      console.warn('⚠️ EmailJS not configured');
+    }
+  }
+  
   // Handle contact form submission with EmailJS
   const contactForm = document.getElementById('contactForm');
   const submitBtn = document.getElementById('submitBtn');
@@ -769,6 +784,15 @@
   if (contactForm) {
     contactForm.addEventListener('submit', async function(e) {
       e.preventDefault();
+      
+      // Check if EmailJS is available
+      if (typeof emailjs === 'undefined') {
+        console.error('❌ EmailJS library not loaded');
+        formStatus.style.display = 'block';
+        formStatus.style.color = '#dc3545';
+        formStatus.innerHTML = '❌ <strong>Error:</strong> Email service not available. Please contact us at <a href="mailto:customercare.nutriveda@gmail.com">customercare.nutriveda@gmail.com</a>';
+        return;
+      }
       
       // Disable submit button
       submitBtn.disabled = true;
@@ -799,7 +823,7 @@
         // Send email using EmailJS
         const response = await emailjs.send(
           EMAILJS_CONFIG.SERVICE_ID,
-          'template_contact_form',  // We'll create this template
+          'template_contact_form',  // Template ID you need to create
           templateParams,
           EMAILJS_CONFIG.PUBLIC_KEY
         );
@@ -833,8 +857,20 @@
         
       } catch (error) {
         console.error('❌ Form submission error:', error);
+        
+        let errorMessage = '❌ <strong>Oops!</strong> Something went wrong. ';
+        
+        // Check for specific errors
+        if (error.text && error.text.includes('Template ID')) {
+          errorMessage += 'Email template not found. Please contact support at <a href="mailto:customercare.nutriveda@gmail.com">customercare.nutriveda@gmail.com</a>';
+        } else if (error.text) {
+          errorMessage += `Error: ${error.text}. Please try again or contact us at <a href="mailto:customercare.nutriveda@gmail.com">customercare.nutriveda@gmail.com</a>';
+        } else {
+          errorMessage += 'Please try again or contact us directly at <a href="mailto:customercare.nutriveda@gmail.com">customercare.nutriveda@gmail.com</a>';
+        }
+        
         formStatus.style.color = '#dc3545';
-        formStatus.innerHTML = '❌ <strong>Oops!</strong> Something went wrong. Please try again or contact us directly at <a href="mailto:customercare.nutriveda@gmail.com">customercare.nutriveda@gmail.com</a>';
+        formStatus.innerHTML = errorMessage;
       } finally {
         // Re-enable submit button
         submitBtn.disabled = false;
