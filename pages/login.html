@@ -293,17 +293,54 @@
     const otpNotice = document.getElementById('otpNotice');
     const otpNoticeText = document.getElementById('otpNoticeText');
     const demoOtpDisplay = document.getElementById('demoOtpDisplay');
+    const environmentBadge = document.getElementById('environmentBadge');
     
-    const isDemo = isDemoEnvironment();
+    // Check if EmailJS is configured
+    const isEmailJSConfigured = typeof EMAILJS_CONFIG !== 'undefined' && EMAILJS_CONFIG.IS_CONFIGURED;
+    const hostname = window.location.hostname;
+    const isProductionDomain = hostname !== 'localhost' && 
+                                hostname !== '127.0.0.1' && 
+                                hostname !== '' && 
+                                window.location.protocol !== 'file:';
     
-    if (isDemo) {
+    // Determine actual mode
+    const isDemo = !isEmailJSConfigured || 
+                   hostname === 'localhost' || 
+                   hostname === '127.0.0.1' || 
+                   hostname === '' ||
+                   window.location.protocol === 'file:';
+    
+    console.log('Configuration check:', {
+      hostname: hostname,
+      isEmailJSConfigured: isEmailJSConfigured,
+      isProductionDomain: isProductionDomain,
+      actualMode: isDemo ? 'DEMO' : 'PRODUCTION'
+    });
+    
+    if (!isEmailJSConfigured && isProductionDomain) {
+      // Production domain but EmailJS not configured - show warning
+      environmentBadge.innerHTML = '<span style="background: #ffc107; color: #000; padding: 6px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);">⚠️ DEMO MODE - EmailJS Not Configured</span>';
+      
+      otpNotice.style.display = 'block';
+      otpNotice.style.background = '#fff3cd';
+      otpNotice.style.borderColor = '#ffc107';
+      otpNotice.innerHTML = '<strong style="color: #856404;">⚠️ EmailJS Not Configured:</strong> <span style="color: #856404;">OTP will appear on screen (demo mode). To enable email delivery, please configure EmailJS in emailjs-config.js</span>';
+      
+    } else if (isDemo) {
+      // Demo mode (localhost or not configured)
+      environmentBadge.innerHTML = '<span style="background: #28a745; color: white; padding: 6px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);">🧪 DEMO MODE - Testing</span>';
+      
       otpNotice.style.display = 'block';
       otpNotice.style.background = '#fff3cd';
       otpNotice.style.borderColor = '#ffeaa7';
       otpNotice.querySelector('strong').style.color = '#856404';
       otpNoticeText.textContent = 'Demo Mode: OTP will appear on screen (not sent via email)';
       otpNoticeText.style.color = '#856404';
+      
     } else {
+      // Production mode with EmailJS configured
+      environmentBadge.innerHTML = '<span style="background: linear-gradient(135deg, #2d5a3d, #3d7a52); color: white; padding: 6px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; box-shadow: 0 2px 8px rgba(45, 90, 61, 0.3);">🔒 PRODUCTION - Email OTP</span>';
+      
       otpNotice.style.display = 'block';
       otpNoticeText.textContent = 'You will receive a 6-digit OTP via email';
     }
@@ -646,6 +683,13 @@
   function isDemoEnvironment() {
     const hostname = window.location.hostname;
     const protocol = window.location.protocol;
+    
+    // Force demo mode if EmailJS is not configured (even on production domain)
+    if (typeof EMAILJS_CONFIG !== 'undefined' && !EMAILJS_CONFIG.IS_CONFIGURED) {
+      console.log('⚠️ EmailJS not configured - forcing DEMO MODE');
+      return true;
+    }
+    
     return hostname === 'localhost' || 
            hostname === '127.0.0.1' || 
            hostname === '' ||  // file:// protocol has empty hostname
@@ -748,7 +792,10 @@
         
         // Check if EmailJS is configured
         if (!EMAILJS_CONFIG.IS_CONFIGURED) {
-          throw new Error('Email service not configured yet. Please set up EmailJS or run in demo mode (localhost).');
+          // This should not happen since isDemoEnvironment() forces demo mode
+          // But just in case, show a helpful message
+          console.warn('EmailJS not configured in production mode - this should not happen');
+          throw new Error('Email service not configured. The page should be in demo mode.');
         }
         
         const result = await sendEmailOTPAPI(userEmail, firstName);
