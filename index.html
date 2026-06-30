@@ -766,40 +766,45 @@
 
 <!-- Contact Form Handler -->
 <script>
-  // Initialize EmailJS
-  if (typeof emailjs !== 'undefined' && typeof EMAILJS_CONFIG !== 'undefined') {
-    if (EMAILJS_CONFIG.IS_CONFIGURED) {
-      emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
-      console.log('✅ EmailJS initialized for contact form');
-    } else {
-      console.warn('⚠️ EmailJS not configured');
-    }
-  }
-  
-  // Handle contact form submission with EmailJS
-  const contactForm = document.getElementById('contactForm');
-  const submitBtn = document.getElementById('submitBtn');
-  const formStatus = document.getElementById('formStatus');
-  
-  if (contactForm) {
-    contactForm.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      
-      // Check if EmailJS is available
-      if (typeof emailjs === 'undefined') {
-        console.error('❌ EmailJS library not loaded');
-        formStatus.style.display = 'block';
-        formStatus.style.color = '#dc3545';
-        formStatus.innerHTML = '❌ <strong>Error:</strong> Email service not available. Please contact us at <a href="mailto:customercare.nutriveda@gmail.com">customercare.nutriveda@gmail.com</a>';
-        return;
+  // Wait for DOM to be fully loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize EmailJS
+    if (typeof emailjs !== 'undefined' && typeof EMAILJS_CONFIG !== 'undefined') {
+      if (EMAILJS_CONFIG.IS_CONFIGURED) {
+        emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+        console.log('✅ EmailJS initialized for contact form');
+      } else {
+        console.warn('⚠️ EmailJS not configured');
       }
+    }
+    
+    // Handle contact form submission with EmailJS
+    const contactForm = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const formStatus = document.getElementById('formStatus');
+    
+    if (contactForm) {
+      console.log('✅ Contact form found, attaching event listener');
       
-      // Disable submit button
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending...';
-      formStatus.style.display = 'block';
-      formStatus.style.color = '#2d5a3d';
-      formStatus.textContent = '📧 Sending your enquiry...';
+      contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        console.log('📝 Form submitted, prevented default');
+        
+        // Check if EmailJS is available
+        if (typeof emailjs === 'undefined') {
+          console.error('❌ EmailJS library not loaded');
+          formStatus.style.display = 'block';
+          formStatus.style.color = '#dc3545';
+          formStatus.innerHTML = '❌ <strong>Error:</strong> Email service not available. Please contact us at <a href="mailto:customercare.nutriveda@gmail.com">customercare.nutriveda@gmail.com</a>';
+          return;
+        }
+        
+        // Disable submit button
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+        formStatus.style.display = 'block';
+        formStatus.style.color = '#2d5a3d';
+        formStatus.textContent = '📧 Sending your enquiry...';
       
       try {
         // Get form data
@@ -876,7 +881,10 @@
         submitBtn.textContent = 'Send Enquiry →';
       }
     });
+  } else {
+    console.error('❌ Contact form not found');
   }
+  }); // End DOMContentLoaded
 </script>
 
 </body>
