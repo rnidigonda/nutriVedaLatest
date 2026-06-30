@@ -10,16 +10,16 @@
 
 const EMAILJS_CONFIG = {
   // Get from EmailJS Dashboard > Account > API Keys
-  PUBLIC_KEY: 'YOUR_EMAILJS_PUBLIC_KEY',  // Replace with your public key
+  PUBLIC_KEY: 'oaiXtw91AoE3IlHIm',  // Your public key
   
   // Get from EmailJS Dashboard > Email Services
-  SERVICE_ID: 'service_nutriveda',  // Replace with your service ID
+  SERVICE_ID: 'service_fqqu0ri',  // Your Gmail service ID
   
   // Get from EmailJS Dashboard > Email Templates
-  TEMPLATE_ID: 'template_otp_login',  // Replace with your template ID
+  TEMPLATE_ID: 'template_2m1zrm9',  // Your template ID
   
   // Configuration status
-  IS_CONFIGURED: false  // Set to true after adding real keys above
+  IS_CONFIGURED: true  // ✅ CONFIGURED - Real emails will be sent!
 };
 
 // Validate configuration
