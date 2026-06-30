@@ -83,10 +83,10 @@ function renderFooter() {
         <div class="logo">Nutri<span>Veda</span></div>
         <p>Premium nutrition rooted in Ayurvedic wisdom and modern science. Based in Hyderabad, serving all of India.</p>
         <div class="footer-social">
-          <div class="social-btn">📘</div>
-          <div class="social-btn">📸</div>
-          <div class="social-btn">🐦</div>
-          <div class="social-btn">💬</div>
+          <div class="social-btn" onclick="showProductCatalog()" style="cursor:pointer;" title="Product Catalog">📘</div>
+          <div class="social-btn" onclick="openImageUpload()" style="cursor:pointer;" title="Upload Image">📸</div>
+          <div class="social-btn" onclick="openSocialShare()" style="cursor:pointer;" title="Share on Social Media">🐦</div>
+          <div class="social-btn" onclick="openSupportChat()" style="cursor:pointer;" title="Customer Support">💬</div>
         </div>
       </div>
       <div class="footer-col">

@@ -6,6 +6,7 @@
 <title>Traditional Spices — NutriVeda</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/icon-features.css?v=3">
 <style>
   .category-scroll-wrapper { background: var(--cream-light); padding: 20px 0; margin-bottom: 30px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .category-scroll-wrapper::-webkit-scrollbar { height: 6px; }
@@ -144,8 +145,27 @@
 
 <div id="footer-placeholder"></div>
 
+
+
+<!-- Icon Action Bar -->
+<div class="icon-action-bar">
+  <button class="icon-action-btn catalog" onclick="showProductCatalog()" data-tooltip="Product Catalog">
+    ??
+  </button>
+  <button class="icon-action-btn camera" onclick="openImageUpload()" data-tooltip="Upload Image">
+    ??
+  </button>
+  <button class="icon-action-btn social" onclick="openSocialShare()" data-tooltip="Share on Social">
+    ??
+  </button>
+  <button class="icon-action-btn chat" onclick="openSupportChat()" data-tooltip="Customer Support">
+    ??
+  </button>
+</div>
+
 <script src="../js/data.js?v=3"></script>
 <script src="../js/common.js"></script>
+<script src="../js/icon-features.js?v=3"></script>
 <script>
   function scrollCategories(direction) {
     const container = document.getElementById('categoryScroll');

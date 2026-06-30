@@ -272,17 +272,33 @@ function searchCatalog() {
 }
 
 function quickAddToCart(productId) {
-  if (typeof addToCart === 'function') {
-    addToCart(productId);
+  // Convert to number for comparison
+  const numId = parseInt(productId);
+  
+  if (typeof addToCartById === 'function') {
+    addToCartById(numId);
+    showToast('🛒 Product added to cart!', 'success');
+  } else if (typeof addToCart === 'function') {
+    addToCart(numId);
     showToast('🛒 Product added to cart!', 'success');
   } else {
-    showToast('✅ Product selected!', 'success');
+    showToast('⚠️ Cart function not available', 'error');
+    console.error('addToCartById function not found in common.js');
   }
 }
 
 function viewProductDetails(productId) {
-  const product = (window.PRODUCTS || []).find(p => p.id === productId);
-  if (!product) return;
+  // Convert to number for comparison
+  const numId = parseInt(productId);
+  
+  // Try to get products from main PRODUCTS array, fallback to CATALOG_PRODUCTS
+  const products = window.PRODUCTS || CATALOG_PRODUCTS;
+  const product = products.find(p => p.id === numId);
+  
+  if (!product) {
+    showToast('⚠️ Product not found', 'warning');
+    return;
+  }
   
   const detailModal = document.createElement('div');
   detailModal.className = 'icon-modal detail-modal';
@@ -295,23 +311,41 @@ function viewProductDetails(productId) {
       <div class="icon-modal-body">
         <div class="detail-grid">
           <div class="detail-image">
-            <img src="${product.image}" alt="${product.name}" onerror="this.src='../assets/placeholder.jpg'">
+            <div class="detail-emoji">${product.emoji || '🏷️'}</div>
+            ${product.badge ? `<div class="detail-badge">${product.badge}</div>` : ''}
           </div>
           <div class="detail-info">
             <p class="detail-category">${product.category}</p>
-            <h3 class="detail-price">₹${product.price}</h3>
+            <p class="detail-desc">${product.desc || ''}</p>
+            <div class="detail-rating">
+              ${'⭐'.repeat(Math.floor(product.rating || 4.5))} 
+              <span>${product.rating || 4.5} (${product.reviews || 0} reviews)</span>
+            </div>
+            <div class="detail-price-box">
+              <span class="detail-price">₹${product.price}</span>
+              ${product.mrp ? `<span class="detail-mrp">₹${product.mrp}</span>` : ''}
+              ${product.mrp ? `<span class="detail-save">Save ₹${product.mrp - product.price}</span>` : ''}
+            </div>
             <div class="detail-benefits">
-              <h4>Benefits:</h4>
+              <h4>✓ Key Benefits:</h4>
               <ul>
                 ${(product.benefits || []).map(b => `<li>${b}</li>`).join('')}
               </ul>
             </div>
+            ${(product.tags || []).length > 0 ? `
+              <div class="detail-tags">
+                ${product.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+              </div>
+            ` : ''}
             <div class="detail-actions">
-              <button class="btn-primary" onclick="addToCartFromDetail('${productId}')">
+              <button class="btn-primary" onclick="addToCartFromDetail(${numId})">
                 🛒 Add to Cart
               </button>
-              <button class="btn-secondary" onclick="addToWishlistFromDetail('${productId}')">
+              <button class="btn-secondary" onclick="addToWishlistFromDetail(${numId})">
                 ❤️ Add to Wishlist
+              </button>
+              <button class="btn-tertiary" onclick="closeIconModal()">
+                Close
               </button>
             </div>
           </div>
@@ -327,15 +361,27 @@ function viewProductDetails(productId) {
 }
 
 function addToCartFromDetail(productId) {
-  if (typeof addToCart === 'function') {
-    addToCart(productId);
+  const numId = parseInt(productId);
+  if (typeof addToCartById === 'function') {
+    addToCartById(numId);
+    showToast('🛒 Added to cart!', 'success');
+  } else if (typeof addToCart === 'function') {
+    addToCart(numId);
+    showToast('🛒 Added to cart!', 'success');
+  } else {
+    showToast('⚠️ Cart function not available', 'error');
+    console.error('addToCartById function not found in common.js');
   }
   closeIconModal();
 }
 
 function addToWishlistFromDetail(productId) {
+  const numId = parseInt(productId);
   if (typeof toggleWishlist === 'function') {
-    toggleWishlist(productId);
+    toggleWishlist(numId);
+    showToast('❤️ Added to wishlist!', 'success');
+  } else {
+    showToast('✓ Saved to wishlist!', 'success');
   }
 }
 
