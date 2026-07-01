@@ -435,7 +435,7 @@
   <div class="hero-bg-circle c2"></div>
   <div class="hero-content">
     <div id="welcomeMessage" style="display:none;background:linear-gradient(135deg,rgba(45,90,61,0.1),rgba(245,216,122,0.1));padding:12px 20px;border-radius:12px;margin-bottom:16px;border:1px solid rgba(45,90,61,0.2);">
-      <span style="font-size:14px;color:var(--primary);font-weight:600;">👋 Welcome, <span id="userName"></span>!</span>
+      <span style="font-size:14px;color:var(--primary);font-weight:600;">👋 Welcome, <span id="userNameDisplay"></span>!</span>
     </div>
     <div class="hero-badge"><span class="dot"></span> 100% Natural & FSSAI Certified</div>
     <h1>Fuel Your Body with <em>Pure Nature</em></h1>
@@ -719,7 +719,7 @@
   
   if (isLoggedIn) {
     const welcomeMsg = document.getElementById('welcomeMessage');
-    const userNameSpan = document.getElementById('userName');
+    const userNameSpan = document.getElementById('userNameDisplay');
     
     if (welcomeMsg && userNameSpan) {
       if (firstName && firstName.trim() !== '') {
