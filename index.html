@@ -768,6 +768,8 @@
 <script>
   // Wait for DOM to be fully loaded
   document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 DOMContentLoaded fired - initializing contact form');
+    
     // Initialize EmailJS
     if (typeof emailjs !== 'undefined' && typeof EMAILJS_CONFIG !== 'undefined') {
       if (EMAILJS_CONFIG.IS_CONFIGURED) {
@@ -776,6 +778,10 @@
       } else {
         console.warn('⚠️ EmailJS not configured');
       }
+    } else {
+      console.error('❌ EmailJS or EMAILJS_CONFIG not available');
+      console.log('emailjs type:', typeof emailjs);
+      console.log('EMAILJS_CONFIG type:', typeof EMAILJS_CONFIG);
     }
     
     // Handle contact form submission with EmailJS
@@ -786,8 +792,14 @@
     if (contactForm) {
       console.log('✅ Contact form found, attaching event listener');
       
+      // Mark that handler is attached
+      contactForm.dataset.handlerAttached = 'true';
+      
+      // CRITICAL: Prevent form's default HTML submission
       contactForm.addEventListener('submit', async function(e) {
+        // Prevent form submission FIRST
         e.preventDefault();
+        e.stopPropagation();
         console.log('📝 Form submitted, prevented default');
         
         // Check if EmailJS is available
@@ -796,7 +808,16 @@
           formStatus.style.display = 'block';
           formStatus.style.color = '#dc3545';
           formStatus.innerHTML = '❌ <strong>Error:</strong> Email service not available. Please contact us at <a href="mailto:customercare.nutriveda@gmail.com">customercare.nutriveda@gmail.com</a>';
-          return;
+          return false;
+        }
+        
+        // Check if config is available
+        if (typeof EMAILJS_CONFIG === 'undefined') {
+          console.error('❌ EMAILJS_CONFIG not loaded');
+          formStatus.style.display = 'block';
+          formStatus.style.color = '#dc3545';
+          formStatus.innerHTML = '❌ <strong>Error:</strong> Email configuration not available. Please contact us at <a href="mailto:customercare.nutriveda@gmail.com">customercare.nutriveda@gmail.com</a>';
+          return false;
         }
         
         // Disable submit button
@@ -814,6 +835,8 @@
         const productInterest = document.getElementById('productInterest').value || 'Not specified';
         const userMessage = document.getElementById('userMessage').value;
         
+        console.log('📋 Form data collected:', { userName, userEmail, userPhone });
+        
         // Prepare EmailJS template parameters for contact form
         const templateParams = {
           to_email: 'customercare.nutriveda@gmail.com',
@@ -823,6 +846,8 @@
           product_interest: productInterest,
           message: userMessage
         };
+        
+        console.log('📤 Sending email with template:', EMAILJS_CONFIG.TEMPLATES.CONTACT_FORM);
         
         // Send email using the contact form template
         const response = await emailjs.send(
@@ -861,6 +886,7 @@
         
       } catch (error) {
         console.error('❌ Form submission error:', error);
+        console.log('Error details:', JSON.stringify(error, null, 2));
         
         let errorMessage = '❌ <strong>Oops!</strong> Something went wrong. ';
         
@@ -880,11 +906,27 @@
         submitBtn.disabled = false;
         submitBtn.textContent = 'Send Enquiry →';
       }
+      
+      return false; // Extra safety to prevent form submission
     });
   } else {
     console.error('❌ Contact form not found');
   }
   }); // End DOMContentLoaded
+
+// Backup: Also try on window.load in case DOMContentLoaded was missed
+window.addEventListener('load', function() {
+  console.log('🔄 Window load event - checking if form handler needs attachment');
+  const form = document.getElementById('contactForm');
+  if (form && !form.dataset.handlerAttached) {
+    console.log('⚠️ Form handler not attached yet, attaching now...');
+    form.dataset.handlerAttached = 'true';
+    // Re-trigger the initialization
+    document.dispatchEvent(new Event('DOMContentLoaded'));
+  } else if (form) {
+    console.log('✅ Form handler already attached');
+  }
+});
 </script>
 
 </body>
