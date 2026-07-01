@@ -101,7 +101,11 @@
             <div class="config-box">
                 Public Key: q9iLRAFk-h5pK4c-Y<br>
                 Service ID: service_i7o0wsp<br>
-                Template ID: template_j4hvu1m<br>
+                <br>
+                <strong>Templates:</strong><br>
+                - Login OTP: template_2m1zrm9<br>
+                - Contact Form: template_j4hvu1m ← Testing This<br>
+                <br>
                 To Email: customercare.nutriveda@gmail.com
             </div>
         </div>
@@ -155,7 +159,11 @@
         const CONFIG = {
             PUBLIC_KEY: 'q9iLRAFk-h5pK4c-Y',
             SERVICE_ID: 'service_i7o0wsp',
-            TEMPLATE_ID: 'template_j4hvu1m'
+            TEMPLATE_ID: 'template_j4hvu1m',  // Contact form template
+            TEMPLATES: {
+                LOGIN_OTP: 'template_2m1zrm9',
+                CONTACT_FORM: 'template_j4hvu1m'
+            }
         };
 
         // Test EmailJS initialization

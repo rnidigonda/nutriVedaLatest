@@ -16,7 +16,13 @@ const EMAILJS_CONFIG = {
   SERVICE_ID: 'service_i7o0wsp',  // Your Gmail service ID (CORRECT & ACTIVE)
   
   // Get from EmailJS Dashboard > Email Templates
-  TEMPLATE_ID: 'template_2m1zrm9',  // Your template ID
+  TEMPLATE_ID: 'template_2m1zrm9',  // Login OTP template ID (for backward compatibility)
+  
+  // Multiple Template IDs for different purposes
+  TEMPLATES: {
+    LOGIN_OTP: 'template_2m1zrm9',      // Login OTP email template
+    CONTACT_FORM: 'template_j4hvu1m'    // Contact form enquiry template
+  },
   
   // Configuration status
   IS_CONFIGURED: true  // ✅ CONFIGURED - Real emails will be sent!

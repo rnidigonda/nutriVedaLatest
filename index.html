@@ -827,7 +827,7 @@
         // Send email using the contact form template
         const response = await emailjs.send(
           EMAILJS_CONFIG.SERVICE_ID,
-          'template_j4hvu1m',  // Contact form template ID (NEW)
+          EMAILJS_CONFIG.TEMPLATES.CONTACT_FORM,  // Contact form template ID
           templateParams,
           EMAILJS_CONFIG.PUBLIC_KEY
         );
