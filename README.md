@@ -154,7 +154,7 @@ Copy this into your EmailJS template:
 ## 📞 Support
 
 **Website:** https://nutriveda.shop  
-**Email:** customercare@nutriveda.com  
+**Email:** customercare.nutriveda@gmail.com  
 **Phone:** +91 78936 39037  
 **Location:** Chandanagar, Hyderabad 500049
 

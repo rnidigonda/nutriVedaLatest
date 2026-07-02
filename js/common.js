@@ -112,7 +112,7 @@ function renderFooter() {
         <h4>Contact</h4>
         <ul>
           <li><a href="tel:+917893639037">📞 +91 78936 39037</a></li>
-          <li><a href="mailto:customercare@nutriveda.com">✉️ customercare@nutriveda.com</a></li>
+          <li><a href="mailto:customercare.nutriveda@gmail.com">✉️ customercare.nutriveda@gmail.com</a></li>
           <li><a href="#">📍 Chandanagar, Hyderabad 500049</a></li>
           <li><a href="cart.html">🛒 My Cart</a></li>
         </ul>
