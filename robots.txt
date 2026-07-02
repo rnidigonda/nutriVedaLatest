@@ -1,13 +1,13 @@
-# robots.txt for NutriVeda
+# robots.txt for Nutri Veda
+# https://nutriveda.shop
+
 User-agent: *
 Allow: /
 
-# Sitemaps
-Sitemap: https://rnidigonda.github.io/nutriVedaLatest/sitemap.xml
-
-# Disallow admin and config paths (if any)
+# Disallow admin and config pages
 Disallow: /admin/
 Disallow: /config/
+Disallow: /*.json$
 
 # Allow all pages and products
 Allow: /pages/
@@ -15,5 +15,8 @@ Allow: /assets/
 Allow: /css/
 Allow: /js/
 
-# Crawl delay (optional, adjust as needed)
+# Sitemap location
+Sitemap: https://nutriveda.shop/sitemap.xml
+
+# Crawl delay (optional, helps reduce server load)
 Crawl-delay: 1

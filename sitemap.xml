@@ -1,152 +1,170 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
   <!-- Homepage -->
   <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/</loc>
-    <lastmod>2025-01-15</lastmod>
+    <loc>https://nutriveda.shop/</loc>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   
-  <!-- Main Pages -->
+  <!-- Products Page -->
   <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/pages/products.html</loc>
-    <lastmod>2025-01-15</lastmod>
+    <loc>https://nutriveda.shop/pages/products.html</loc>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   
+  <!-- Cart Page -->
   <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/pages/cart.html</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/pages/checkout.html</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/pages/wishlist.html</loc>
-    <lastmod>2025-01-15</lastmod>
+    <loc>https://nutriveda.shop/pages/cart.html</loc>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
+  <!-- Checkout Page -->
   <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/pages/login.html</loc>
-    <lastmod>2025-01-15</lastmod>
+    <loc>https://nutriveda.shop/pages/checkout.html</loc>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
-  <!-- Category Pages -->
+  <!-- Login Page -->
   <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/pages/healthy-snacks.html</loc>
-    <lastmod>2025-01-15</lastmod>
+    <loc>https://nutriveda.shop/pages/login.html</loc>
+    <lastmod>2026-07-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <!-- Return Policy -->
+  <url>
+    <loc>https://nutriveda.shop/return-policy.html</loc>
+    <lastmod>2026-07-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <!-- Wishlist Page -->
+  <url>
+    <loc>https://nutriveda.shop/pages/wishlist.html</loc>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <!-- Product Categories -->
+  <url>
+    <loc>https://nutriveda.shop/pages/products.html?cat=protein</loc>
+    <lastmod>2026-07-02</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/pages/weight-management.html</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://nutriveda.shop/pages/products.html?cat=vitamins</loc>
+    <lastmod>2026-07-02</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/pages/kids-nutrition.html</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://nutriveda.shop/pages/products.html?cat=herbal</loc>
+    <lastmod>2026-07-02</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/pages/immunity.html</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://nutriveda.shop/pages/products.html?cat=kids</loc>
+    <lastmod>2026-07-02</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   
+  <!-- Individual Product Pages (Top Products) -->
   <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/pages/bone-health.html</loc>
-    <lastmod>2025-01-15</lastmod>
+    <loc>https://nutriveda.shop/pages/product.html?id=1</loc>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://nutriveda.shop/assets/product-protein-1.jpg</image:loc>
+      <image:title>VedaProtein Elite Whey Protein Powder</image:title>
+      <image:caption>24g protein per scoop, Chocolate & Vanilla flavors</image:caption>
+    </image:image>
   </url>
   
   <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/pages/hair-care.html</loc>
-    <lastmod>2025-01-15</lastmod>
+    <loc>https://nutriveda.shop/pages/product.html?id=2</loc>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://nutriveda.shop/assets/product-protein-2.jpg</image:loc>
+      <image:title>PlantPower Vegan Protein</image:title>
+      <image:caption>100% plant-based, 20g protein per serving</image:caption>
+    </image:image>
   </url>
   
   <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/pages/health-mix.html</loc>
-    <lastmod>2025-01-15</lastmod>
+    <loc>https://nutriveda.shop/pages/product.html?id=3</loc>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://nutriveda.shop/assets/product-vitamin-1.jpg</image:loc>
+      <image:title>Daily Vitality Multivitamin</image:title>
+      <image:caption>Complete daily multivitamin with D3, B12, Zinc & Iron</image:caption>
+    </image:image>
   </url>
   
   <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/pages/makhana.html</loc>
-    <lastmod>2025-01-15</lastmod>
+    <loc>https://nutriveda.shop/pages/product.html?id=4</loc>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://nutriveda.shop/assets/product-omega-1.jpg</image:loc>
+      <image:title>OmegaVeda Fish Oil</image:title>
+      <image:caption>High-strength Omega-3 EPA & DHA</image:caption>
+    </image:image>
   </url>
   
   <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/pages/spices.html</loc>
-    <lastmod>2025-01-15</lastmod>
+    <loc>https://nutriveda.shop/pages/product.html?id=5</loc>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://nutriveda.shop/assets/product-herbal-1.jpg</image:loc>
+      <image:title>AshwaBalance Herbal Blend</image:title>
+      <image:caption>Ashwagandha, Brahmi & Shatavari for stress relief</image:caption>
+    </image:image>
   </url>
   
   <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/pages/tea-blends.html</loc>
-    <lastmod>2025-01-15</lastmod>
+    <loc>https://nutriveda.shop/pages/product.html?id=6</loc>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://nutriveda.shop/assets/product-turmeric-1.jpg</image:loc>
+      <image:title>TurmerCure Gold Blend</image:title>
+      <image:caption>Turmeric, Black Pepper & Ginger anti-inflammatory blend</image:caption>
+    </image:image>
   </url>
   
   <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/pages/baby-care.html</loc>
-    <lastmod>2025-01-15</lastmod>
+    <loc>https://nutriveda.shop/pages/product.html?id=7</loc>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   
-  <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/pages/malts.html</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/pages/instant-mix.html</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/pages/cooking.html</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://rnidigonda.github.io/nutriVedaLatest/pages/amla.html</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
 </urlset>
