@@ -559,7 +559,7 @@
       
       const response = await emailjs.send(
         EMAILJS_CONFIG.SERVICE_ID,
-        EMAILJS_CONFIG.TEMPLATE_ID,
+        EMAILJS_CONFIG.TEMPLATES.LOGIN_OTP,  // Use LOGIN_OTP template from TEMPLATES object
         templateParams
       );
       
