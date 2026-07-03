@@ -901,9 +901,19 @@
         // Save user data to Google Sheets
         saveUserToGoogleSheets(userEmail, userFirstName, userLastName, userPhone);
         
-        // Redirect to home page after 1.5 seconds
+        // Redirect after 1.5 seconds
         setTimeout(() => {
-          window.location.href = '../index.html';
+          // Check if there's a return URL (user came from checkout/cart)
+          const urlParams = new URLSearchParams(window.location.search);
+          const returnUrl = urlParams.get('returnUrl');
+          
+          if (returnUrl) {
+            // Redirect back to where they came from
+            window.location.href = decodeURIComponent(returnUrl);
+          } else {
+            // Default: go to home page
+            window.location.href = '../index.html';
+          }
         }, 1500);
       } else {
         throw new Error('Invalid OTP');
@@ -988,7 +998,18 @@
   window.addEventListener('DOMContentLoaded', function() {
     const isLoggedIn = localStorage.getItem('nv_user_logged_in');
     if (isLoggedIn === 'true') {
-      window.location.href = '../index.html';
+      // User already logged in - check if there's a return URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const returnUrl = urlParams.get('returnUrl');
+      
+      if (returnUrl) {
+        // Redirect back to where they came from
+        window.location.href = decodeURIComponent(returnUrl);
+      } else {
+        // Default: go to home page
+        window.location.href = '../index.html';
+      }
+      return; // Stop further execution
     }
     
     // Update OTP notice text based on environment
