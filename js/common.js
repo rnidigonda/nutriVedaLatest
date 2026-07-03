@@ -147,6 +147,17 @@ function getUserEmail() {
   return localStorage.getItem('nv_user_email') || '';
 }
 
+// Helper function to get correct login path based on current page location
+function getLoginPath() {
+  const currentPath = window.location.pathname;
+  // If we're already in /pages/ folder, use relative path
+  if (currentPath.includes('/pages/')) {
+    return 'login.html';
+  }
+  // If we're in root, use pages/login.html
+  return 'pages/login.html';
+}
+
 function logoutUser() {
   localStorage.removeItem('nv_user_logged_in');
   localStorage.removeItem('nv_user_phone');
@@ -154,7 +165,7 @@ function logoutUser() {
   localStorage.removeItem('nv_user_last_name');
   localStorage.removeItem('nv_user_email');
   localStorage.removeItem('nv_user_login_time');
-  window.location.href = 'pages/login.html';
+  window.location.href = getLoginPath();
 }
 
 function updateNavForUser() {
@@ -252,11 +263,12 @@ function updateNavForUser() {
     }
   } else {
     // User not logged in - show login button
+    const loginPath = getLoginPath();
     if (loginNavItem) {
-      loginNavItem.innerHTML = '<a href="pages/login.html" class="nav-login">👤 Login</a>';
+      loginNavItem.innerHTML = `<a href="${loginPath}" class="nav-login">👤 Login</a>`;
     }
     if (loginMobile) {
-      loginMobile.href = 'pages/login.html';
+      loginMobile.href = loginPath;
       loginMobile.title = 'Login';
       loginMobile.onclick = null;
     }
@@ -382,6 +394,7 @@ function highlightMatch(text, query) {
 // Display search results
 function displaySearchResults(results, query) {
   const resultsContainer = document.getElementById('searchResults');
+  const currentPath = window.location.pathname;
   
   if (!results || results.length === 0) {
     resultsContainer.innerHTML = `
@@ -409,8 +422,9 @@ function displaySearchResults(results, query) {
   `;
   
   results.forEach(product => {
+    const productLink = currentPath.includes('/pages/') ? `product.html?id=${product.id}` : `pages/product.html?id=${product.id}`;
     html += `
-      <a href="pages/product.html?id=${product.id}" class="search-result-item" onclick="toggleSearch()">
+      <a href="${productLink}" class="search-result-item" onclick="toggleSearch()">
         <div class="search-result-icon">${product.emoji}</div>
         <div class="search-result-info">
           <div class="search-result-name">${highlightMatch(product.name, query)}</div>
@@ -489,7 +503,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (query && searchProducts(query).length > 0) {
           // Go to first result
           const firstResult = searchProducts(query)[0];
-          window.location.href = `pages/product.html?id=${firstResult.id}`;
+          const currentPath = window.location.pathname;
+          const productLink = currentPath.includes('/pages/') ? `product.html?id=${firstResult.id}` : `pages/product.html?id=${firstResult.id}`;
+          window.location.href = productLink;
         }
       }
     });
