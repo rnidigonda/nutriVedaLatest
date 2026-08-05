@@ -1,18 +1,18 @@
 // Production Configuration
 const CONFIG = {
-  // API Configuration - Update these with your backend URLs
+  // API Configuration
   API_BASE_URL: 'https://your-api-gateway-url.execute-api.ap-south-1.amazonaws.com',
   
   // Feature Flags
-  ENABLE_SMS_OTP: false, // Set to true when backend is ready
-  DEMO_MODE: false, // Set to false for production
-
-  // Razorpay Payment Configuration
-  // PAYMENT_API_BASE_URL: base URL of the deployed Vercel functions (no trailing slash)
-  // e.g. 'https://nutriveda-payment-api.vercel.app'
-  PAYMENT_API_BASE_URL: 'https://your-payment-api.vercel.app',
-  RAZORPAY_KEY_ID: 'rzp_test_TJjdoZbGQUSLfO', // Public Key ID — safe to expose in frontend
+  ENABLE_SMS_OTP: false,
+  DEMO_MODE: false,
   
+  // Razorpay Configuration
+  RAZORPAY: {
+    KEY_ID: 'rzp_test_TM8fFWercixDhZ',
+    API_URL: 'https://nutri-veda-latest.vercel.app'
+  },
+
   // Contact Information
   CONTACT: {
     phone: '+917893639037',
@@ -27,15 +27,8 @@ const CONFIG = {
   // Business Hours
   BUSINESS_HOURS: 'Mon – Sat: 9:00 AM – 7:00 PM',
   
-  // Razorpay Configuration
-  RAZORPAY: {
-    KEY_ID: 'rzp_test_TM8fFWercixDhZ',
-    // API base URL for payment backend (Vercel deployment)
-    API_URL: 'https://nutri-veda-latest.vercel.app'
-  },
-
-  // Cache Version (increment when updating assets)
-  VERSION: '6'
+  // Cache Version
+  VERSION: '7'
 };
 
 // Export for use in other scripts
