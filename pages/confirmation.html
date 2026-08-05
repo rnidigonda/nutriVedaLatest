@@ -105,17 +105,27 @@
   if(orderData) {
     document.getElementById('orderId').textContent = orderData.orderId;
 
-    const payLabels = { phonepay:'PhonePe / UPI', card:'Card', netbank:'Net Banking', cod:'Cash on Delivery' };
+    const payLabels = { razorpay:'Razorpay (Online)', phonepay:'PhonePe / UPI', card:'Card', netbank:'Net Banking', cod:'Cash on Delivery' };
     const orderDate = new Date(orderData.timestamp);
     const deliveryDate = new Date(orderDate);
     deliveryDate.setDate(deliveryDate.getDate() + 3);
     const dateStr = deliveryDate.toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
 
+    const amountLabel = orderData.paymentStatus === 'cod_pending' ? 'Amount Due' : 'Amount Paid';
+    const paymentLine = orderData.paymentStatus === 'paid'
+      ? `${payLabels[orderData.payment]||orderData.payment} ✅ Paid`
+      : (payLabels[orderData.payment]||orderData.payment);
+
     document.getElementById('confirmDetails').innerHTML = `
-      <div class="confirm-detail-item"><div class="icon">💰</div><div class="label">Amount Paid</div><div class="val">₹${orderData.total.toLocaleString()}</div></div>
-      <div class="confirm-detail-item"><div class="icon">💳</div><div class="label">Payment</div><div class="val">${payLabels[orderData.payment]||orderData.payment}</div></div>
+      <div class="confirm-detail-item"><div class="icon">💰</div><div class="label">${amountLabel}</div><div class="val">₹${orderData.total.toLocaleString()}</div></div>
+      <div class="confirm-detail-item"><div class="icon">💳</div><div class="label">Payment</div><div class="val">${paymentLine}</div></div>
       <div class="confirm-detail-item"><div class="icon">📅</div><div class="label">Est. Delivery</div><div class="val">${dateStr}</div></div>
       <div class="confirm-detail-item"><div class="icon">🎁</div><div class="label">You Saved</div><div class="val">₹${orderData.savings.toLocaleString()}</div></div>`;
+
+    if(orderData.razorpayPaymentId) {
+      document.getElementById('confirmMsg').insertAdjacentHTML('afterend',
+        `<p style="font-size:.8rem;color:var(--text-light);margin-top:-8px;">Payment ID: ${orderData.razorpayPaymentId}</p>`);
+    }
 
     const ol = document.getElementById('orderItemsList');
     orderData.cart.forEach(item => {

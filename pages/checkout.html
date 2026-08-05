@@ -9,11 +9,6 @@
 <style>
   .cod-panel { background:var(--cream-dark); border-radius:14px; padding:20px; margin-top:14px; }
   .cod-panel p { font-size:.88rem; color:var(--text-mid); line-height:1.7; }
-  .card-panel { margin-top:14px; }
-  .card-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-  .netbanking-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px; }
-  .nb-btn { background:var(--cream-dark); border:1.5px solid rgba(200,150,12,.15); border-radius:10px; padding:12px 8px; text-align:center; cursor:pointer; font-size:.8rem; font-weight:600; color:var(--forest); transition:all .2s; font-family:'DM Sans',sans-serif; }
-  .nb-btn:hover { background:var(--forest); color:var(--gold-pale); }
   .mini-cart-item { display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid rgba(200,150,12,.1); }
   .mini-cart-item:last-child { border-bottom:none; }
   .mini-cart-emoji { width:44px; height:44px; background:linear-gradient(135deg,rgba(61,122,82,.1),rgba(200,150,12,.08)); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0; }
@@ -28,18 +23,19 @@
   .addr-saved-text { font-size:.82rem; color:var(--text-light); line-height:1.6; }
   .payment-processing { display:none; position:fixed; inset:0; background:rgba(250,246,237,.96); z-index:9999; flex-direction:column; align-items:center; justify-content:center; }
   .payment-processing.show { display:flex; }
-  .pp-spinner { width:60px; height:60px; border:4px solid rgba(95,37,159,.2); border-top:4px solid #5f259f; border-radius:50%; animation:spin .8s linear infinite; margin-bottom:24px; }
+  .pp-spinner { width:60px; height:60px; border:4px solid rgba(26,58,42,.2); border-top:4px solid var(--forest); border-radius:50%; animation:spin .8s linear infinite; margin-bottom:24px; }
   @keyframes spin { to{transform:rotate(360deg)} }
-  .pp-proc-logo { font-size:2.5rem; font-weight:900; color:#5f259f; margin-bottom:8px; }
   .pp-proc-text { font-size:1rem; color:var(--text-mid); }
 </style>
+<!-- Razorpay Checkout SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="../config.js"></script>
 </head>
 <body>
 <div class="cursor" id="cursor"></div>
 <div class="payment-processing" id="paymentProcessing">
-  <div class="pp-proc-logo">PhonePe</div>
   <div class="pp-spinner"></div>
-  <div class="pp-proc-text">Processing your payment securely...</div>
+  <div class="pp-proc-text" id="paymentProcessingText">Preparing secure payment...</div>
   <div style="font-size:.82rem;color:var(--text-light);margin-top:8px;">Do not refresh or close this page</div>
 </div>
 
@@ -89,7 +85,6 @@
       <div class="step-content active" id="sc1">
         <div class="checkout-section">
           <h3><span>1</span> Delivery Address</h3>
-
           <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
             <div class="addr-saved selected" id="addrSaved" onclick="selectAddr('saved')">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
@@ -103,7 +98,6 @@
               <div class="addr-saved-text">Enter a different delivery address</div>
             </div>
           </div>
-
           <div id="newAddrForm" style="display:none;">
             <div class="form-row">
               <div class="form-group"><label>Full Name *</label><input type="text" id="fname" placeholder="Your full name"></div>
@@ -152,79 +146,28 @@
           <h3><span>3</span> Choose Payment Method</h3>
           <div class="payment-methods">
 
-            <!-- PHONEPAY -->
-            <div class="payment-option selected" id="po-phonepay" onclick="selectPayment('phonepay')">
-              <input type="radio" name="payment" value="phonepay" checked>
-              <div class="payment-option-icon">📱</div>
-              <div class="payment-option-info">
-                <div class="payment-option-name">PhonePe UPI <span class="phonepay-badge">RECOMMENDED</span></div>
-                <div class="payment-option-sub">Pay via PhonePe, Google Pay, Paytm or any UPI app</div>
-              </div>
-            </div>
-
-            <!-- PHONEPAY PANEL -->
-            <div class="phonepay-panel" id="phonepayPanel">
-              <div class="pp-logo">PhonePe</div>
-              <div class="pp-sub">India's most trusted payment platform</div>
-              <label style="font-size:.82rem;opacity:.8;margin-bottom:6px;display:block;">Enter your UPI ID</label>
-              <input type="text" class="phonepay-upi-input" id="upiId" placeholder="yourname@ybl / @okaxis / @paytm">
-              <div class="pp-options">
-                <button class="pp-option-btn" onclick="fillUpi('@ybl')">PhonePe @ybl</button>
-                <button class="pp-option-btn" onclick="fillUpi('@okaxis')">GPay @okaxis</button>
-                <button class="pp-option-btn" onclick="fillUpi('@paytm')">Paytm @paytm</button>
-                <button class="pp-option-btn" onclick="fillUpi('@oksbi')">SBI @oksbi</button>
-              </div>
-              <div style="margin-top:18px;font-size:.8rem;opacity:.7;display:flex;align-items:center;gap:8px;">
-                <span>🔒</span> Your payment is protected by 256-bit SSL encryption
-              </div>
-              <div style="margin-top:14px;padding:12px;background:rgba(255,255,255,.1);border-radius:10px;">
-                <div style="font-size:.8rem;opacity:.8;margin-bottom:6px;">Pay directly using any UPI app:</div>
-                <div class="upi-apps">
-                  <div class="upi-app" onclick="selectApp('PhonePe')">📱 PhonePe</div>
-                  <div class="upi-app" onclick="selectApp('Google Pay')">G Pay</div>
-                  <div class="upi-app" onclick="selectApp('Paytm')">Paytm</div>
-                  <div class="upi-app" onclick="selectApp('BHIM')">BHIM</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- DEBIT/CREDIT CARD -->
-            <div class="payment-option" id="po-card" onclick="selectPayment('card')">
-              <input type="radio" name="payment" value="card">
+            <!-- RAZORPAY -->
+            <div class="payment-option selected" id="po-razorpay" onclick="selectPayment('razorpay')">
+              <input type="radio" name="payment" value="razorpay" checked>
               <div class="payment-option-icon">💳</div>
               <div class="payment-option-info">
-                <div class="payment-option-name">Debit / Credit Card</div>
-                <div class="payment-option-sub">Visa, Mastercard, RuPay — all cards accepted</div>
+                <div class="payment-option-name">Pay Online <span class="phonepay-badge">RECOMMENDED</span></div>
+                <div class="payment-option-sub">UPI, Debit/Credit Card, Net Banking, Wallets — powered by Razorpay</div>
               </div>
             </div>
-            <div class="card-panel" id="cardPanel" style="display:none;">
-              <div class="checkout-section" style="margin:0;">
-                <div class="form-group"><label>Card Number</label><input type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)"></div>
-                <div class="card-row">
-                  <div class="form-group"><label>Expiry (MM/YY)</label><input type="text" placeholder="MM/YY" maxlength="5"></div>
-                  <div class="form-group"><label>CVV</label><input type="password" placeholder="•••" maxlength="3"></div>
+            <div id="razorpayPanel" style="padding:16px 20px;background:var(--cream-dark);border-radius:14px;margin-top:14px;">
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+                <span style="font-size:1.4rem;">🔒</span>
+                <div>
+                  <div style="font-weight:700;color:var(--forest);font-size:.92rem;">Secure Payment via Razorpay</div>
+                  <div style="font-size:.8rem;color:var(--text-light);">All payment methods supported. 100% secure.</div>
                 </div>
-                <div class="form-group"><label>Name on Card</label><input type="text" placeholder="As printed on card"></div>
               </div>
-            </div>
-
-            <!-- NET BANKING -->
-            <div class="payment-option" id="po-netbank" onclick="selectPayment('netbank')">
-              <input type="radio" name="payment" value="netbank">
-              <div class="payment-option-icon">🏦</div>
-              <div class="payment-option-info">
-                <div class="payment-option-name">Net Banking</div>
-                <div class="payment-option-sub">All major Indian banks supported</div>
-              </div>
-            </div>
-            <div id="netbankPanel" style="display:none;">
-              <div class="netbanking-grid">
-                <button class="nb-btn" onclick="selectBank(this)">SBI</button>
-                <button class="nb-btn" onclick="selectBank(this)">HDFC</button>
-                <button class="nb-btn" onclick="selectBank(this)">ICICI</button>
-                <button class="nb-btn" onclick="selectBank(this)">Axis</button>
-                <button class="nb-btn" onclick="selectBank(this)">Kotak</button>
-                <button class="nb-btn" onclick="selectBank(this)">Other</button>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <span style="background:var(--white);padding:4px 10px;border-radius:6px;font-size:.75rem;font-weight:600;color:var(--forest);">📱 UPI</span>
+                <span style="background:var(--white);padding:4px 10px;border-radius:6px;font-size:.75rem;font-weight:600;color:var(--forest);">💳 Cards</span>
+                <span style="background:var(--white);padding:4px 10px;border-radius:6px;font-size:.75rem;font-weight:600;color:var(--forest);">🏦 Net Banking</span>
+                <span style="background:var(--white);padding:4px 10px;border-radius:6px;font-size:.75rem;font-weight:600;color:var(--forest);">👛 Wallets</span>
               </div>
             </div>
 
@@ -288,26 +231,24 @@
   // ══════════════════════════════════════════════════════
   //            LOGIN REQUIREMENT CHECK
   // ══════════════════════════════════════════════════════
-  
-  // Check if user is logged in before accessing checkout
   (function checkLoginRequired() {
     const isLoggedIn = localStorage.getItem('nv_user_logged_in') === 'true';
-    
     if (!isLoggedIn) {
-      // User not logged in - redirect to login with return URL
       const returnUrl = encodeURIComponent(window.location.href);
       alert('Please login to continue with checkout');
       window.location.href = `login.html?returnUrl=${returnUrl}`;
     }
   })();
-  
-  // ══════════════════════════════════════════════════════
-  
-  let selectedAddr = 'saved';
-  let selectedPayment = 'phonepay';
-  let selectedUpiApp = null;
-  let selectedBankEl = null;
 
+  // ══════════════════════════════════════════════════════
+  //            STATE
+  // ══════════════════════════════════════════════════════
+  let selectedAddr = 'saved';
+  let selectedPayment = 'razorpay';
+
+  // ══════════════════════════════════════════════════════
+  //            CALCULATIONS
+  // ══════════════════════════════════════════════════════
   function calcTotals(isCod) {
     const cart = getCart();
     const subtotal = cart.reduce((s,i) => s + i.price*i.qty, 0);
@@ -362,9 +303,11 @@
     document.getElementById('reviewAddr').textContent = getAddrText();
   }
 
+  // ══════════════════════════════════════════════════════
+  //            NAVIGATION
+  // ══════════════════════════════════════════════════════
   function goToStep(n) {
-    if(n === 1) { }
-    else if(n === 2) {
+    if(n === 2) {
       if(selectedAddr === 'new') {
         const req = ['fname','fphone','faddr1','fcity','fpin'];
         for(const f of req) {
@@ -374,8 +317,7 @@
         }
       }
       renderReviewItems();
-    } else if(n === 3) { }
-
+    }
     [1,2,3].forEach(i => {
       const sc = document.getElementById('sc'+i);
       if(sc) sc.classList.toggle('active', i === n);
@@ -393,6 +335,9 @@
     window.scrollTo({top:0,behavior:'smooth'});
   }
 
+  // ══════════════════════════════════════════════════════
+  //            ADDRESS & PAYMENT SELECTION
+  // ══════════════════════════════════════════════════════
   function selectAddr(type) {
     selectedAddr = type;
     document.getElementById('addrSaved').classList.toggle('selected', type==='saved');
@@ -402,74 +347,183 @@
 
   function selectPayment(type) {
     selectedPayment = type;
-    ['phonepay','card','netbank','cod'].forEach(t => {
+    ['razorpay','cod'].forEach(t => {
       document.getElementById('po-'+t).classList.toggle('selected', t===type);
       document.getElementById('po-'+t).querySelector('input').checked = t===type;
     });
-    document.getElementById('phonepayPanel').style.display = type==='phonepay' ? 'block' : 'none';
-    document.getElementById('cardPanel').style.display = type==='card' ? 'block' : 'none';
-    document.getElementById('netbankPanel').style.display = type==='netbank' ? 'block' : 'none';
+    document.getElementById('razorpayPanel').style.display = type==='razorpay' ? 'block' : 'none';
     document.getElementById('codPanel').style.display = type==='cod' ? 'block' : 'none';
     renderSummary(type==='cod');
     const btn = document.getElementById('payBtn');
     if(type==='cod') btn.textContent = '✓ Place Order (Pay on Delivery)';
-    else if(type==='phonepay') btn.textContent = '📱 Pay via PhonePe / UPI →';
-    else btn.textContent = '🔒 Pay Now →';
+    else btn.textContent = '🔒 Pay Now via Razorpay →';
   }
 
-  function fillUpi(suffix) {
-    const inp = document.getElementById('upiId');
-    const base = inp.value.split('@')[0] || 'yourname';
-    inp.value = base + suffix;
-  }
-
-  function selectApp(app) {
-    selectedUpiApp = app;
-    showToast(`${app} selected for payment`);
-  }
-
-  function selectBank(btn) {
-    if(selectedBankEl) selectedBankEl.style.background = '';
-    btn.style.background = 'var(--forest)';
-    btn.style.color = 'var(--gold-pale)';
-    selectedBankEl = btn;
-  }
-
-  function formatCard(inp) {
-    let v = inp.value.replace(/\D/g,'').substring(0,16);
-    inp.value = v.replace(/(.{4})/g,'$1 ').trim();
-  }
-
-  function processPayment() {
+  // ══════════════════════════════════════════════════════
+  //            RAZORPAY PAYMENT FLOW
+  // ══════════════════════════════════════════════════════
+  async function processPayment() {
     const cart = getCart();
     if(cart.length === 0) { showToast('Your cart is empty!'); return; }
 
-    if(selectedPayment === 'phonepay') {
-      const upi = document.getElementById('upiId').value.trim();
-      if(!upi && !selectedUpiApp) { showToast('Please enter your UPI ID or select a UPI app'); return; }
+    const isCod = selectedPayment === 'cod';
+
+    // COD: Place order directly (no payment gateway needed)
+    if(isCod) {
+      placeOrder({ payment: 'cod' });
+      return;
     }
 
-    // Show processing overlay
+    // RAZORPAY: Create order on backend, then open Razorpay Checkout
     const overlay = document.getElementById('paymentProcessing');
     overlay.classList.add('show');
+    document.getElementById('paymentProcessingText').textContent = 'Creating your secure payment...';
 
-    // Simulate payment processing (2.5s) then redirect to confirmation
-    setTimeout(() => {
+    try {
+      // 1. Create order via backend API
+      const cartPayload = cart.map(i => ({ id: i.id, qty: i.qty }));
+      const response = await fetch(CONFIG.RAZORPAY.API_URL + '/api/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cart: cartPayload, cod: false })
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.error || 'Failed to create order');
+      }
+
+      const orderData = await response.json();
       overlay.classList.remove('show');
-      const t = calcTotals(selectedPayment==='cod');
-      const orderId = 'NV' + Date.now().toString().slice(-8);
-      const orderData = {
-        orderId, cart, total: t.total, savings: t.savings,
-        payment: selectedPayment, addr: getAddrText(),
-        timestamp: new Date().toISOString()
+
+      // 2. Open Razorpay Checkout
+      const options = {
+        key: CONFIG.RAZORPAY.KEY_ID,
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: 'NutriVeda',
+        description: `Order ${orderData.receipt}`,
+        order_id: orderData.orderId,
+        image: '../assets/images/logo.png',
+        prefill: {
+          name: getUserName(),
+          email: getUserEmail(),
+          contact: getUserPhone()
+        },
+        notes: {
+          address: getAddrText()
+        },
+        theme: {
+          color: '#1a3a2a'
+        },
+        handler: function(response) {
+          // Payment successful — verify on backend
+          verifyPayment(response, orderData);
+        },
+        modal: {
+          ondismiss: function() {
+            showToast('Payment cancelled. You can try again.');
+          }
+        }
       };
-      localStorage.setItem('nv_lastOrder', JSON.stringify(orderData));
-      localStorage.removeItem('nv_cart');
-      window.location.href = 'confirmation.html';
-    }, 2500);
+
+      const rzp = new Razorpay(options);
+      rzp.on('payment.failed', function(response) {
+        showToast('Payment failed: ' + (response.error.description || 'Please try again'));
+      });
+      rzp.open();
+
+    } catch (error) {
+      overlay.classList.remove('show');
+      showToast(error.message || 'Something went wrong. Please try again.');
+      console.error('Payment error:', error);
+    }
   }
 
-  // INIT
+  // ══════════════════════════════════════════════════════
+  //            VERIFY PAYMENT & COMPLETE ORDER
+  // ══════════════════════════════════════════════════════
+  async function verifyPayment(paymentResponse, orderData) {
+    const overlay = document.getElementById('paymentProcessing');
+    overlay.classList.add('show');
+    document.getElementById('paymentProcessingText').textContent = 'Verifying payment...';
+
+    try {
+      const response = await fetch(CONFIG.RAZORPAY.API_URL + '/api/verify-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          razorpay_order_id: paymentResponse.razorpay_order_id,
+          razorpay_payment_id: paymentResponse.razorpay_payment_id,
+          razorpay_signature: paymentResponse.razorpay_signature
+        })
+      });
+
+      const result = await response.json();
+
+      if (result.verified) {
+        // Payment verified! Place order
+        placeOrder({
+          payment: 'razorpay',
+          razorpay_payment_id: paymentResponse.razorpay_payment_id,
+          razorpay_order_id: paymentResponse.razorpay_order_id
+        });
+      } else {
+        overlay.classList.remove('show');
+        showToast('Payment verification failed. Please contact support.');
+      }
+    } catch (error) {
+      overlay.classList.remove('show');
+      showToast('Verification error. Your payment may have succeeded — please contact support.');
+      console.error('Verify error:', error);
+    }
+  }
+
+  // ══════════════════════════════════════════════════════
+  //            PLACE ORDER (shared by Razorpay & COD)
+  // ══════════════════════════════════════════════════════
+  function placeOrder(paymentInfo) {
+    const cart = getCart();
+    const t = calcTotals(paymentInfo.payment === 'cod');
+    const orderId = 'NV' + Date.now().toString().slice(-8);
+
+    const finalOrderData = {
+      orderId,
+      cart,
+      total: t.total,
+      savings: t.savings,
+      payment: paymentInfo.payment,
+      paymentStatus: paymentInfo.payment === 'cod' ? 'cod_pending' : 'paid',
+      razorpayPaymentId: paymentInfo.razorpay_payment_id || null,
+      razorpayOrderId: paymentInfo.razorpay_order_id || null,
+      addr: getAddrText(),
+      timestamp: new Date().toISOString()
+    };
+
+    localStorage.setItem('nv_lastOrder', JSON.stringify(finalOrderData));
+    localStorage.removeItem('nv_cart');
+
+    // Hide overlay and redirect
+    document.getElementById('paymentProcessing').classList.remove('show');
+    window.location.href = 'confirmation.html';
+  }
+
+  // ══════════════════════════════════════════════════════
+  //            USER INFO HELPERS
+  // ══════════════════════════════════════════════════════
+  function getUserName() {
+    try { return JSON.parse(localStorage.getItem('nv_user_profile') || '{}').name || ''; } catch(e) { return ''; }
+  }
+  function getUserEmail() {
+    try { return JSON.parse(localStorage.getItem('nv_user_profile') || '{}').email || localStorage.getItem('nv_user_email') || ''; } catch(e) { return ''; }
+  }
+  function getUserPhone() {
+    try { return JSON.parse(localStorage.getItem('nv_user_profile') || '{}').phone || ''; } catch(e) { return ''; }
+  }
+
+  // ══════════════════════════════════════════════════════
+  //            INIT
+  // ══════════════════════════════════════════════════════
   const cart = getCart();
   if(cart.length === 0) { window.location.href = 'cart.html'; }
 
@@ -480,4 +534,3 @@
 </script>
 </body>
 </html>
-

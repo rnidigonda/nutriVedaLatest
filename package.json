@@ -1,0 +1,9 @@
+{
+  "name": "nutriveda-payment-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Serverless backend for NutriVeda Razorpay payment integration",
+  "dependencies": {
+    "razorpay": "^2.9.8"
+  }
+}
