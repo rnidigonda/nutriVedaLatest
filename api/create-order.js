@@ -92,15 +92,9 @@ module.exports = async function handler(req, res) {
 
   } catch (error) {
     console.error('Create order error:', error.message || error);
-    const statusCode = error.statusCode || 500;
-    return res.status(statusCode).json({ 
-      error: 'Failed to create order. Please try again.',
-      debug: {
-        hasKeyId: !!process.env.RAZORPAY_KEY_ID,
-        hasKeySecret: !!process.env.RAZORPAY_KEY_SECRET,
-        keyIdPrefix: process.env.RAZORPAY_KEY_ID ? process.env.RAZORPAY_KEY_ID.substring(0, 12) + '...' : 'NOT SET',
-        errorMessage: error.error ? error.error.description : error.message
-      }
-    });
+    if (error.statusCode === 401) {
+      return res.status(401).json({ error: 'Payment gateway authentication failed.' });
+    }
+    return res.status(500).json({ error: 'Failed to create order. Please try again.' });
   }
 };

@@ -29,7 +29,7 @@ const CONFIG = {
   
   // Razorpay Configuration
   RAZORPAY: {
-    KEY_ID: 'rzp_test_TLzAdS6ndApJ0w',
+    KEY_ID: 'rzp_test_TM8fFWercixDhZ',
     // API base URL for payment backend (Vercel deployment)
     API_URL: 'https://nutri-veda-latest.vercel.app'
   },
