@@ -65,10 +65,13 @@ async function _syncCartToServer(cart) {
   _cartSyncInProgress = true;
   try {
     // Clear server cart then re-add all items
-    await CartAPI.clearCart();
+    const clearResult = await CartAPI.clearCart();
+    if (clearResult.error) console.warn('[NutriVeda] Cart clear error:', clearResult.error);
+    
     for (const item of cart) {
       if (item.id && item.qty > 0) {
-        await CartAPI.addItem(item.id, item.qty);
+        const result = await CartAPI.addItem(item.id, item.qty);
+        if (result.error) console.warn('[NutriVeda] Cart add error for product', item.id, ':', result.error);
       }
     }
   } catch (e) {

@@ -183,23 +183,38 @@ const CartAPI = {
     if (!supabase) return { data: null, error: 'Not connected' };
     
     const ctx = await getSessionContext();
-    const upsertData = {
+    const insertData = {
       product_id: productId,
       quantity: quantity
     };
     
     if (ctx.type === 'authenticated') {
-      upsertData.customer_id = ctx.userId;
+      insertData.customer_id = ctx.userId;
     } else {
-      upsertData.guest_session_id = ctx.guestSessionId;
+      insertData.guest_session_id = ctx.guestSessionId;
     }
     
-    // Upsert: if item exists, update quantity
-    return await supabase
+    // Try insert first; on conflict, update quantity
+    const { data, error } = await supabase
       .from('cart_items')
-      .upsert(upsertData, {
-        onConflict: ctx.type === 'authenticated' ? 'customer_id,product_id' : 'guest_session_id,product_id'
-      });
+      .insert(insertData);
+    
+    // If duplicate key error, update instead
+    if (error && error.code === '23505') {
+      let updateQuery = supabase
+        .from('cart_items')
+        .update({ quantity })
+        .eq('product_id', productId);
+      
+      if (ctx.type === 'authenticated') {
+        updateQuery = updateQuery.eq('customer_id', ctx.userId);
+      } else {
+        updateQuery = updateQuery.eq('guest_session_id', ctx.guestSessionId);
+      }
+      return await updateQuery;
+    }
+    
+    return { data, error };
   },
   
   async updateQuantity(productId, quantity) {
