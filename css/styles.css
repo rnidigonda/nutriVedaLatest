@@ -382,6 +382,8 @@ footer { background:var(--forest); color:var(--cream); padding:60px 5% 28px; }
   .hamburger{display:flex;}
   .nav-cart-mobile{display:flex;align-items:center;font-size:1.2rem;text-decoration:none;color:var(--text-dark);}
   .nav-links.open{display:flex;flex-direction:column;position:fixed;top:72px;left:0;right:0;background:var(--cream);padding:24px 5%;gap:20px;border-bottom:1px solid rgba(200,150,12,.2);z-index:999;}
+  .nav-links.open .nav-login, .nav-links.open .nav-cart, .nav-links.open .nav-cta { display:none !important; }
+  .nav-links.open #loginNavItem { display:none !important; }
   .hero{grid-template-columns:1fr;padding:110px 5% 60px;text-align:center;}
   .hero-visual{display:none;}
   .hero p,.hero-stats,.hero-actions{max-width:100%;}
