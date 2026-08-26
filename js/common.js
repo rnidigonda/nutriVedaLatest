@@ -16,9 +16,9 @@ document.querySelectorAll('.nav-links a').forEach(a => {
   a.addEventListener('click', () => { const nl = document.getElementById('navLinks'); if(nl) nl.classList.remove('open'); });
 });
 
-// ── CART STORAGE (Hybrid: Supabase server-backed + localStorage fallback) ──
+// ── CART STORAGE (Hybrid: supabaseClient server-backed + localStorage fallback) ──
 // The cart uses localStorage as immediate cache for UI responsiveness,
-// and syncs to Supabase when connected. On page load, server data takes priority.
+// and syncs to supabaseClient when connected. On page load, server data takes priority.
 
 let _cartSyncInProgress = false;
 
@@ -57,10 +57,10 @@ function addToCartById(id, btn) {
   showToast('Added to cart! 🛒');
 }
 
-// Async sync: push local cart state to Supabase
+// Async sync: push local cart state to supabaseClient
 async function _syncCartToServer(cart) {
   if (_cartSyncInProgress) return;
-  if (typeof CartAPI === 'undefined' || !supabase) return;
+  if (typeof CartAPI === 'undefined' || !supabaseClient) return;
   
   _cartSyncInProgress = true;
   try {
@@ -83,7 +83,7 @@ async function _syncCartToServer(cart) {
 
 // On page load: pull server cart and merge/override local cache
 async function _loadCartFromServer() {
-  if (typeof CartAPI === 'undefined' || !supabase) return;
+  if (typeof CartAPI === 'undefined' || !supabaseClient) return;
   
   try {
     const { data, error } = await CartAPI.getItems();
@@ -113,7 +113,7 @@ async function _loadCartFromServer() {
 
 // Merge guest cart into user cart after login
 async function mergeCartOnLogin() {
-  if (typeof CartAPI === 'undefined' || !supabase) return;
+  if (typeof CartAPI === 'undefined' || !supabaseClient) return;
   
   try {
     const user = await getAuthUser();
@@ -141,7 +141,7 @@ let _wishlistSyncInProgress = false;
 
 async function _syncWishlistToServer() {
   if (_wishlistSyncInProgress) return;
-  if (typeof WishlistAPI === 'undefined' || !supabase) return;
+  if (typeof WishlistAPI === 'undefined' || !supabaseClient) return;
   if (typeof WishlistManager === 'undefined') return;
   
   _wishlistSyncInProgress = true;
@@ -173,7 +173,7 @@ async function _syncWishlistToServer() {
 }
 
 async function _loadWishlistFromServer() {
-  if (typeof WishlistAPI === 'undefined' || !supabase) return;
+  if (typeof WishlistAPI === 'undefined' || !supabaseClient) return;
   if (typeof WishlistManager === 'undefined') return;
   
   try {
@@ -191,7 +191,7 @@ async function _loadWishlistFromServer() {
 }
 
 async function mergeWishlistOnLogin() {
-  if (typeof WishlistAPI === 'undefined' || !supabase) return;
+  if (typeof WishlistAPI === 'undefined' || !supabaseClient) return;
   
   try {
     const user = await getAuthUser();

@@ -14,7 +14,7 @@ const ProductReviews = {
     let reviews = [];
     let fromServer = false;
     
-    if (typeof ReviewsAPI !== 'undefined' && supabase) {
+    if (typeof ReviewsAPI !== 'undefined' && supabaseClient) {
       try {
         const { data, error } = await ReviewsAPI.getForProduct(productId, { limit: 20 });
         if (!error && data && data.length > 0) {
@@ -266,7 +266,7 @@ const ProductReviews = {
     }
     
     // Try to submit to server
-    if (typeof ReviewsAPI !== 'undefined' && supabase) {
+    if (typeof ReviewsAPI !== 'undefined' && supabaseClient) {
       const { data, error } = await ReviewsAPI.submitReview(productId, {
         name,
         rating,
@@ -301,7 +301,7 @@ const ProductReviews = {
       return;
     }
     
-    if (typeof ReviewsAPI !== 'undefined' && supabase) {
+    if (typeof ReviewsAPI !== 'undefined' && supabaseClient) {
       await ReviewsAPI.markHelpful(reviewId);
     }
     if (typeof showToast === 'function') showToast('Marked as helpful!');

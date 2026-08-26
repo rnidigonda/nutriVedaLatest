@@ -504,7 +504,7 @@
     };
 
     // Write order to Supabase database
-    if (typeof OrdersAPI !== 'undefined' && supabase) {
+    if (typeof OrdersAPI !== 'undefined' && supabaseClient) {
       try {
         const shippingName = (localStorage.getItem('nv_user_first_name') || '') + ' ' + (localStorage.getItem('nv_user_last_name') || '');
         const shippingPhone = localStorage.getItem('nv_user_phone') || '';

@@ -8,16 +8,17 @@ const SUPABASE_URL = CONFIG.SUPABASE?.URL || '';
 const SUPABASE_ANON_KEY = CONFIG.SUPABASE?.ANON_KEY || '';
 
 // Initialize Supabase client (loaded via CDN in HTML)
-let supabase = null;
+// Using _supabaseClient to avoid collision with the CDN's window.supabase
+var supabaseClient = null;
 
 function initSupabase() {
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-    console.warn('[NutriVeda] Supabase not configured. Running in offline/localStorage mode.');
+    console.warn('[NutriVeda] supabaseClient not configured. Running in offline/localStorage mode.');
     return null;
   }
   
   if (window.supabase && window.supabase.createClient) {
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
       auth: {
         autoRefreshToken: true,
         persistSession: true,
@@ -26,10 +27,10 @@ function initSupabase() {
         storageKey: 'nv_supabase_auth'
       }
     });
-    return supabase;
+    return supabaseClient;
   }
   
-  console.warn('[NutriVeda] Supabase JS library not loaded. Running in offline mode.');
+  console.warn('[NutriVeda] supabaseClient JS library not loaded. Running in offline mode.');
   return null;
 }
 
@@ -50,9 +51,9 @@ function clearGuestSession() {
 
 // ─── AUTH HELPERS ───────────────────────────────────────
 async function getAuthUser() {
-  if (!supabase) return null;
+  if (!supabaseClient) return null;
   try {
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data: { user } } = await supabaseClient.auth.getUser();
     return user;
   } catch (e) {
     return null;
@@ -70,9 +71,9 @@ async function getSessionContext() {
 // ─── PRODUCT API ────────────────────────────────────────
 const ProductAPI = {
   async getAll(options = {}) {
-    if (!supabase) return { data: null, error: 'Not connected' };
+    if (!supabaseClient) return { data: null, error: 'Not connected' };
     
-    let query = supabase
+    let query = supabaseClient
       .from('products')
       .select('*')
       .eq('is_active', true);
@@ -129,8 +130,8 @@ const ProductAPI = {
   },
   
   async getById(id) {
-    if (!supabase) return { data: null, error: 'Not connected' };
-    return await supabase
+    if (!supabaseClient) return { data: null, error: 'Not connected' };
+    return await supabaseClient
       .from('products')
       .select('*')
       .eq('id', id)
@@ -138,8 +139,8 @@ const ProductAPI = {
   },
   
   async getBySlug(slug) {
-    if (!supabase) return { data: null, error: 'Not connected' };
-    return await supabase
+    if (!supabaseClient) return { data: null, error: 'Not connected' };
+    return await supabaseClient
       .from('products')
       .select('*')
       .eq('slug', slug)
@@ -147,8 +148,8 @@ const ProductAPI = {
   },
   
   async getCategories() {
-    if (!supabase) return { data: null, error: 'Not connected' };
-    return await supabase
+    if (!supabaseClient) return { data: null, error: 'Not connected' };
+    return await supabaseClient
       .from('categories')
       .select('*')
       .order('display_order');
@@ -158,10 +159,10 @@ const ProductAPI = {
 // ─── CART API ───────────────────────────────────────────
 const CartAPI = {
   async getItems() {
-    if (!supabase) return { data: null, error: 'Not connected' };
+    if (!supabaseClient) return { data: null, error: 'Not connected' };
     
     const ctx = await getSessionContext();
-    let query = supabase
+    let query = supabaseClient
       .from('cart_items')
       .select(`
         id,
@@ -180,7 +181,7 @@ const CartAPI = {
   },
   
   async addItem(productId, quantity = 1) {
-    if (!supabase) return { data: null, error: 'Not connected' };
+    if (!supabaseClient) return { data: null, error: 'Not connected' };
     
     const ctx = await getSessionContext();
     const insertData = {
@@ -195,13 +196,13 @@ const CartAPI = {
     }
     
     // Try insert first; on conflict, update quantity
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from('cart_items')
       .insert(insertData);
     
     // If duplicate key error, update instead
     if (error && error.code === '23505') {
-      let updateQuery = supabase
+      let updateQuery = supabaseClient
         .from('cart_items')
         .update({ quantity })
         .eq('product_id', productId);
@@ -218,10 +219,10 @@ const CartAPI = {
   },
   
   async updateQuantity(productId, quantity) {
-    if (!supabase) return { data: null, error: 'Not connected' };
+    if (!supabaseClient) return { data: null, error: 'Not connected' };
     
     const ctx = await getSessionContext();
-    let query = supabase
+    let query = supabaseClient
       .from('cart_items')
       .update({ quantity })
       .eq('product_id', productId);
@@ -236,10 +237,10 @@ const CartAPI = {
   },
   
   async removeItem(productId) {
-    if (!supabase) return { data: null, error: 'Not connected' };
+    if (!supabaseClient) return { data: null, error: 'Not connected' };
     
     const ctx = await getSessionContext();
-    let query = supabase
+    let query = supabaseClient
       .from('cart_items')
       .delete()
       .eq('product_id', productId);
@@ -254,10 +255,10 @@ const CartAPI = {
   },
   
   async clearCart() {
-    if (!supabase) return { data: null, error: 'Not connected' };
+    if (!supabaseClient) return { data: null, error: 'Not connected' };
     
     const ctx = await getSessionContext();
-    let query = supabase
+    let query = supabaseClient
       .from('cart_items')
       .delete();
     
@@ -271,7 +272,7 @@ const CartAPI = {
   },
   
   async getCount() {
-    if (!supabase) return 0;
+    if (!supabaseClient) return 0;
     
     const { data } = await this.getItems();
     if (!data) return 0;
@@ -280,13 +281,13 @@ const CartAPI = {
   
   // Merge guest cart into authenticated user cart on login
   async mergeGuestCart(userId) {
-    if (!supabase) return;
+    if (!supabaseClient) return;
     
     const guestSessionId = localStorage.getItem('nv_guest_session_id');
     if (!guestSessionId) return;
     
     // Get guest cart items
-    const { data: guestItems } = await supabase
+    const { data: guestItems } = await supabaseClient
       .from('cart_items')
       .select('product_id, quantity')
       .eq('guest_session_id', guestSessionId);
@@ -295,7 +296,7 @@ const CartAPI = {
     
     // Upsert each guest item into user's cart
     for (const item of guestItems) {
-      await supabase
+      await supabaseClient
         .from('cart_items')
         .upsert({
           customer_id: userId,
@@ -307,7 +308,7 @@ const CartAPI = {
     }
     
     // Delete guest cart items
-    await supabase
+    await supabaseClient
       .from('cart_items')
       .delete()
       .eq('guest_session_id', guestSessionId);
@@ -320,10 +321,10 @@ const CartAPI = {
 // ─── WISHLIST API ───────────────────────────────────────
 const WishlistAPI = {
   async getItems() {
-    if (!supabase) return { data: null, error: 'Not connected' };
+    if (!supabaseClient) return { data: null, error: 'Not connected' };
     
     const ctx = await getSessionContext();
-    let query = supabase
+    let query = supabaseClient
       .from('wishlist_items')
       .select(`
         id,
@@ -342,7 +343,7 @@ const WishlistAPI = {
   },
   
   async addItem(productId) {
-    if (!supabase) return { data: null, error: 'Not connected' };
+    if (!supabaseClient) return { data: null, error: 'Not connected' };
     
     const ctx = await getSessionContext();
     const insertData = { product_id: productId };
@@ -353,7 +354,7 @@ const WishlistAPI = {
       insertData.guest_session_id = ctx.guestSessionId;
     }
     
-    return await supabase
+    return await supabaseClient
       .from('wishlist_items')
       .upsert(insertData, {
         onConflict: ctx.type === 'authenticated' ? 'customer_id,product_id' : 'guest_session_id,product_id'
@@ -361,10 +362,10 @@ const WishlistAPI = {
   },
   
   async removeItem(productId) {
-    if (!supabase) return { data: null, error: 'Not connected' };
+    if (!supabaseClient) return { data: null, error: 'Not connected' };
     
     const ctx = await getSessionContext();
-    let query = supabase
+    let query = supabaseClient
       .from('wishlist_items')
       .delete()
       .eq('product_id', productId);
@@ -379,10 +380,10 @@ const WishlistAPI = {
   },
   
   async isInWishlist(productId) {
-    if (!supabase) return false;
+    if (!supabaseClient) return false;
     
     const ctx = await getSessionContext();
-    let query = supabase
+    let query = supabaseClient
       .from('wishlist_items')
       .select('id')
       .eq('product_id', productId);
@@ -398,7 +399,7 @@ const WishlistAPI = {
   },
   
   async getCount() {
-    if (!supabase) return 0;
+    if (!supabaseClient) return 0;
     
     const { data } = await this.getItems();
     return data ? data.length : 0;
@@ -406,12 +407,12 @@ const WishlistAPI = {
   
   // Merge guest wishlist into authenticated user on login
   async mergeGuestWishlist(userId) {
-    if (!supabase) return;
+    if (!supabaseClient) return;
     
     const guestSessionId = localStorage.getItem('nv_guest_session_id');
     if (!guestSessionId) return;
     
-    const { data: guestItems } = await supabase
+    const { data: guestItems } = await supabaseClient
       .from('wishlist_items')
       .select('product_id')
       .eq('guest_session_id', guestSessionId);
@@ -419,7 +420,7 @@ const WishlistAPI = {
     if (!guestItems || guestItems.length === 0) return;
     
     for (const item of guestItems) {
-      await supabase
+      await supabaseClient
         .from('wishlist_items')
         .upsert({
           customer_id: userId,
@@ -429,7 +430,7 @@ const WishlistAPI = {
         });
     }
     
-    await supabase
+    await supabaseClient
       .from('wishlist_items')
       .delete()
       .eq('guest_session_id', guestSessionId);
@@ -441,9 +442,9 @@ const WishlistAPI = {
 // ─── REVIEWS API ────────────────────────────────────────
 const ReviewsAPI = {
   async getForProduct(productId, options = {}) {
-    if (!supabase) return { data: null, error: 'Not connected' };
+    if (!supabaseClient) return { data: null, error: 'Not connected' };
     
-    let query = supabase
+    let query = supabaseClient
       .from('reviews')
       .select('*')
       .eq('product_id', productId)
@@ -475,12 +476,12 @@ const ReviewsAPI = {
   },
   
   async submitReview(productId, reviewData) {
-    if (!supabase) return { data: null, error: 'Not connected' };
+    if (!supabaseClient) return { data: null, error: 'Not connected' };
     
     const user = await getAuthUser();
     if (!user) return { data: null, error: 'Must be logged in to submit a review' };
     
-    return await supabase
+    return await supabaseClient
       .from('reviews')
       .insert({
         product_id: productId,
@@ -495,16 +496,16 @@ const ReviewsAPI = {
   },
   
   async markHelpful(reviewId) {
-    if (!supabase) return;
+    if (!supabaseClient) return;
     
-    await supabase.rpc('increment_helpful_count', { review_id: reviewId });
+    await supabaseClient.rpc('increment_helpful_count', { review_id: reviewId });
   }
 };
 
 // ─── ORDERS API ─────────────────────────────────────────
 const OrdersAPI = {
   async create(orderData) {
-    if (!supabase) return { data: null, error: 'Not connected' };
+    if (!supabaseClient) return { data: null, error: 'Not connected' };
     
     const ctx = await getSessionContext();
     
@@ -532,7 +533,7 @@ const OrdersAPI = {
       payment_status: orderData.paymentStatus || 'pending'
     };
     
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from('orders')
       .insert(order)
       .select()
@@ -552,17 +553,17 @@ const OrdersAPI = {
         total_price: item.unitPrice * item.quantity
       }));
       
-      await supabase.from('order_items').insert(orderItems);
+      await supabaseClient.from('order_items').insert(orderItems);
     }
     
     return { data, error: null };
   },
   
   async getMyOrders() {
-    if (!supabase) return { data: null, error: 'Not connected' };
+    if (!supabaseClient) return { data: null, error: 'Not connected' };
     
     const ctx = await getSessionContext();
-    let query = supabase
+    let query = supabaseClient
       .from('orders')
       .select(`
         *,
@@ -580,9 +581,9 @@ const OrdersAPI = {
   },
   
   async getById(orderId) {
-    if (!supabase) return { data: null, error: 'Not connected' };
+    if (!supabaseClient) return { data: null, error: 'Not connected' };
     
-    return await supabase
+    return await supabaseClient
       .from('orders')
       .select(`
         *,
@@ -593,9 +594,9 @@ const OrdersAPI = {
   },
   
   async updatePaymentStatus(orderId, paymentData) {
-    if (!supabase) return { data: null, error: 'Not connected' };
+    if (!supabaseClient) return { data: null, error: 'Not connected' };
     
-    return await supabase
+    return await supabaseClient
       .from('orders')
       .update({
         payment_status: paymentData.status,
@@ -608,6 +609,5 @@ const OrdersAPI = {
 };
 
 // ─── INITIALIZATION ─────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  initSupabase();
-});
+// Initialize immediately (this script loads after the Supabase CDN)
+initSupabase();
