@@ -16,21 +16,31 @@ document.querySelectorAll('.nav-links a').forEach(a => {
   a.addEventListener('click', () => { const nl = document.getElementById('navLinks'); if(nl) nl.classList.remove('open'); });
 });
 
-// ── CART STORAGE ──
+// ── CART STORAGE (Hybrid: Supabase server-backed + localStorage fallback) ──
+// The cart uses localStorage as immediate cache for UI responsiveness,
+// and syncs to Supabase when connected. On page load, server data takes priority.
+
+let _cartSyncInProgress = false;
+
 function getCart() {
   try { return JSON.parse(localStorage.getItem('nv_cart') || '[]'); } catch(e) { return []; }
 }
+
 function saveCart(cart) {
   localStorage.setItem('nv_cart', JSON.stringify(cart));
   updateCartBadge();
+  // Fire async sync to server (non-blocking)
+  _syncCartToServer(cart);
 }
+
 function updateCartBadge() {
   const cart = getCart();
   const total = cart.reduce((s,i) => s + i.qty, 0);
   document.querySelectorAll('#cartCount, #cartCountMobile').forEach(el => { if(el) el.textContent = total; });
 }
+
 function addToCartById(id, btn) {
-  const product = PRODUCTS.find(p => p.id === id);
+  const product = (typeof PRODUCTS !== 'undefined') ? PRODUCTS.find(p => p.id === id) : null;
   if(!product) return;
   const cart = getCart();
   const existing = cart.find(i => i.id === id);
@@ -47,6 +57,72 @@ function addToCartById(id, btn) {
   showToast('Added to cart! 🛒');
 }
 
+// Async sync: push local cart state to Supabase
+async function _syncCartToServer(cart) {
+  if (_cartSyncInProgress) return;
+  if (typeof CartAPI === 'undefined' || !supabase) return;
+  
+  _cartSyncInProgress = true;
+  try {
+    // Clear server cart then re-add all items
+    await CartAPI.clearCart();
+    for (const item of cart) {
+      if (item.id && item.qty > 0) {
+        await CartAPI.addItem(item.id, item.qty);
+      }
+    }
+  } catch (e) {
+    console.warn('[NutriVeda] Cart sync failed:', e.message || e);
+  } finally {
+    _cartSyncInProgress = false;
+  }
+}
+
+// On page load: pull server cart and merge/override local cache
+async function _loadCartFromServer() {
+  if (typeof CartAPI === 'undefined' || !supabase) return;
+  
+  try {
+    const { data, error } = await CartAPI.getItems();
+    if (error || !data || data.length === 0) return;
+    
+    // Server has items — use server as source of truth
+    const serverCart = data.map(item => ({
+      id: item.product_id,
+      name: item.products?.name || '',
+      price: item.products?.price || 0,
+      mrp: item.products?.mrp || 0,
+      emoji: item.products?.emoji || '',
+      category: item.products?.category_name || '',
+      qty: item.quantity
+    })).filter(item => item.name); // filter out items where product join failed
+    
+    if (serverCart.length > 0) {
+      localStorage.setItem('nv_cart', JSON.stringify(serverCart));
+      updateCartBadge();
+      // Trigger re-render if cart page is active
+      if (typeof renderCart === 'function') renderCart();
+    }
+  } catch (e) {
+    console.warn('[NutriVeda] Failed to load cart from server:', e.message || e);
+  }
+}
+
+// Merge guest cart into user cart after login
+async function mergeCartOnLogin() {
+  if (typeof CartAPI === 'undefined' || !supabase) return;
+  
+  try {
+    const user = await getAuthUser();
+    if (user) {
+      await CartAPI.mergeGuestCart(user.id);
+      await _loadCartFromServer();
+    }
+  } catch (e) {
+    console.warn('[NutriVeda] Cart merge failed:', e.message || e);
+  }
+}
+
 // ── TOAST ──
 function showToast(msg) {
   let toast = document.getElementById('globalToast');
@@ -56,6 +132,80 @@ function showToast(msg) {
   setTimeout(() => toast.classList.remove('show'), 2400);
 }
 
+// ── WISHLIST SERVER SYNC ──
+// Hooks into WishlistManager (defined in advanced-features.js) to add server persistence
+let _wishlistSyncInProgress = false;
+
+async function _syncWishlistToServer() {
+  if (_wishlistSyncInProgress) return;
+  if (typeof WishlistAPI === 'undefined' || !supabase) return;
+  if (typeof WishlistManager === 'undefined') return;
+  
+  _wishlistSyncInProgress = true;
+  try {
+    const localWishlist = WishlistManager.getWishlist(); // array of product IDs
+    
+    // Get current server wishlist
+    const { data: serverItems } = await WishlistAPI.getItems();
+    const serverIds = serverItems ? serverItems.map(i => i.product_id) : [];
+    
+    // Add items that are local but not on server
+    for (const id of localWishlist) {
+      if (!serverIds.includes(id)) {
+        await WishlistAPI.addItem(id);
+      }
+    }
+    
+    // Remove items that are on server but not local
+    for (const id of serverIds) {
+      if (!localWishlist.includes(id)) {
+        await WishlistAPI.removeItem(id);
+      }
+    }
+  } catch (e) {
+    console.warn('[NutriVeda] Wishlist sync failed:', e.message || e);
+  } finally {
+    _wishlistSyncInProgress = false;
+  }
+}
+
+async function _loadWishlistFromServer() {
+  if (typeof WishlistAPI === 'undefined' || !supabase) return;
+  if (typeof WishlistManager === 'undefined') return;
+  
+  try {
+    const { data, error } = await WishlistAPI.getItems();
+    if (error || !data || data.length === 0) return;
+    
+    // Server has items — use as source of truth
+    const serverIds = data.map(item => item.product_id);
+    localStorage.setItem(WishlistManager.storageKey || 'nutriveda_wishlist', JSON.stringify(serverIds));
+    WishlistManager.updateWishlistCount();
+    WishlistManager.updateAllWishlistButtons();
+  } catch (e) {
+    console.warn('[NutriVeda] Failed to load wishlist from server:', e.message || e);
+  }
+}
+
+async function mergeWishlistOnLogin() {
+  if (typeof WishlistAPI === 'undefined' || !supabase) return;
+  
+  try {
+    const user = await getAuthUser();
+    if (user) {
+      await WishlistAPI.mergeGuestWishlist(user.id);
+      await _loadWishlistFromServer();
+    }
+  } catch (e) {
+    console.warn('[NutriVeda] Wishlist merge failed:', e.message || e);
+  }
+}
+
+// Listen for wishlist changes and sync to server
+window.addEventListener('wishlistUpdated', () => {
+  _syncWishlistToServer();
+});
+
 // ── REVEAL ON SCROLL ──
 function initReveal() {
   const observer = new IntersectionObserver(entries => {
@@ -63,7 +213,7 @@ function initReveal() {
   }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }
-document.addEventListener('DOMContentLoaded', () => { initReveal(); updateCartBadge(); renderFooter(); updateNavForUser(); });
+document.addEventListener('DOMContentLoaded', () => { initReveal(); updateCartBadge(); renderFooter(); updateNavForUser(); _loadCartFromServer(); _loadWishlistFromServer(); });
 
 // ── CONTACT FORM ──
 function submitForm(btn) {
@@ -280,6 +430,8 @@ document.addEventListener('DOMContentLoaded', () => {
   updateCartBadge(); 
   renderFooter();
   updateNavForUser();
+  _loadCartFromServer();
+  _loadWishlistFromServer();
 });
 
 
