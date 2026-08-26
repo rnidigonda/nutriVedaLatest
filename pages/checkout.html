@@ -485,7 +485,7 @@
   // ══════════════════════════════════════════════════════
   //            PLACE ORDER (shared by Razorpay & COD)
   // ══════════════════════════════════════════════════════
-  function placeOrder(paymentInfo) {
+  async function placeOrder(paymentInfo) {
     const cart = getCart();
     const t = calcTotals(paymentInfo.payment === 'cod');
     const orderId = 'NV' + Date.now().toString().slice(-8);
@@ -502,6 +502,50 @@
       addr: getAddrText(),
       timestamp: new Date().toISOString()
     };
+
+    // Write order to Supabase database
+    if (typeof OrdersAPI !== 'undefined' && supabase) {
+      try {
+        const shippingName = (localStorage.getItem('nv_user_first_name') || '') + ' ' + (localStorage.getItem('nv_user_last_name') || '');
+        const shippingPhone = localStorage.getItem('nv_user_phone') || '';
+        const shippingEmail = localStorage.getItem('nv_user_email') || '';
+        
+        await OrdersAPI.create({
+          paymentMethod: paymentInfo.payment === 'cod' ? 'cod' : 'razorpay',
+          subtotal: t.subtotal,
+          shippingFee: t.shipping,
+          codFee: paymentInfo.payment === 'cod' ? 40 : 0,
+          discount: 0,
+          total: t.total,
+          shippingName: shippingName.trim() || 'Customer',
+          shippingPhone: shippingPhone,
+          shippingEmail: shippingEmail,
+          addressLine1: getAddrText(),
+          addressLine2: '',
+          city: 'Hyderabad',
+          state: 'Telangana',
+          pincode: '500049',
+          paymentId: paymentInfo.razorpay_payment_id || null,
+          paymentOrderId: paymentInfo.razorpay_order_id || null,
+          paymentSignature: null,
+          paymentStatus: paymentInfo.payment === 'cod' ? 'pending' : 'captured',
+          items: cart.map(item => ({
+            productId: item.id,
+            productName: item.name,
+            emoji: item.emoji,
+            quantity: item.qty,
+            unitPrice: item.price
+          }))
+        });
+        
+        // Clear server cart too
+        if (typeof CartAPI !== 'undefined') {
+          await CartAPI.clearCart();
+        }
+      } catch (e) {
+        console.warn('[NutriVeda] Failed to save order to database:', e.message || e);
+      }
+    }
 
     localStorage.setItem('nv_lastOrder', JSON.stringify(finalOrderData));
     localStorage.removeItem('nv_cart');
