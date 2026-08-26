@@ -7,6 +7,12 @@ const CONFIG = {
   ENABLE_SMS_OTP: false,
   DEMO_MODE: false,
   
+  // Supabase Configuration
+  SUPABASE: {
+    URL: 'https://your-project-ref.supabase.co',
+    ANON_KEY: 'your-anon-key-here'
+  },
+  
   // Razorpay Configuration
   RAZORPAY: {
     KEY_ID: 'rzp_test_TM8fFWercixDhZ',
