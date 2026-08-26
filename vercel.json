@@ -1,3 +1,10 @@
 {
-  "version": 2
+  "version": 2,
+  "buildCommand": "npm run build",
+  "rewrites": [
+    {
+      "source": "/products/:slug",
+      "destination": "/pages/products/:slug.html"
+    }
+  ]
 }

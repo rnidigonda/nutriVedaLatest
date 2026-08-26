@@ -1,0 +1,472 @@
+[
+  {
+    "id": 1,
+    "slug": "vedaprotein-elite-whey",
+    "name": "VedaProtein Elite Whey"
+  },
+  {
+    "id": 2,
+    "slug": "plantpower-vegan-protein",
+    "name": "PlantPower Vegan Protein"
+  },
+  {
+    "id": 3,
+    "slug": "daily-vitality-multivitamin",
+    "name": "Daily Vitality Multivitamin"
+  },
+  {
+    "id": 4,
+    "slug": "omegaveda-fish-oil",
+    "name": "OmegaVeda Fish Oil"
+  },
+  {
+    "id": 5,
+    "slug": "ashwabalance-herbal-blend",
+    "name": "AshwaBalance Herbal Blend"
+  },
+  {
+    "id": 6,
+    "slug": "turmercure-gold-blend",
+    "name": "TurmerCure Gold Blend"
+  },
+  {
+    "id": 7,
+    "slug": "growstrong-kids-nutrimix",
+    "name": "GrowStrong Kids NutriMix"
+  },
+  {
+    "id": 8,
+    "slug": "juniorimmune-chewables",
+    "name": "JuniorImmune Chewables"
+  },
+  {
+    "id": 9,
+    "slug": "casein-nightrecovery",
+    "name": "Casein NightRecovery"
+  },
+  {
+    "id": 10,
+    "slug": "vitamind3-k2-drops",
+    "name": "VitaminD3 + K2 Drops"
+  },
+  {
+    "id": 11,
+    "slug": "triphaladetox-blend",
+    "name": "TriphalaDetox Blend"
+  },
+  {
+    "id": 12,
+    "slug": "growtall-kids-calcium",
+    "name": "GrowTall Kids Calcium+"
+  },
+  {
+    "id": 13,
+    "slug": "30-days-slimming-kit",
+    "name": "30 Days Slimming Kit"
+  },
+  {
+    "id": 14,
+    "slug": "15-days-slimming-kit",
+    "name": "15 Days Slimming Kit"
+  },
+  {
+    "id": 15,
+    "slug": "sprouted-sathu-maavu-health-mix",
+    "name": "Sprouted Sathu Maavu Health Mix"
+  },
+  {
+    "id": 16,
+    "slug": "veg-goat-leg-soup-mix",
+    "name": "Veg Goat Leg Soup Mix"
+  },
+  {
+    "id": 17,
+    "slug": "weight-gain-porridge-mix",
+    "name": "Weight Gain Porridge Mix"
+  },
+  {
+    "id": 18,
+    "slug": "nannari-sharbath-syrup",
+    "name": "Nannari Sharbath Syrup"
+  },
+  {
+    "id": 19,
+    "slug": "nalleru-kaaram-podi",
+    "name": "Nalleru Kaaram Podi"
+  },
+  {
+    "id": 20,
+    "slug": "herbal-hair-dye-natural-black",
+    "name": "Herbal Hair Dye Natural Black"
+  },
+  {
+    "id": 21,
+    "slug": "dryfruit-laddu-dates-punch",
+    "name": "Dryfruit Laddu Dates Punch"
+  },
+  {
+    "id": 22,
+    "slug": "weight-gain-combo-pack",
+    "name": "Weight Gain Combo Pack"
+  },
+  {
+    "id": 23,
+    "slug": "slimming-nutritional-malt",
+    "name": "Slimming Nutritional Malt"
+  },
+  {
+    "id": 24,
+    "slug": "healthy-snacks-combo",
+    "name": "Healthy Snacks Combo"
+  },
+  {
+    "id": 25,
+    "slug": "amla-candy",
+    "name": "Amla Candy"
+  },
+  {
+    "id": 26,
+    "slug": "gond-laddu",
+    "name": "Gond Laddu"
+  },
+  {
+    "id": 27,
+    "slug": "omega-3-laddu",
+    "name": "Omega 3 Laddu"
+  },
+  {
+    "id": 28,
+    "slug": "rice-bran-laddu",
+    "name": "Rice Bran Laddu"
+  },
+  {
+    "id": 29,
+    "slug": "sunnundalu-cow-ghee",
+    "name": "Sunnundalu (Cow Ghee)"
+  },
+  {
+    "id": 30,
+    "slug": "sesame-dates-laddu",
+    "name": "Sesame Dates Laddu"
+  },
+  {
+    "id": 31,
+    "slug": "bones-joints-strength-combo",
+    "name": "Bones & Joints Strength Combo"
+  },
+  {
+    "id": 32,
+    "slug": "nalleru-pachadi",
+    "name": "Nalleru Pachadi"
+  },
+  {
+    "id": 33,
+    "slug": "moringa-sesame-kaaram-podi",
+    "name": "Moringa Sesame Kaaram Podi"
+  },
+  {
+    "id": 34,
+    "slug": "siridanya-dosa-mix",
+    "name": "Siridanya Dosa Mix"
+  },
+  {
+    "id": 35,
+    "slug": "sesame-sunflower-kaaram-podi",
+    "name": "Sesame Sunflower Kaaram Podi"
+  },
+  {
+    "id": 36,
+    "slug": "moringa-curry-leaves-dosa-mix",
+    "name": "Moringa Curry Leaves Dosa Mix"
+  },
+  {
+    "id": 37,
+    "slug": "black-rice-urad-dal-porridge-mix",
+    "name": "Black Rice Urad Dal Porridge Mix"
+  },
+  {
+    "id": 38,
+    "slug": "immunity-booster-kit",
+    "name": "Immunity Booster Kit"
+  },
+  {
+    "id": 39,
+    "slug": "moringa-powder",
+    "name": "Moringa Powder"
+  },
+  {
+    "id": 40,
+    "slug": "herbal-tea-immunity-blend",
+    "name": "Herbal Tea Immunity Blend"
+  },
+  {
+    "id": 41,
+    "slug": "immune-o-boost-tulsi-tea",
+    "name": "Immune-O-Boost Tulsi Tea"
+  },
+  {
+    "id": 42,
+    "slug": "sukku-malli-coffee-powder",
+    "name": "Sukku Malli Coffee Powder"
+  },
+  {
+    "id": 43,
+    "slug": "guava-leaves-powder",
+    "name": "Guava Leaves Powder"
+  },
+  {
+    "id": 44,
+    "slug": "super-kid-combo",
+    "name": "Super Kid Combo"
+  },
+  {
+    "id": 45,
+    "slug": "abc-malt",
+    "name": "ABC Malt"
+  },
+  {
+    "id": 46,
+    "slug": "baby-bath-powder-sunni-pindi",
+    "name": "Baby Bath Powder (Sunni Pindi)"
+  },
+  {
+    "id": 47,
+    "slug": "panchagavya-tooth-powder",
+    "name": "Panchagavya Tooth Powder"
+  },
+  {
+    "id": 48,
+    "slug": "multi-millet-penne-pasta",
+    "name": "Multi Millet Penne Pasta"
+  },
+  {
+    "id": 49,
+    "slug": "sprouted-ragi-choco-malt",
+    "name": "Sprouted Ragi Choco Malt"
+  },
+  {
+    "id": 50,
+    "slug": "little-millet-macaroni-pasta",
+    "name": "Little Millet Macaroni Pasta"
+  },
+  {
+    "id": 51,
+    "slug": "dry-fruit-powder",
+    "name": "Dry Fruit Powder"
+  },
+  {
+    "id": 52,
+    "slug": "triphala-powder",
+    "name": "Triphala Powder"
+  },
+  {
+    "id": 53,
+    "slug": "foxtail-millet-vermicelli",
+    "name": "Foxtail Millet Vermicelli"
+  },
+  {
+    "id": 54,
+    "slug": "power-seed-mix-7-in-1",
+    "name": "Power Seed Mix (7 in 1)"
+  },
+  {
+    "id": 55,
+    "slug": "red-banana-malt",
+    "name": "Red Banana Malt"
+  },
+  {
+    "id": 56,
+    "slug": "beetroot-malt",
+    "name": "Beetroot Malt"
+  },
+  {
+    "id": 57,
+    "slug": "beetroot-amla",
+    "name": "Beetroot Amla"
+  },
+  {
+    "id": 58,
+    "slug": "carrot-malt",
+    "name": "Carrot Malt"
+  },
+  {
+    "id": 59,
+    "slug": "moringa-sesame-makhana",
+    "name": "Moringa Sesame Makhana"
+  },
+  {
+    "id": 60,
+    "slug": "almond-curry-leaves-makhana",
+    "name": "Almond Curry Leaves Makhana"
+  },
+  {
+    "id": 61,
+    "slug": "pumpkin-flax-seeds-makhana",
+    "name": "Pumpkin Flax Seeds Makhana"
+  },
+  {
+    "id": 62,
+    "slug": "amla-powder",
+    "name": "Amla Powder"
+  },
+  {
+    "id": 63,
+    "slug": "beetroot-dosa-mix",
+    "name": "Beetroot Dosa Mix"
+  },
+  {
+    "id": 64,
+    "slug": "finger-millet-pongal-premix",
+    "name": "Finger Millet Pongal Premix"
+  },
+  {
+    "id": 65,
+    "slug": "wheat-ravva-upma-premix",
+    "name": "Wheat Ravva Upma Premix"
+  },
+  {
+    "id": 66,
+    "slug": "coconut-chutney-premix",
+    "name": "Coconut Chutney Premix"
+  },
+  {
+    "id": 67,
+    "slug": "lakadong-turmeric-powder",
+    "name": "Lakadong Turmeric Powder"
+  },
+  {
+    "id": 68,
+    "slug": "kashmiri-mongra-saffron",
+    "name": "Kashmiri Mongra Saffron"
+  },
+  {
+    "id": 69,
+    "slug": "kura-karam-masala-chilli-powder",
+    "name": "Kura Karam Masala Chilli Powder"
+  },
+  {
+    "id": 70,
+    "slug": "multi-floral-honey",
+    "name": "Multi Floral Honey"
+  },
+  {
+    "id": 71,
+    "slug": "organic-jaggery-powder",
+    "name": "Organic Jaggery Powder"
+  },
+  {
+    "id": 72,
+    "slug": "dry-dates-powder",
+    "name": "Dry Dates Powder"
+  },
+  {
+    "id": 73,
+    "slug": "turmeric-powder",
+    "name": "Turmeric Powder"
+  },
+  {
+    "id": 74,
+    "slug": "red-chilli-powder",
+    "name": "Red Chilli Powder"
+  },
+  {
+    "id": 75,
+    "slug": "amchur-powder",
+    "name": "Amchur Powder"
+  },
+  {
+    "id": 76,
+    "slug": "mango-orugulu-dry-mango-pieces",
+    "name": "Mango Orugulu (Dry Mango Pieces)"
+  },
+  {
+    "id": 77,
+    "slug": "organic-black-pepper-powder",
+    "name": "Organic Black Pepper Powder"
+  },
+  {
+    "id": 78,
+    "slug": "organic-black-pepper-whole",
+    "name": "Organic Black Pepper Whole"
+  },
+  {
+    "id": 79,
+    "slug": "sprouted-fenugreek-powder",
+    "name": "Sprouted Fenugreek Powder"
+  },
+  {
+    "id": 80,
+    "slug": "gond-katira",
+    "name": "Gond Katira"
+  },
+  {
+    "id": 81,
+    "slug": "sea-buckthorn-dried",
+    "name": "Sea Buckthorn Dried"
+  },
+  {
+    "id": 82,
+    "slug": "abc-powder-amla-beetroot-carrot",
+    "name": "ABC Powder (Amla Beetroot Carrot)"
+  },
+  {
+    "id": 83,
+    "slug": "diabetic-health-mix",
+    "name": "Diabetic Health Mix"
+  },
+  {
+    "id": 84,
+    "slug": "mango-seeds-powder",
+    "name": "Mango Seeds Powder"
+  },
+  {
+    "id": 85,
+    "slug": "diabetic-control-powder",
+    "name": "Diabetic Control Powder"
+  },
+  {
+    "id": 86,
+    "slug": "abcd-powder-amla-beetroot-carrot-dry-dates",
+    "name": "ABCD Powder (Amla Beetroot Carrot Dry Dates)"
+  },
+  {
+    "id": 87,
+    "slug": "wheat-grass-powder",
+    "name": "Wheat Grass Powder"
+  },
+  {
+    "id": 88,
+    "slug": "rice-bran-powder",
+    "name": "Rice Bran Powder"
+  },
+  {
+    "id": 89,
+    "slug": "dry-ginger-powder-sonti-podi",
+    "name": "Dry Ginger Powder (Sonti Podi)"
+  },
+  {
+    "id": 90,
+    "slug": "seed-cycling-kit",
+    "name": "Seed Cycling Kit"
+  },
+  {
+    "id": 91,
+    "slug": "curry-leaves-powder",
+    "name": "Curry Leaves Powder"
+  },
+  {
+    "id": 92,
+    "slug": "debloat-powder",
+    "name": "DeBloat Powder"
+  },
+  {
+    "id": 93,
+    "slug": "lactoboost-health-mix",
+    "name": "LactoBoost Health Mix"
+  },
+  {
+    "id": 94,
+    "slug": "slim-tox-tea-slimming-detox",
+    "name": "Slim-Tox Tea (Slimming & Detox)"
+  }
+]

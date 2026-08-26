@@ -4,8 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Product — NutriVeda</title>
+<meta name="description" content="Premium nutrition products from NutriVeda - Natural, FSSAI Certified health products.">
+<meta name="robots" content="index, follow">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/styles.css">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 </head>
 <body>
 <div class="cursor" id="cursor"></div>
@@ -48,7 +51,42 @@
         <a href="products.html" class="btn-primary" style="display:inline-flex;">Browse All Products</a>
       </div>`;
   } else {
-    document.title = product.name + ' — NutriVeda';
+    document.title = product.name + ' — NutriVeda | ' + product.category;
+    
+    // Update meta description dynamically
+    let metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute('content', product.desc);
+    
+    // Inject schema.org Product structured data
+    const schemaScript = document.createElement('script');
+    schemaScript.type = 'application/ld+json';
+    schemaScript.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": product.name,
+      "description": product.desc,
+      "image": "https://nutriveda.shop/assets/product-" + product.id + ".jpg",
+      "brand": { "@type": "Brand", "name": "NutriVeda" },
+      "sku": "NV" + String(product.id).padStart(3, '0'),
+      "category": product.category,
+      "offers": {
+        "@type": "Offer",
+        "url": window.location.href,
+        "priceCurrency": "INR",
+        "price": product.price,
+        "availability": "https://schema.org/InStock",
+        "itemCondition": "https://schema.org/NewCondition"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": product.rating.toString(),
+        "reviewCount": product.reviews.toString(),
+        "bestRating": "5",
+        "worstRating": "1"
+      }
+    });
+    document.head.appendChild(schemaScript);
+    
     const disc = Math.round((1 - product.price/product.mrp)*100);
     const starsHtml = '★'.repeat(Math.floor(product.rating)) + (product.rating % 1 ? '½' : '');
 
