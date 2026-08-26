@@ -8,6 +8,7 @@
 <meta name="robots" content="index, follow">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/reviews.css">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 </head>
 <body>
@@ -30,6 +31,7 @@
 
 <div id="productContent" style="padding-top:72px;"></div>
 
+<div id="reviewsSection"></div>
 <div id="relatedSection"></div>
 <div id="footer-placeholder"></div>
 
@@ -39,6 +41,7 @@
 <script src="../js/supabase-client.js"></script>
 <script src="../js/data.js"></script>
 <script src="../js/common.js?v=2"></script>
+<script src="../js/reviews.js"></script>
 <script>
   const params = new URLSearchParams(window.location.search);
   const id = parseInt(params.get('id'));
@@ -196,6 +199,11 @@
   function buyNow() {
     addProductToCart();
     window.location.href = 'cart.html';
+  }
+  
+  // Render product reviews
+  if (product && typeof ProductReviews !== 'undefined') {
+    ProductReviews.render('reviewsSection', product.id, product);
   }
 </script>
 </body>
