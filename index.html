@@ -337,6 +337,7 @@
 <link rel="stylesheet" href="css/styles.css">
 <link rel="stylesheet" href="css/advanced-features.css?v=1">
 <link rel="stylesheet" href="css/icon-features.css?v=3">
+<link rel="stylesheet" href="css/performance.css">
 
 <!-- EmailJS Library for Contact Form -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -690,10 +691,15 @@
 <script src="js/common.js?v=5"></script>
 <script src="js/advanced-features.js?v=1"></script>
 <script src="js/icon-features.js?v=3"></script>
+<script src="js/performance.js"></script>
 <script>
-  // Render featured products (first 6)
+  // Show skeleton while products load
   const grid = document.getElementById('featuredGrid');
+  if (typeof SkeletonLoader !== 'undefined') SkeletonLoader.show('featuredGrid', 6);
+  
+  // Render featured products (first 6)
   const featured = PRODUCTS.slice(0, 6);
+  grid.innerHTML = '';
   featured.forEach(p => {
     grid.innerHTML += `
       <div class="prod-card reveal" style="position:relative;">
