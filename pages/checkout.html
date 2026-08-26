@@ -42,10 +42,10 @@
   <a href="../index.html" class="nav-logo">Nutri<span>Veda</span></a>
   <ul class="nav-links" id="navLinks">
     <li><a href="products.html">Products</a></li>
-    <li><a href="cart.html" class="nav-cart">🛒 <span id="cartCount">0</span></a></li>
+    <li><a href="cart.html" class="nav-cart"><i data-lucide="shopping-cart" style="width:16px;height:16px;"></i> <span id="cartCount">0</span></a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:16px;">
-    <a href="cart.html" class="nav-cart-mobile">🛒 <span id="cartCountMobile">0</span></a>
+    <a href="cart.html" class="nav-cart-mobile"><i data-lucide="shopping-cart" style="width:16px;height:16px;"></i> <span id="cartCountMobile">0</span></a>
     <div class="hamburger" id="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
   </div>
 </nav>
@@ -224,6 +224,7 @@
 
 <div id="footer-placeholder"></div>
 
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script src="../config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="../js/supabase-client.js"></script>

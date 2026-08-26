@@ -342,6 +342,9 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script type="text/javascript" src="emailjs-config.js"></script>
 
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
 <script src="config.js"></script>
 </head>
 <body>
@@ -355,8 +358,8 @@
     <li><a href="index.html#why-us">About</a></li>
     <li><a href="index.html#testimonials">Reviews</a></li>
     <li><a href="index.html#contact">Contact</a></li>
-    <li id="loginNavItem"><a href="pages/login.html" class="nav-login">👤 Login</a></li>
-    <li><a href="pages/cart.html" class="nav-cart">🛒 <span id="cartCount">0</span></a></li>
+    <li id="loginNavItem"><a href="pages/login.html" class="nav-login"><i data-lucide="user" style="width:16px;height:16px;"></i> Login</a></li>
+    <li><a href="pages/cart.html" class="nav-cart"><i data-lucide="shopping-cart" style="width:16px;height:16px;"></i> <span id="cartCount">0</span></a></li>
     <li><a href="pages/products.html" class="nav-cta">Shop Now</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:16px;">
@@ -366,9 +369,9 @@
         <path d="m21 21-4.35-4.35"></path>
       </svg>
     </button>
-    <a href="pages/wishlist.html" class="nav-wishlist-mobile" style="position:relative;">❤️ <span class="wishlist-count" style="display:none;">0</span></a>
-    <a href="pages/login.html" class="nav-login-mobile" id="loginMobile">👤</a>
-    <a href="pages/cart.html" class="nav-cart-mobile">🛒 <span id="cartCountMobile">0</span></a>
+    <a href="pages/wishlist.html" class="nav-wishlist-mobile" style="position:relative;"><i data-lucide="heart" style="width:18px;height:18px;"></i> <span class="wishlist-count" style="display:none;">0</span></a>
+    <a href="pages/login.html" class="nav-login-mobile" id="loginMobile"><i data-lucide="user" style="width:18px;height:18px;"></i></a>
+    <a href="pages/cart.html" class="nav-cart-mobile"><i data-lucide="shopping-cart" style="width:18px;height:18px;"></i> <span id="cartCountMobile">0</span></a>
     <div class="hamburger" id="hamburger" onclick="toggleNav()">
       <span></span><span></span><span></span>
     </div>
@@ -552,19 +555,19 @@
         <h2 class="section-title">The <em>NutriVeda</em> Difference</h2>
       </div>
       <div class="why-item reveal">
-        <div class="why-icon">🌾</div>
+        <div class="why-icon"><i data-lucide="wheat" style="width:28px;height:28px;color:var(--forest);"></i></div>
         <div class="why-text"><h3>Farm-to-Bottle Ingredients</h3><p>We source directly from certified organic farms. Every ingredient is traceable, pure, and free from harmful additives.</p></div>
       </div>
       <div class="why-item reveal">
-        <div class="why-icon">🔬</div>
+        <div class="why-icon"><i data-lucide="flask-conical" style="width:28px;height:28px;color:var(--forest);"></i></div>
         <div class="why-text"><h3>Third-Party Lab Tested</h3><p>Every batch is independently tested for purity, potency, and safety before it reaches your hands.</p></div>
       </div>
       <div class="why-item reveal">
-        <div class="why-icon">🚚</div>
+        <div class="why-icon"><i data-lucide="truck" style="width:28px;height:28px;color:var(--forest);"></i></div>
         <div class="why-text"><h3>Fast Local Delivery</h3><p>Based in Hyderabad — get your orders delivered within 2–3 business days across Telangana & AP.</p></div>
       </div>
       <div class="why-item reveal">
-        <div class="why-icon">💬</div>
+        <div class="why-icon"><i data-lucide="message-circle" style="width:28px;height:28px;color:var(--forest);"></i></div>
         <div class="why-text"><h3>Personal Nutrition Support</h3><p>Talk directly to Ravindar for personalised product recommendations tailored to your health goals.</p></div>
       </div>
     </div>
@@ -614,10 +617,10 @@
       <h2>Let's Talk <em>Nutrition</em></h2>
       <p>Have a question about our products? Want a personalised recommendation? Ravindar is here to help.</p>
       <div class="contact-details">
-        <div class="contact-item"><div class="contact-item-icon">📞</div><div class="contact-item-text"><strong>Phone / WhatsApp</strong><a href="tel:+917893639037" id="whatsappLink" onclick="openWhatsApp(); return false;">+91 78936 39037</a></div></div>
-        <div class="contact-item"><div class="contact-item-icon">✉️</div><div class="contact-item-text"><strong>Email</strong><a href="mailto:customercare.nutriveda@gmail.com" id="emailLink" onclick="openEmail(); return false;">customercare.nutriveda@gmail.com</a></div></div>
-        <div class="contact-item"><div class="contact-item-icon">📍</div><div class="contact-item-text"><strong>Address</strong><span>H.No: 12, Tiwari Nagar, Near Miyapur Police Station,<br>Chandanagar, Hyderabad — 500049</span></div></div>
-        <div class="contact-item"><div class="contact-item-icon">⏰</div><div class="contact-item-text"><strong>Business Hours</strong><span>Mon – Sat: 9:00 AM – 7:00 PM</span></div></div>
+        <div class="contact-item"><div class="contact-item-icon"><i data-lucide="phone" style="width:20px;height:20px;"></i></div><div class="contact-item-text"><strong>Phone / WhatsApp</strong><a href="tel:+917893639037" id="whatsappLink" onclick="openWhatsApp(); return false;">+91 78936 39037</a></div></div>
+        <div class="contact-item"><div class="contact-item-icon"><i data-lucide="mail" style="width:20px;height:20px;"></i></div><div class="contact-item-text"><strong>Email</strong><a href="mailto:customercare.nutriveda@gmail.com" id="emailLink" onclick="openEmail(); return false;">customercare.nutriveda@gmail.com</a></div></div>
+        <div class="contact-item"><div class="contact-item-icon"><i data-lucide="map-pin" style="width:20px;height:20px;"></i></div><div class="contact-item-text"><strong>Address</strong><span>H.No: 12, Tiwari Nagar, Near Miyapur Police Station,<br>Chandanagar, Hyderabad — 500049</span></div></div>
+        <div class="contact-item"><div class="contact-item-icon"><i data-lucide="clock" style="width:20px;height:20px;"></i></div><div class="contact-item-text"><strong>Business Hours</strong><span>Mon – Sat: 9:00 AM – 7:00 PM</span></div></div>
       </div>
     </div>
     <div class="contact-form reveal" id="contactFormSection">
@@ -668,16 +671,16 @@
 <!-- Icon Action Bar -->
 <div class="icon-action-bar">
   <button class="icon-action-btn catalog" onclick="showProductCatalog()" data-tooltip="Product Catalog">
-    📘
+    <i data-lucide="book-open" style="width:20px;height:20px;"></i>
   </button>
   <button class="icon-action-btn camera" onclick="openImageUpload()" data-tooltip="Upload Image">
-    📷
+    <i data-lucide="camera" style="width:20px;height:20px;"></i>
   </button>
   <button class="icon-action-btn social" onclick="openSocialShare()" data-tooltip="Share on Social">
-    🐦
+    <i data-lucide="share-2" style="width:20px;height:20px;"></i>
   </button>
   <button class="icon-action-btn chat" onclick="openSupportChat()" data-tooltip="Customer Support">
-    💬
+    <i data-lucide="message-circle" style="width:20px;height:20px;"></i>
   </button>
 </div>
 
@@ -764,6 +767,9 @@
     // Open Gmail compose in new tab
     window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}`, '_blank');
   }
+  
+  // Initialize Lucide icons
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 </script>
 
 <!-- Contact Form Handler -->
