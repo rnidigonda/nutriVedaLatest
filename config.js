@@ -9,8 +9,8 @@ const CONFIG = {
   
   // Supabase Configuration
   SUPABASE: {
-    URL: 'https://your-project-ref.supabase.co',
-    ANON_KEY: 'your-anon-key-here'
+    URL: 'https://dinntqxyffrgcttamozr.supabase.co',
+    ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRpbm50cXh5ZmZyZ2N0dGFtb3pyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc3NTk5NTksImV4cCI6MjEwMzMzNTk1OX0.Uoo5ByRI8G-BSvP1wkay8ZHbxL93sg_IMUvMrMJ-RAo'
   },
   
   // Razorpay Configuration
