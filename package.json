@@ -4,8 +4,7 @@
   "private": true,
   "description": "Serverless backend for NutriVeda Razorpay payment integration",
   "scripts": {
-    "build:products": "node scripts/build-product-pages.js",
-    "build": "npm run build:products"
+    "build:products": "node scripts/build-product-pages.js"
   },
   "dependencies": {
     "razorpay": "^2.9.8"
