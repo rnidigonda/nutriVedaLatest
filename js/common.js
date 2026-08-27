@@ -322,6 +322,10 @@ function getLoginPath() {
 }
 
 function logoutUser() {
+  // Sign out from Supabase Auth
+  if (typeof supabaseClient !== 'undefined' && supabaseClient) {
+    supabaseClient.auth.signOut();
+  }
   localStorage.removeItem('nv_user_logged_in');
   localStorage.removeItem('nv_user_phone');
   localStorage.removeItem('nv_user_first_name');

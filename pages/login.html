@@ -3,1488 +3,349 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login / Sign Up - Nutri Veda</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/styles.css?v=4">
-
-<!-- EmailJS Library for Production Email OTP -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-<script type="text/javascript" src="../emailjs-config.js"></script>
+<title>Login / Register — NutriVeda</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <style>
-  .login-container {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, rgba(45, 90, 61, 0.05) 0%, rgba(245, 216, 122, 0.05) 100%);
-    padding: 60px 20px;
-  }
-  
-  .login-card {
-    background: white;
-    border-radius: 24px;
-    box-shadow: 0 20px 60px rgba(45, 90, 61, 0.08);
-    max-width: 440px;
-    width: 100%;
-    padding: 48px 40px;
-    position: relative;
-    overflow: visible;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-  
-  .login-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 6px;
-    background: linear-gradient(90deg, var(--primary), var(--gold));
-  }
-  
-  .login-header {
-    text-align: center;
-    margin-bottom: 36px;
-  }
-  
-  .login-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 8px;
-  }
-  
-  .login-logo span {
-    color: var(--gold);
-  }
-  
-  .login-subtitle {
-    font-size: 14px;
-    color: var(--text-light);
-    margin-bottom: 24px;
-  }
-  
-  .login-title {
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 8px;
-  }
-  
-  .login-desc {
-    font-size: 14px;
-    color: var(--text-light);
-  }
-  
-  .login-form {
-    margin-top: 32px;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .form-label {
-    display: block;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 8px;
-  }
-  
-  .form-input {
-    width: 100%;
-    padding: 14px 16px;
-    border: 2px solid #e5e5e5;
-    border-radius: 12px;
-    font-size: 15px;
-    transition: all 0.3s;
-    font-family: inherit;
-  }
-  
-  .form-input:focus {
-    outline: none;
-    border-color: var(--primary);
-    background: rgba(45, 90, 61, 0.02);
-  }
-  
-  .phone-input-group {
-    display: flex;
-    gap: 12px;
-  }
-  
-  .country-code {
-    width: 80px;
-    padding: 14px 12px;
-    border: 2px solid #e5e5e5;
-    border-radius: 12px;
-    font-size: 15px;
-    font-weight: 600;
-    text-align: center;
-    background: #f8f8f8;
-  }
-  
-  .otp-input-group {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-  }
-  
-  .otp-box {
-    width: 56px;
-    height: 56px;
-    border: 2px solid #e5e5e5;
-    border-radius: 12px;
-    font-size: 24px;
-    font-weight: 600;
-    text-align: center;
-    transition: all 0.3s;
-  }
-  
-  .otp-box:focus {
-    outline: none;
-    border-color: var(--primary);
-    background: rgba(45, 90, 61, 0.02);
-  }
-  
-  .btn-submit {
-    width: 100%;
-    padding: 16px;
-    background: #2d5a3d;
-    background: linear-gradient(135deg, #2d5a3d, #3d7a52);
-    color: #ffffff !important;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    margin-top: 8px;
-    text-align: center;
-    line-height: 1.5;
-    display: block;
-  }
-  
-  .btn-submit:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(45, 90, 61, 0.3);
-  }
-  
-  .btn-submit:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-  
-  .btn-secondary {
-    width: 100%;
-    padding: 16px;
-    background: white;
-    color: #2d5a3d !important;
-    border: 2px solid #2d5a3d;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    margin-top: 12px;
-    text-align: center;
-    line-height: 1.5;
-    display: block;
-  }
-  
-  .btn-secondary:hover {
-    background: #2d5a3d;
-    color: white !important;
-  }
-  
-  .resend-timer {
-    text-align: center;
-    margin-top: 16px;
-    font-size: 14px;
-    color: var(--text-light);
-  }
-  
-  .resend-link {
-    color: var(--primary);
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-  }
-  
-  .resend-link:hover {
-    text-decoration: underline;
-  }
-  
-  .status-message {
-    padding: 14px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    font-size: 14px;
-    text-align: center;
-    display: none;
-  }
-  
-  .status-success {
-    background: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-  }
-  
-  .status-error {
-    background: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-  }
-  
-  .status-info {
-    background: #d1ecf1;
-    color: #0c5460;
-    border: 1px solid #bee5eb;
-  }
-  
-  .back-link {
-    text-align: center;
-    margin-top: 24px;
-    padding-top: 24px;
-    border-top: 1px solid #e5e5e5;
-  }
-  
-  .back-link a {
-    color: var(--text-light);
-    text-decoration: none;
-    font-size: 14px;
-    transition: color 0.3s;
-  }
-  
-  .back-link a:hover {
-    color: var(--primary);
-  }
-  
-  .hidden {
-    display: none;
-  }
-  
-  .terms-text {
-    font-size: 12px;
-    color: var(--text-light);
-    text-align: center;
-    margin-top: 20px;
-    line-height: 1.6;
-  }
-  
-  .terms-text a {
-    color: var(--primary);
-    text-decoration: none;
-  }
-  
-  .terms-text a:hover {
-    text-decoration: underline;
-  }
+  body { background: var(--cream); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .login-container { width: 100%; max-width: 420px; }
+  .login-card { background: white; border-radius: 20px; padding: 40px 32px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+  .login-logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--forest); text-align: center; margin-bottom: 4px; }
+  .login-logo span { color: var(--gold); }
+  .login-subtitle { text-align: center; color: var(--text-light); font-size: 0.85rem; margin-bottom: 28px; }
+  .login-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--forest); margin-bottom: 6px; }
+  .login-desc { color: var(--text-light); font-size: 0.88rem; margin-bottom: 20px; }
+  .form-group { margin-bottom: 16px; }
+  .form-label { display: block; font-size: 13px; font-weight: 600; color: var(--text-dark); margin-bottom: 6px; }
+  .form-input { width: 100%; padding: 12px 14px; border: 1.5px solid #e0e0e0; border-radius: 10px; font-size: 14px; transition: border-color 0.2s; font-family: 'DM Sans', sans-serif; box-sizing: border-box; }
+  .form-input:focus { border-color: var(--forest); outline: none; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .btn-submit { width: 100%; padding: 14px; background: var(--forest); color: white; border: none; border-radius: 10px; font-weight: 700; font-size: 15px; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
+  .btn-submit:hover { background: #1e4030; transform: translateY(-1px); }
+  .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .btn-secondary { width: 100%; padding: 12px; background: none; border: 1.5px solid #ddd; border-radius: 10px; color: var(--text-mid); font-weight: 600; font-size: 14px; cursor: pointer; margin-top: 10px; transition: all 0.2s; }
+  .btn-secondary:hover { border-color: var(--forest); color: var(--forest); }
+  .toggle-link { text-align: center; margin-top: 20px; font-size: 14px; color: var(--text-light); }
+  .toggle-link a { color: var(--forest); font-weight: 600; text-decoration: none; }
+  .toggle-link a:hover { text-decoration: underline; }
+  .status-message { padding: 12px 16px; border-radius: 10px; font-size: 13px; margin-bottom: 16px; display: none; }
+  .status-success { background: #d4edda; color: #155724; display: block; }
+  .status-error { background: #f8d7da; color: #721c24; display: block; }
+  .back-link { text-align: center; margin-top: 20px; }
+  .back-link a { color: var(--text-light); font-size: 13px; text-decoration: none; }
+  .back-link a:hover { color: var(--forest); }
+  .hidden { display: none !important; }
+  .password-toggle { position: relative; }
+  .password-toggle input { padding-right: 44px; }
+  .password-toggle button { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-light); cursor: pointer; font-size: 18px; }
+  .phone-input-group { display: flex; gap: 8px; }
+  .country-code { width: 56px; text-align: center; background: var(--cream); font-weight: 600; border: 1.5px solid #e0e0e0; border-radius: 10px; padding: 12px 8px; font-size: 14px; }
+  .terms-text { font-size: 12px; color: var(--text-light); text-align: center; margin-top: 16px; }
+  .terms-text a { color: var(--forest); }
+  .divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #e0e0e0; }
+  .divider span { font-size: 12px; color: var(--text-light); font-weight: 600; }
 </style>
 </head>
 <body>
 
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-<script src="../config.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="../js/supabase-client.js"></script>
-<script>
-  // Check configuration on page load
-  window.addEventListener('DOMContentLoaded', function() {
-    const otpNotice = document.getElementById('otpNotice');
-    const otpNoticeText = document.getElementById('otpNoticeText');
-    const demoOtpDisplay = document.getElementById('demoOtpDisplay');
-    
-    // Check if EmailJS is configured
-    const isEmailJSConfigured = typeof EMAILJS_CONFIG !== 'undefined' && EMAILJS_CONFIG.IS_CONFIGURED;
-    const hostname = window.location.hostname;
-    const isProductionDomain = hostname !== 'localhost' && 
-                                hostname !== '127.0.0.1' && 
-                                hostname !== '' && 
-                                window.location.protocol !== 'file:';
-    
-    // Determine actual mode
-    const isDemo = !isEmailJSConfigured || 
-                   hostname === 'localhost' || 
-                   hostname === '127.0.0.1' || 
-                   hostname === '' ||
-                   window.location.protocol === 'file:';
-    
-    console.log('Configuration check:', {
-      hostname: hostname,
-      isEmailJSConfigured: isEmailJSConfigured,
-      isProductionDomain: isProductionDomain,
-      actualMode: isDemo ? 'DEMO' : 'PRODUCTION'
-    });
-    
-    if (!isEmailJSConfigured && isProductionDomain) {
-      // Production domain but EmailJS not configured - show warning
-      otpNotice.style.display = 'block';
-      otpNotice.style.background = '#fff3cd';
-      otpNotice.style.borderColor = '#ffc107';
-      otpNotice.innerHTML = '<strong style="color: #856404;">⚠️ EmailJS Not Configured:</strong> <span style="color: #856404;">OTP will appear on screen (demo mode). To enable email delivery, please configure EmailJS in emailjs-config.js</span>';
-      
-    } else if (isDemo) {
-      // Demo mode (localhost or not configured)
-      otpNotice.style.display = 'block';
-      otpNotice.style.background = '#fff3cd';
-      otpNotice.style.borderColor = '#ffeaa7';
-      otpNotice.querySelector('strong').style.color = '#856404';
-      otpNoticeText.textContent = 'Demo Mode: OTP will appear on screen (not sent via email)';
-      otpNoticeText.style.color = '#856404';
-      
-    } else {
-      // Production mode with EmailJS configured
-      otpNotice.style.display = 'block';
-      otpNoticeText.textContent = 'You will receive a 6-digit OTP via email';
-    }
-  });
-</script>
-
 <div class="login-container">
   <div class="login-card">
-    <!-- Logo -->
-    <div class="login-header">
-      <div class="login-logo">Nutri<span>Veda</span></div>
-      <div class="login-subtitle">Pure Nutrition, Powerful Life</div>
-    </div>
-    
-    <!-- Status Message -->
+    <div class="login-logo">Nutri<span>Veda</span></div>
+    <div class="login-subtitle">Pure Nutrition, Powerful Life</div>
+
     <div id="statusMessage" class="status-message"></div>
-    
-    <!-- Step 1: Email Input -->
-    <div id="emailStep">
-      <div class="login-title">Login / Sign Up</div>
-      <p class="login-desc">Enter your email address to continue</p>
-      
-      <!-- Info Notice -->
-      <div id="otpNotice" style="background:#d1ecf1;border:1px solid #bee5eb;border-radius:8px;padding:12px;margin:16px 0;font-size:13px;color:#0c5460;display:none;">
-        <strong>📧 Note:</strong> <span id="otpNoticeText"></span>
-      </div>
-      
-      <form id="emailForm" class="login-form">
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm">
+      <div class="login-title">Welcome Back</div>
+      <p class="login-desc">Login to your account</p>
+
+      <form onsubmit="handleLogin(event)">
         <div class="form-group">
           <label class="form-label">Email Address</label>
-          <input 
-            type="email" 
-            id="emailAddress" 
-            class="form-input" 
-            placeholder="your@email.com"
-            required
-          >
+          <input type="email" id="loginEmail" class="form-input" placeholder="your@email.com" required>
         </div>
-        
-        <button type="submit" class="btn-submit" id="sendEmailOtpBtn">
-          Send OTP to Email
-        </button>
-        
-        <p class="terms-text">
-          By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
-        </p>
+
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="password-toggle">
+            <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password" required minlength="6">
+            <button type="button" onclick="togglePassword('loginPassword', this)">👁</button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="loginBtn">Login</button>
       </form>
+
+      <div class="toggle-link">
+        Don't have an account? <a href="#" onclick="showRegister()">Register</a>
+      </div>
     </div>
-    
-    <!-- Step 2: User Details -->
-    <div id="detailsStep" class="hidden">
-      <div class="login-title">Complete Your Profile</div>
-      <p class="login-desc">We need a few details to personalize your experience</p>
-      
-      <form id="detailsForm" class="login-form">
-        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+
+    <!-- REGISTER FORM -->
+    <div id="registerForm" class="hidden">
+      <div class="login-title">Create Account</div>
+      <p class="login-desc">Register once, login easily every time</p>
+
+      <form onsubmit="handleRegister(event)">
+        <div class="form-row">
           <div class="form-group">
             <label class="form-label">First Name *</label>
-            <input 
-              type="text" 
-              id="firstName" 
-              class="form-input" 
-              placeholder="Enter first name"
-              required
-              minlength="2"
-            >
+            <input type="text" id="regFirstName" class="form-input" placeholder="First name" required minlength="2">
           </div>
           <div class="form-group">
             <label class="form-label">Last Name *</label>
-            <input 
-              type="text" 
-              id="lastName" 
-              class="form-input" 
-              placeholder="Enter last name"
-              required
-              minlength="2"
-            >
+            <input type="text" id="regLastName" class="form-input" placeholder="Last name" required minlength="2">
           </div>
         </div>
-        
+
+        <div class="form-group">
+          <label class="form-label">Email Address *</label>
+          <input type="email" id="regEmail" class="form-input" placeholder="your@email.com" required>
+        </div>
+
         <div class="form-group">
           <label class="form-label">Mobile Number (Optional)</label>
           <div class="phone-input-group">
             <input type="text" class="country-code" value="+91" readonly>
-            <input 
-              type="tel" 
-              id="phoneNumber" 
-              class="form-input" 
-              placeholder="Enter 10-digit mobile number"
-              pattern="[0-9]{10}"
-              maxlength="10"
-            >
+            <input type="tel" id="regPhone" class="form-input" placeholder="10-digit number" pattern="[0-9]{10}" maxlength="10">
           </div>
         </div>
-        
-        <button type="submit" class="btn-submit" id="saveDetailsBtn">
-          Continue to Verify
-        </button>
-        
-        <button type="button" class="btn-secondary" id="backToEmailBtn">
-          ← Back
-        </button>
-      </form>
-    </div>
-    
-    <!-- Step 3: OTP Verification -->
-    <div id="otpStep" class="hidden">
-      <div class="login-title">Verify OTP</div>
-      <p class="login-desc">Enter the 6-digit code sent to <strong id="displayEmail"></strong></p>
-      
-      <!-- OTP Display (only in demo mode) -->
-      <div id="demoOtpDisplay" style="background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); border: 3px solid #28a745; border-radius: 16px; padding: 24px; margin: 20px 0; text-align: center; display: none; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2); animation: fadeIn 0.3s ease;">
-        <div style="display: inline-block; background: #28a745; color: white; padding: 6px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 12px; letter-spacing: 1px;">
-          🧪 DEMO MODE - TESTING ENVIRONMENT
-        </div>
-        <div style="font-size: 14px; color: #155724; font-weight: 600; margin-bottom: 12px;">Your Test OTP Code:</div>
-        <div id="displayOtp" style="font-size: 48px; font-weight: 900; letter-spacing: 12px; color: #155724; font-family: 'Courier New', monospace; margin: 16px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);"></div>
-        <div style="font-size: 12px; color: #155724; margin-top: 12px; line-height: 1.6;">
-          📋 Copy this code to the boxes below<br>
-          <span style="font-size: 11px; opacity: 0.8;">⚠️ In production, OTP will be sent via email</span>
-        </div>
-      </div>
-      
-      <form id="otpForm" class="login-form">
+
         <div class="form-group">
-          <div class="otp-input-group">
-            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
-            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
-            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
-            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
-            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
-            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
+          <label class="form-label">Create Password *</label>
+          <div class="password-toggle">
+            <input type="password" id="regPassword" class="form-input" placeholder="Min 6 characters" required minlength="6">
+            <button type="button" onclick="togglePassword('regPassword', this)">👁</button>
           </div>
         </div>
-        
-        <button type="submit" class="btn-submit" id="verifyOtpBtn">
-          Verify & Continue
-        </button>
-        
-        <button type="button" class="btn-secondary" id="changeEmailBtn">
-          Change Email
-        </button>
-        
-        <div class="resend-timer">
-          <span id="timerText">Resend OTP in <strong id="countdown">30</strong>s</span>
-          <a href="#" id="resendLink" class="resend-link hidden">Resend OTP</a>
+
+        <div class="form-group">
+          <label class="form-label">Confirm Password *</label>
+          <div class="password-toggle">
+            <input type="password" id="regConfirmPassword" class="form-input" placeholder="Re-enter password" required minlength="6">
+            <button type="button" onclick="togglePassword('regConfirmPassword', this)">👁</button>
+          </div>
         </div>
+
+        <button type="submit" class="btn-submit" id="registerBtn">Create Account</button>
+
+        <p class="terms-text">
+          By registering, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>
+        </p>
       </form>
+
+      <div class="toggle-link">
+        Already have an account? <a href="#" onclick="showLogin()">Login</a>
+      </div>
     </div>
-    
+
     <div class="back-link">
       <a href="../index.html">← Back to Home</a>
     </div>
   </div>
 </div>
 
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="../config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../js/supabase-client.js"></script>
 <script>
-  // Elements
-  const emailStep = document.getElementById('emailStep');
-  const detailsStep = document.getElementById('detailsStep');
-  const otpStep = document.getElementById('otpStep');
-  const emailForm = document.getElementById('emailForm');
-  const detailsForm = document.getElementById('detailsForm');
-  const otpForm = document.getElementById('otpForm');
-  const emailInput = document.getElementById('emailAddress');
-  const phoneInput = document.getElementById('phoneNumber');
-  const firstNameInput = document.getElementById('firstName');
-  const lastNameInput = document.getElementById('lastName');
-  const displayEmail = document.getElementById('displayEmail');
-  const statusMessage = document.getElementById('statusMessage');
-  const sendEmailOtpBtn = document.getElementById('sendEmailOtpBtn');
-  const saveDetailsBtn = document.getElementById('saveDetailsBtn');
-  const verifyOtpBtn = document.getElementById('verifyOtpBtn');
-  const changeEmailBtn = document.getElementById('changeEmailBtn');
-  const backToEmailBtn = document.getElementById('backToEmailBtn');
-  const resendLink = document.getElementById('resendLink');
-  const timerText = document.getElementById('timerText');
-  const countdown = document.getElementById('countdown');
-  const otpBoxes = document.querySelectorAll('.otp-box');
-  const demoOtpDisplay = document.getElementById('demoOtpDisplay');
-  
-  let otpTimer;
-  let generatedOtp = '';
-  let userEmail = '';
-  let userPhone = '';
-  let userFirstName = '';
-  let userLastName = '';
-  let sentOtps = {}; // Store OTPs for verification (production)
-  
-  // Initialize EmailJS (production)
-  if (typeof emailjs !== 'undefined' && typeof EMAILJS_CONFIG !== 'undefined') {
-    if (EMAILJS_CONFIG.IS_CONFIGURED) {
-      emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
-      console.log('✅ EmailJS initialized for production');
-    }
+  // ── UI HELPERS ──
+  function showLogin() {
+    document.getElementById('loginForm').classList.remove('hidden');
+    document.getElementById('registerForm').classList.add('hidden');
+    clearStatus();
   }
-  
-  // API Functions (for production)
-  async function sendEmailOTPAPI(email, firstName) {
-    // Generate OTP
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    
-    // Store OTP with timestamp (expires in 5 minutes)
-    const expiryTime = Date.now() + (5 * 60 * 1000); // 5 minutes
-    sentOtps[email] = {
-      otp: otp,
-      expiry: expiryTime,
-      attempts: 0
-    };
-    
-    try {
-      // Check if EmailJS is configured
-      if (!EMAILJS_CONFIG.IS_CONFIGURED) {
-        throw new Error('EmailJS not configured. Please set up your API keys in emailjs-config.js');
-      }
-      
-      // Send email using EmailJS
-      const templateParams = {
-        to_email: email,
-        firstName: firstName,
-        otp: otp
-      };
-      
-      const response = await emailjs.send(
-        EMAILJS_CONFIG.SERVICE_ID,
-        EMAILJS_CONFIG.TEMPLATES.LOGIN_OTP,  // Use LOGIN_OTP template from TEMPLATES object
-        templateParams
-      );
-      
-      console.log('✅ Email sent successfully:', response);
-      
-      return {
-        success: true,
-        message: 'OTP sent successfully'
-      };
-      
-    } catch (error) {
-      console.error('❌ Error sending email:', error);
-      
-      // If EmailJS fails, show helpful error
-      if (error.text) {
-        throw new Error(`Email service error: ${error.text}`);
-      }
-      
-      throw new Error('Failed to send OTP email. Please try again or contact support.');
-    }
-  }
-  
-  async function verifyEmailOTPAPI(email, otp) {
-    return new Promise((resolve) => {
-      // Check if OTP exists for this email
-      if (!sentOtps[email]) {
-        resolve({
-          success: false,
-          message: 'No OTP found for this email'
-        });
-        return;
-      }
-      
-      const otpData = sentOtps[email];
-      
-      // Check if OTP expired
-      if (Date.now() > otpData.expiry) {
-        delete sentOtps[email];
-        resolve({
-          success: false,
-          message: 'OTP expired. Please request a new one.'
-        });
-        return;
-      }
-      
-      // Check attempts (max 5)
-      if (otpData.attempts >= 5) {
-        delete sentOtps[email];
-        resolve({
-          success: false,
-          message: 'Too many attempts. Please request a new OTP.'
-        });
-        return;
-      }
-      
-      // Increment attempts
-      otpData.attempts++;
-      
-      // Verify OTP
-      if (otpData.otp === otp) {
-        // Clear OTP after successful verification
-        delete sentOtps[email];
-        resolve({
-          success: true,
-          message: 'OTP verified successfully'
-        });
-      } else {
-        resolve({
-          success: false,
-          message: `Invalid OTP. ${5 - otpData.attempts} attempts remaining.`
-        });
-      }
-    });
-  }
-  
-  // Show status message
-  function showStatus(message, type) {
-    statusMessage.textContent = message;
-    statusMessage.className = `status-message status-${type}`;
-    statusMessage.style.display = 'block';
-    
-    setTimeout(() => {
-      statusMessage.style.display = 'none';
-    }, 5000);
-  }
-  
-  // Start countdown timer
-  function startTimer(seconds) {
-    let timeLeft = seconds;
-    timerText.style.display = 'block';
-    resendLink.classList.add('hidden');
-    
-    otpTimer = setInterval(() => {
-      timeLeft--;
-      countdown.textContent = timeLeft;
-      
-      if (timeLeft <= 0) {
-        clearInterval(otpTimer);
-        timerText.style.display = 'none';
-        resendLink.classList.remove('hidden');
-      }
-    }, 1000);
-  }
-  
-  // Generate random 6-digit OTP (demo mode only)
-  function generateOtp() {
-    return Math.floor(100000 + Math.random() * 900000).toString();
-  }
-  
-  // Check if running in demo mode (localhost)
-  function isDemoEnvironment() {
-    const hostname = window.location.hostname;
-    const protocol = window.location.protocol;
-    
-    // Force demo mode if EmailJS is not configured (even on production domain)
-    if (typeof EMAILJS_CONFIG !== 'undefined' && !EMAILJS_CONFIG.IS_CONFIGURED) {
-      console.log('⚠️ EmailJS not configured - forcing DEMO MODE');
-      return true;
-    }
-    
-    return hostname === 'localhost' || 
-           hostname === '127.0.0.1' || 
-           hostname === '' ||  // file:// protocol has empty hostname
-           protocol === 'file:' ||
-           hostname.includes('192.168.') ||
-           (typeof CONFIG !== 'undefined' && CONFIG.DEMO_MODE === true);
-  }
-  
-  // Step 1: Email Input
-  emailForm.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const email = emailInput.value.trim().toLowerCase();
-    
-    // Validate email
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      showStatus('Please enter a valid email address', 'error');
-      return;
-    }
-    
-    sendEmailOtpBtn.textContent = 'Please wait...';
-    sendEmailOtpBtn.disabled = true;
-    
-    // Store email and move to details step
-    userEmail = email;
-    emailStep.classList.add('hidden');
-    detailsStep.classList.remove('hidden');
-    
-    sendEmailOtpBtn.textContent = 'Send OTP to Email';
-    sendEmailOtpBtn.disabled = false;
-  });
-  
-  // Step 2: Save Details and Send OTP
-  detailsForm.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const firstName = firstNameInput.value.trim();
-    const lastName = lastNameInput.value.trim();
-    const phone = phoneInput.value.trim();
-    
-    // Validate
-    if (firstName.length < 2 || lastName.length < 2) {
-      showStatus('Names must be at least 2 characters', 'error');
-      return;
-    }
-    
-    // Validate phone if provided
-    if (phone && !/^[6-9]\d{9}$/.test(phone)) {
-      showStatus('Please enter a valid 10-digit Indian mobile number or leave it empty', 'error');
-      return;
-    }
-    
-    saveDetailsBtn.textContent = 'Sending OTP...';
-    saveDetailsBtn.disabled = true;
-    
-    // Store details
-    userFirstName = firstName;
-    userLastName = lastName;
-    userPhone = phone;
-    
-    // Auto-detect environment: localhost = demo, production = Email API
-    const isDemo = isDemoEnvironment();
-    
-    console.log('Environment check:', {
-      hostname: window.location.hostname,
-      protocol: window.location.protocol,
-      isDemo: isDemo
-    });
-    
-    try {
-      if (isDemo) {
-        // ========================================
-        // DEMO MODE (Localhost/Testing)
-        // ========================================
-        console.log('🧪 Running in DEMO MODE');
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        generatedOtp = generateOtp();
-        
-        // Show OTP prominently on screen
-        demoOtpDisplay.style.display = 'block';
-        document.getElementById('displayOtp').textContent = generatedOtp;
-        
-        displayEmail.textContent = userEmail;
-        detailsStep.classList.add('hidden');
-        otpStep.classList.remove('hidden');
-        startTimer(30);
-        showStatus(`📧 Demo OTP: ${generatedOtp} (visible below)`, 'success');
-        
-        // Also show in console for easy access
-        console.log('%c🔐 DEMO MODE - Your OTP Code', 'background: #2d5a3d; color: #f5d87a; font-size: 16px; padding: 10px; border-radius: 5px;');
-        console.log(`%cOTP: ${generatedOtp}`, 'font-size: 24px; font-weight: bold; color: #2d5a3d;');
-        console.log(`%c📧 Email: ${userEmail}`, 'font-size: 14px; color: #666;');
-        console.log('%cℹ️ In production, this will be sent via email', 'color: #666; font-style: italic;');
-        
-      } else {
-        // ========================================
-        // PRODUCTION MODE (Real Email)
-        // ========================================
-        console.log('🔒 Running in PRODUCTION MODE');
-        
-        // Check if EmailJS is configured
-        if (!EMAILJS_CONFIG.IS_CONFIGURED) {
-          // This should not happen since isDemoEnvironment() forces demo mode
-          // But just in case, show a helpful message
-          console.warn('EmailJS not configured in production mode - this should not happen');
-          throw new Error('Email service not configured. The page should be in demo mode.');
-        }
-        
-        const result = await sendEmailOTPAPI(userEmail, firstName);
-        
-        if (result.success) {
-          displayEmail.textContent = userEmail;
-          detailsStep.classList.add('hidden');
-          otpStep.classList.remove('hidden');
-          startTimer(30);
-          showStatus(`📧 OTP sent to ${userEmail}. Check your inbox!`, 'success');
-        } else {
-          throw new Error(result.message || 'Failed to send OTP');
-        }
-      }
-      
-      // Focus first OTP box
-      otpBoxes[0].focus();
-      
-    } catch (error) {
-      console.error('Error sending OTP:', error);
-      showStatus(error.message || 'Failed to send OTP. Please try again.', 'error');
-    } finally {
-      saveDetailsBtn.textContent = 'Continue to Verify';
-      saveDetailsBtn.disabled = false;
-    }
-  });
-  
-  // Back to email
-  backToEmailBtn.addEventListener('click', function() {
-    detailsStep.classList.add('hidden');
-    emailStep.classList.remove('hidden');
-  });
-  
-  // OTP input handling
-  otpBoxes.forEach((box, index) => {
-    box.addEventListener('input', (e) => {
-      if (e.target.value) {
-        // Move to next box
-        if (index < otpBoxes.length - 1) {
-          otpBoxes[index + 1].focus();
-        }
-      }
-    });
-    
-    box.addEventListener('keydown', (e) => {
-      // Move to previous box on backspace
-      if (e.key === 'Backspace' && !e.target.value && index > 0) {
-        otpBoxes[index - 1].focus();
-      }
-    });
-    
-    // Only allow numbers
-    box.addEventListener('keypress', (e) => {
-      if (!/[0-9]/.test(e.key)) {
-        e.preventDefault();
-      }
-    });
-  });
-  
-  // Verify OTP
-  otpForm.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const enteredOtp = Array.from(otpBoxes).map(box => box.value).join('');
-    
-    if (enteredOtp.length !== 6) {
-      showStatus('Please enter complete 6-digit OTP', 'error');
-      return;
-    }
-    
-    verifyOtpBtn.textContent = 'Verifying...';
-    verifyOtpBtn.disabled = true;
-    
-    try {
-      let verified = false;
-      
-      // Auto-detect environment
-      const isDemo = isDemoEnvironment();
-      
-      if (isDemo) {
-        // ========================================
-        // DEMO MODE (Localhost/Testing)
-        // ========================================
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        verified = (enteredOtp === generatedOtp);
-        
-        if (!verified) {
-          console.log('%c❌ Invalid OTP', 'background: #e74c3c; color: white; font-size: 14px; padding: 8px; border-radius: 5px;');
-          console.log(`Expected: ${generatedOtp}, Got: ${enteredOtp}`);
-        }
-        
-      } else {
-        // ========================================
-        // PRODUCTION MODE (Real Email)
-        // ========================================
-        const result = await verifyEmailOTPAPI(userEmail, enteredOtp);
-        verified = result.success;
-      }
-      
-      if (verified) {
-        // OTP verified successfully
-        console.log('%c✅ OTP Verified Successfully!', 'background: #2ecc71; color: white; font-size: 16px; padding: 10px; border-radius: 5px;');
-        showStatus('Login successful! Redirecting...', 'success');
-        
-        // Store user session with all details
-        localStorage.setItem('nv_user_email', userEmail);
-        localStorage.setItem('nv_user_first_name', userFirstName);
-        localStorage.setItem('nv_user_last_name', userLastName);
-        localStorage.setItem('nv_user_phone', userPhone || '');
-        localStorage.setItem('nv_user_logged_in', 'true');
-        localStorage.setItem('nv_user_login_time', new Date().toISOString());
-        
-        // Save user data to Google Sheets
-        saveUserToGoogleSheets(userEmail, userFirstName, userLastName, userPhone);
-        
-        // Redirect after 1.5 seconds
-        setTimeout(() => {
-          // Check if there's a return URL (user came from checkout/cart)
-          const urlParams = new URLSearchParams(window.location.search);
-          const returnUrl = urlParams.get('returnUrl');
-          
-          if (returnUrl) {
-            // Redirect back to where they came from
-            window.location.href = decodeURIComponent(returnUrl);
-          } else {
-            // Default: go to home page
-            window.location.href = '../index.html';
-          }
-        }, 1500);
-      } else {
-        throw new Error('Invalid OTP');
-      }
-      
-    } catch (error) {
-      console.error('Error verifying OTP:', error);
-      showStatus(error.message || 'Invalid OTP. Please try again.', 'error');
-      verifyOtpBtn.textContent = 'Verify & Continue';
-      verifyOtpBtn.disabled = false;
-      
-      // Clear OTP boxes
-      otpBoxes.forEach(box => box.value = '');
-      otpBoxes[0].focus();
-    }
-  });
-  
-  // Change email
-  changeEmailBtn.addEventListener('click', function() {
-    otpStep.classList.add('hidden');
-    detailsStep.classList.remove('hidden');
-    clearInterval(otpTimer);
-    
-    // Clear OTP boxes
-    otpBoxes.forEach(box => box.value = '');
-  });
-  
-  // Resend OTP
-  resendLink.addEventListener('click', async function(e) {
-    e.preventDefault();
-    
-    // Auto-detect environment
-    const isDemo = isDemoEnvironment();
-    
-    console.log('Resending OTP - Demo mode:', isDemo);
-    
-    try {
-      if (isDemo) {
-        // ========================================
-        // DEMO MODE (Localhost/Testing)
-        // ========================================
-        generatedOtp = generateOtp();
-        
-        document.getElementById('displayOtp').textContent = generatedOtp;
-        showStatus(`📧 New Demo OTP: ${generatedOtp}`, 'success');
-        
-        console.log('%c🔐 NEW DEMO OTP', 'background: #2d5a3d; color: #f5d87a; font-size: 16px; padding: 10px; border-radius: 5px;');
-        console.log(`%cOTP: ${generatedOtp}`, 'font-size: 24px; font-weight: bold; color: #2d5a3d;');
-        
-      } else {
-        // ========================================
-        // PRODUCTION MODE (Real Email)
-        // ========================================
-        
-        // Check if EmailJS is configured
-        if (!EMAILJS_CONFIG.IS_CONFIGURED) {
-          throw new Error('Email service not configured yet.');
-        }
-        
-        const result = await sendEmailOTPAPI(userEmail, userFirstName);
-        
-        if (result.success) {
-          showStatus('📧 New OTP sent successfully! Check your email.', 'success');
-        } else {
-          throw new Error(result.message || 'Failed to resend OTP');
-        }
-      }
-      
-      startTimer(30);
-      
-      // Clear OTP boxes
-      otpBoxes.forEach(box => box.value = '');
-      otpBoxes[0].focus();
-      
-    } catch (error) {
-      console.error('Error resending OTP:', error);
-      showStatus(error.message || 'Failed to resend OTP', 'error');
-    }
-  });
-  
-  // Check if already logged in
-  window.addEventListener('DOMContentLoaded', function() {
-    const isLoggedIn = localStorage.getItem('nv_user_logged_in');
-    if (isLoggedIn === 'true') {
-      // User already logged in - check if there's a return URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const returnUrl = urlParams.get('returnUrl');
-      
-      if (returnUrl) {
-        // Redirect back to where they came from
-        window.location.href = decodeURIComponent(returnUrl);
-      } else {
-        // Default: go to home page
-        window.location.href = '../index.html';
-      }
-      return; // Stop further execution
-    }
-    
-    // Update OTP notice text based on environment
-    const otpNoticeText = document.getElementById('otpNoticeText');
-    const isDemo = isDemoEnvironment();
-    
-    if (isDemo) {
-      otpNoticeText.textContent = 'Demo Mode: OTP will appear on screen (not sent via email)';
-    } else {
-      otpNoticeText.textContent = 'You will receive a 6-digit OTP via email';
-    }
-    document.getElementById('otpNotice').style.display = 'block';
-  });
-  
-  // ========================================
-  // SAVE USER TO GOOGLE SHEETS
-  // ========================================
-  async function saveUserToGoogleSheets(email, firstName, lastName, phone) {
-    // TODO: Replace this URL with your Google Apps Script Web App URL
-    const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
-    
-    // Skip if URL not configured
-    if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
-      console.log('Google Sheets integration not configured yet.');
-      console.log('User data:', {email, firstName, lastName, phone});
-      return;
-    }
-    
-    try {
-      const response = await fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors', // Required for Google Apps Script
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          action: 'register',
-          email: email,
-          firstName: firstName,
-          lastName: lastName,
-          phone: phone
-        })
-      });
-      
-      console.log('User data sent to Google Sheets');
-      
-    } catch (error) {
-      console.error('Failed to save user to Google Sheets:', error);
-      // Don't block login if saving fails
-    }
-  }
-</script>
-  
-  // API Functions
-  async function sendOTPAPI(phoneNumber, firstName) {
-    if (!CONFIG.ENABLE_SMS_OTP) {
-      throw new Error('SMS OTP is not enabled');
-    }
-    
-    const response = await fetch(`${CONFIG.API_BASE_URL}/send-otp`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        phoneNumber: phoneNumber,
-        firstName: firstName
-      })
-    });
-    
-    if (!response.ok) {
-      throw new Error('Failed to send OTP');
-    }
-    
-    return await response.json();
-  }
-  
-  async function verifyOTPAPI(phoneNumber, otp) {
-    if (!CONFIG.ENABLE_SMS_OTP) {
-      throw new Error('SMS OTP is not enabled');
-    }
-    
-    const response = await fetch(`${CONFIG.API_BASE_URL}/verify-otp`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        phoneNumber: phoneNumber,
-        otp: otp
-      })
-    });
-    
-    if (!response.ok) {
-      throw new Error('Failed to verify OTP');
-    }
-    
-    return await response.json();
-  }
-  
-  // Show status message
-  function showStatus(message, type) {
-    statusMessage.textContent = message;
-    statusMessage.className = `status-message status-${type}`;
-    statusMessage.style.display = 'block';
-    
-    setTimeout(() => {
-      statusMessage.style.display = 'none';
-    }, 5000);
-  }
-  
-  // Start countdown timer
-  function startTimer(seconds) {
-    let timeLeft = seconds;
-    timerText.style.display = 'block';
-    resendLink.classList.add('hidden');
-    
-    otpTimer = setInterval(() => {
-      timeLeft--;
-      countdown.textContent = timeLeft;
-      
-      if (timeLeft <= 0) {
-        clearInterval(otpTimer);
-        timerText.style.display = 'none';
-        resendLink.classList.remove('hidden');
-      }
-    }, 1000);
-  }
-  
-  // Generate random 6-digit OTP (demo mode only)
-  function generateOtp() {
-    return Math.floor(100000 + Math.random() * 900000).toString();
-  }
-  
-  // Check if running in demo mode (localhost)
-  function isDemoEnvironment() {
-    const hostname = window.location.hostname;
-    return hostname === 'localhost' || 
-           hostname === '127.0.0.1' || 
-           hostname.includes('192.168.') ||
-           CONFIG.DEMO_MODE === true;
-  }
-  
-  // Send OTP (Step 1 → Step 2: Details)
-  phoneForm.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const phone = phoneInput.value.trim();
-    
-    // Validate phone number
-    if (!/^[6-9]\d{9}$/.test(phone)) {
-      showStatus('Please enter a valid 10-digit Indian mobile number', 'error');
-      return;
-    }
-    
-    sendOtpBtn.textContent = 'Please wait...';
-    sendOtpBtn.disabled = true;
-    
-    // Store phone and move to details step
-    userPhone = phone;
-    phoneStep.classList.add('hidden');
-    detailsStep.classList.remove('hidden');
-    
-    sendOtpBtn.textContent = 'Send OTP';
-    sendOtpBtn.disabled = false;
-  });
-  
-  // Save Details (Step 2 → Step 3: OTP)
-  detailsForm.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const firstName = firstNameInput.value.trim();
-    const lastName = lastNameInput.value.trim();
-    const email = userEmailInput.value.trim();
-    
-    // Validate
-    if (firstName.length < 2 || lastName.length < 2) {
-      showStatus('Names must be at least 2 characters', 'error');
-      return;
-    }
-    
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      showStatus('Please enter a valid email address', 'error');
-      return;
-    }
-    
-    saveDetailsBtn.textContent = 'Sending OTP...';
-    saveDetailsBtn.disabled = true;
-    
-    // Store details
-    userFirstName = firstName;
-    userLastName = lastName;
-    userEmail = email;
-    
-    try {
-      // Auto-detect environment: localhost = demo, production = SMS
-      const isDemo = isDemoEnvironment();
-      
-      if (isDemo || CONFIG.DEMO_MODE) {
-        // ========================================
-        // DEMO MODE (Localhost/Testing)
-        // ========================================
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        generatedOtp = generateOtp();
-        
-        // Show OTP prominently on screen
-        demoOtpDisplay.style.display = 'block';
-        document.getElementById('displayOtp').textContent = generatedOtp;
-        
-        displayPhone.textContent = `+91 ${userPhone}`;
-        detailsStep.classList.add('hidden');
-        otpStep.classList.remove('hidden');
-        startTimer(30);
-        showStatus(`📱 Demo OTP: ${generatedOtp} (visible below)`, 'success');
-        
-        // Also show in console for easy access
-        console.log('%c🔐 DEMO MODE - Your OTP Code', 'background: #2d5a3d; color: #f5d87a; font-size: 16px; padding: 10px; border-radius: 5px;');
-        console.log(`%cOTP: ${generatedOtp}`, 'font-size: 24px; font-weight: bold; color: #2d5a3d;');
-        console.log('%cℹ️ In production, this will be sent via SMS', 'color: #666; font-style: italic;');
-        
-      } else if (CONFIG.ENABLE_SMS_OTP) {
-        // ========================================
-        // PRODUCTION MODE (Real SMS)
-        // ========================================
-        const result = await sendOTPAPI(userPhone, firstName);
-        
-        if (result.success) {
-          displayPhone.textContent = `+91 ${userPhone}`;
-          detailsStep.classList.add('hidden');
-          otpStep.classList.remove('hidden');
-          startTimer(30);
-          showStatus(`📱 OTP sent to +91 ${userPhone}`, 'success');
-        } else {
-          throw new Error(result.message || 'Failed to send OTP');
-        }
-        
-      } else {
-        throw new Error('SMS OTP is currently disabled. Please contact support.');
-      }
-      
-      // Focus first OTP box
-      otpBoxes[0].focus();
-      
-    } catch (error) {
-      console.error('Error sending OTP:', error);
-      showStatus(error.message || 'Failed to send OTP. Please try again.', 'error');
-    } finally {
-      saveDetailsBtn.textContent = 'Continue to Verify';
-      saveDetailsBtn.disabled = false;
-    }
-  });
-  
-  // Back to phone
-  backToPhoneBtn.addEventListener('click', function() {
-    detailsStep.classList.add('hidden');
-    phoneStep.classList.remove('hidden');
-  });
-  
-  // OTP input handling
-  otpBoxes.forEach((box, index) => {
-    box.addEventListener('input', (e) => {
-      if (e.target.value) {
-        // Move to next box
-        if (index < otpBoxes.length - 1) {
-          otpBoxes[index + 1].focus();
-        }
-      }
-    });
-    
-    box.addEventListener('keydown', (e) => {
-      // Move to previous box on backspace
-      if (e.key === 'Backspace' && !e.target.value && index > 0) {
-        otpBoxes[index - 1].focus();
-      }
-    });
-    
-    // Only allow numbers
-    box.addEventListener('keypress', (e) => {
-      if (!/[0-9]/.test(e.key)) {
-        e.preventDefault();
-      }
-    });
-  });
-  
-  // Verify OTP
-  otpForm.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const enteredOtp = Array.from(otpBoxes).map(box => box.value).join('');
-    
-    if (enteredOtp.length !== 6) {
-      showStatus('Please enter complete 6-digit OTP', 'error');
-      return;
-    }
-    
-    verifyOtpBtn.textContent = 'Verifying...';
-    verifyOtpBtn.disabled = true;
-    
-    try {
-      let verified = false;
-      
-      // Auto-detect environment
-      const isDemo = isDemoEnvironment();
-      
-      if (isDemo || CONFIG.DEMO_MODE) {
-        // ========================================
-        // DEMO MODE (Localhost/Testing)
-        // ========================================
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        verified = (enteredOtp === generatedOtp);
-        
-        if (!verified) {
-          console.log('%c❌ Invalid OTP', 'background: #e74c3c; color: white; font-size: 14px; padding: 8px; border-radius: 5px;');
-          console.log(`Expected: ${generatedOtp}, Got: ${enteredOtp}`);
-        }
-        
-      } else if (CONFIG.ENABLE_SMS_OTP) {
-        // ========================================
-        // PRODUCTION MODE (Real SMS)
-        // ========================================
-        const result = await verifyOTPAPI(userPhone, enteredOtp);
-        verified = result.success;
-        
-      } else {
-        throw new Error('SMS OTP is currently disabled');
-      }
-      
-      if (verified) {
-        // OTP verified successfully
-        console.log('%c✅ OTP Verified Successfully!', 'background: #2ecc71; color: white; font-size: 16px; padding: 10px; border-radius: 5px;');
-        showStatus('Login successful! Redirecting...', 'success');
-        
-        // Store user session with all details
-        localStorage.setItem('nv_user_phone', userPhone);
-        localStorage.setItem('nv_user_first_name', userFirstName);
-        localStorage.setItem('nv_user_last_name', userLastName);
-        localStorage.setItem('nv_user_email', userEmail);
-        localStorage.setItem('nv_user_logged_in', 'true');
-        localStorage.setItem('nv_user_login_time', new Date().toISOString());
-        
-        // Save user data to Google Sheets
-        saveUserToGoogleSheets(userPhone, userFirstName, userLastName, userEmail);
-        
-        // Redirect to home page after 1.5 seconds
-        setTimeout(() => {
-          window.location.href = '../index.html';
-        }, 1500);
-      } else {
-        throw new Error('Invalid OTP');
-      }
-      
-    } catch (error) {
-      console.error('Error verifying OTP:', error);
-      showStatus(error.message || 'Invalid OTP. Please try again.', 'error');
-      verifyOtpBtn.textContent = 'Verify & Continue';
-      verifyOtpBtn.disabled = false;
-      
-      // Clear OTP boxes
-      otpBoxes.forEach(box => box.value = '');
-      otpBoxes[0].focus();
-    }
-  });
-  
-  // Change number
-  changeNumberBtn.addEventListener('click', function() {
-    otpStep.classList.add('hidden');
-    detailsStep.classList.remove('hidden');
-    clearInterval(otpTimer);
-    
-    // Clear OTP boxes
-    otpBoxes.forEach(box => box.value = '');
-  });
-  
-  // Resend OTP
-  resendLink.addEventListener('click', async function(e) {
-    e.preventDefault();
-    
-    try {
-      // Auto-detect environment
-      const isDemo = isDemoEnvironment();
-      
-      if (isDemo || CONFIG.DEMO_MODE) {
-        // ========================================
-        // DEMO MODE (Localhost/Testing)
-        // ========================================
-        generatedOtp = generateOtp();
-        
-        document.getElementById('displayOtp').textContent = generatedOtp;
-        showStatus(`📱 New Demo OTP: ${generatedOtp}`, 'success');
-        
-        console.log('%c🔐 NEW DEMO OTP', 'background: #2d5a3d; color: #f5d87a; font-size: 16px; padding: 10px; border-radius: 5px;');
-        console.log(`%cOTP: ${generatedOtp}`, 'font-size: 24px; font-weight: bold; color: #2d5a3d;');
-        
-      } else if (CONFIG.ENABLE_SMS_OTP) {
-        // ========================================
-        // PRODUCTION MODE (Real SMS)
-        // ========================================
-        const result = await sendOTPAPI(userPhone, userFirstName);
-        
-        if (result.success) {
-          showStatus('📱 New OTP sent successfully!', 'success');
-        } else {
-          throw new Error(result.message || 'Failed to resend OTP');
-        }
-      }
-      
-      startTimer(30);
-      
-      // Clear OTP boxes
-      otpBoxes.forEach(box => box.value = '');
-      otpBoxes[0].focus();
-      
-    } catch (error) {
-      console.error('Error resending OTP:', error);
-      showStatus(error.message || 'Failed to resend OTP', 'error');
-    }
-  });
-  
-  // Check if already logged in
-  window.addEventListener('DOMContentLoaded', function() {
-    const isLoggedIn = localStorage.getItem('nv_user_logged_in');
-    if (isLoggedIn === 'true') {
-      window.location.href = '../index.html';
-    }
-  });
-  
-  // ========================================
-  // SAVE USER TO GOOGLE SHEETS
-  // ========================================
-  async function saveUserToGoogleSheets(phone, firstName, lastName, email) {
-    // TODO: Replace this URL with your Google Apps Script Web App URL
-    // Instructions:
-    // 1. Create Google Sheet "NutriVeda Users"
-    // 2. Go to Extensions → Apps Script
-    // 3. Paste code from google-apps-script-user-storage.js
-    // 4. Deploy as Web App
-    // 5. Copy the URL and paste below
-    
-    const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
-    
-    // Skip if URL not configured
-    if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
-      console.log('Google Sheets integration not configured yet.');
-      console.log('User data:', {phone, firstName, lastName, email});
-      return;
-    }
-    
-    try {
-      const response = await fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors', // Required for Google Apps Script
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          action: 'register',
-          phone: phone,
-          firstName: firstName,
-          lastName: lastName,
-          email: email
-        })
-      });
-      
-      console.log('User data sent to Google Sheets');
-      
-    } catch (error) {
-      console.error('Failed to save user to Google Sheets:', error);
-      // Don't block login if saving fails
-    }
-  }
-</script>
 
+  function showRegister() {
+    document.getElementById('loginForm').classList.add('hidden');
+    document.getElementById('registerForm').classList.remove('hidden');
+    clearStatus();
+  }
+
+  function showStatus(msg, type) {
+    const el = document.getElementById('statusMessage');
+    el.textContent = msg;
+    el.className = 'status-message status-' + type;
+  }
+
+  function clearStatus() {
+    document.getElementById('statusMessage').className = 'status-message';
+  }
+
+  function togglePassword(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (input.type === 'password') {
+      input.type = 'text';
+      btn.textContent = '🙈';
+    } else {
+      input.type = 'password';
+      btn.textContent = '👁';
+    }
+  }
+
+  function getReturnUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('returnUrl') ? decodeURIComponent(params.get('returnUrl')) : '../index.html';
+  }
+
+  // ── REGISTRATION ──
+  async function handleRegister(e) {
+    e.preventDefault();
+
+    const firstName = document.getElementById('regFirstName').value.trim();
+    const lastName = document.getElementById('regLastName').value.trim();
+    const email = document.getElementById('regEmail').value.trim().toLowerCase();
+    const phone = document.getElementById('regPhone').value.trim();
+    const password = document.getElementById('regPassword').value;
+    const confirmPassword = document.getElementById('regConfirmPassword').value;
+
+    if (password !== confirmPassword) {
+      showStatus('Passwords do not match', 'error');
+      return;
+    }
+
+    if (password.length < 6) {
+      showStatus('Password must be at least 6 characters', 'error');
+      return;
+    }
+
+    const btn = document.getElementById('registerBtn');
+    btn.textContent = 'Creating account...';
+    btn.disabled = true;
+
+    try {
+      if (!supabaseClient) throw new Error('Service unavailable. Please try again.');
+
+      // 1. Create Supabase Auth user
+      const { data: authData, error: authError } = await supabaseClient.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: {
+            first_name: firstName,
+            last_name: lastName,
+            phone: phone
+          }
+        }
+      });
+
+      if (authError) {
+        if (authError.message.includes('already registered')) {
+          showStatus('This email is already registered. Please login instead.', 'error');
+          btn.textContent = 'Create Account';
+          btn.disabled = false;
+          return;
+        }
+        throw authError;
+      }
+
+      // 2. Create customer profile in customers table
+      if (authData.user) {
+        await supabaseClient.from('customers').upsert({
+          id: authData.user.id,
+          email: email,
+          first_name: firstName,
+          last_name: lastName,
+          phone: phone || null
+        });
+      }
+
+      // 3. Store session locally for nav display
+      localStorage.setItem('nv_user_email', email);
+      localStorage.setItem('nv_user_first_name', firstName);
+      localStorage.setItem('nv_user_last_name', lastName);
+      localStorage.setItem('nv_user_phone', phone || '');
+      localStorage.setItem('nv_user_logged_in', 'true');
+      localStorage.setItem('nv_user_login_time', new Date().toISOString());
+
+      // 4. Merge guest cart/wishlist
+      if (typeof CartAPI !== 'undefined') await CartAPI.mergeGuestCart(authData.user.id);
+      if (typeof WishlistAPI !== 'undefined') await WishlistAPI.mergeGuestWishlist(authData.user.id);
+
+      showStatus('Account created successfully! Redirecting...', 'success');
+
+      setTimeout(() => { window.location.href = getReturnUrl(); }, 1200);
+
+    } catch (err) {
+      showStatus(err.message || 'Registration failed. Please try again.', 'error');
+      btn.textContent = 'Create Account';
+      btn.disabled = false;
+    }
+  }
+
+  // ── LOGIN ──
+  async function handleLogin(e) {
+    e.preventDefault();
+
+    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+    const password = document.getElementById('loginPassword').value;
+
+    const btn = document.getElementById('loginBtn');
+    btn.textContent = 'Logging in...';
+    btn.disabled = true;
+
+    try {
+      if (!supabaseClient) throw new Error('Service unavailable. Please try again.');
+
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+
+      if (error) {
+        if (error.message.includes('Invalid login')) {
+          throw new Error('Invalid email or password. Please try again.');
+        }
+        throw error;
+      }
+
+      // Get user profile from customers table
+      const { data: profile } = await supabaseClient
+        .from('customers')
+        .select('*')
+        .eq('id', data.user.id)
+        .maybeSingle();
+
+      const firstName = profile?.first_name || data.user.user_metadata?.first_name || '';
+      const lastName = profile?.last_name || data.user.user_metadata?.last_name || '';
+      const phone = profile?.phone || data.user.user_metadata?.phone || '';
+
+      // Store session locally for nav display
+      localStorage.setItem('nv_user_email', email);
+      localStorage.setItem('nv_user_first_name', firstName);
+      localStorage.setItem('nv_user_last_name', lastName);
+      localStorage.setItem('nv_user_phone', phone);
+      localStorage.setItem('nv_user_logged_in', 'true');
+      localStorage.setItem('nv_user_login_time', new Date().toISOString());
+
+      // Merge guest cart/wishlist into account
+      if (typeof CartAPI !== 'undefined') await CartAPI.mergeGuestCart(data.user.id);
+      if (typeof WishlistAPI !== 'undefined') await WishlistAPI.mergeGuestWishlist(data.user.id);
+
+      showStatus('Login successful! Redirecting...', 'success');
+
+      setTimeout(() => { window.location.href = getReturnUrl(); }, 1000);
+
+    } catch (err) {
+      showStatus(err.message || 'Login failed. Please try again.', 'error');
+      btn.textContent = 'Login';
+      btn.disabled = false;
+    }
+  }
+
+  // ── AUTO-REDIRECT IF ALREADY LOGGED IN ──
+  (async function checkSession() {
+    if (!supabaseClient) return;
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (session) {
+      // Already logged in, redirect
+      window.location.href = getReturnUrl();
+    }
+  })();
+</script>
 </body>
 </html>
-
