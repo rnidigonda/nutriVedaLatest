@@ -77,11 +77,56 @@
         </div>
 
         <button type="submit" class="btn-submit" id="loginBtn">Login</button>
+
+        <div style="text-align:right;margin-top:10px;">
+          <a href="#" onclick="showForgotPassword()" style="font-size:13px;color:var(--forest);text-decoration:none;">Forgot password?</a>
+        </div>
       </form>
 
       <div class="toggle-link">
         Don't have an account? <a href="#" onclick="showRegister()">Register</a>
       </div>
+    </div>
+
+    <!-- FORGOT PASSWORD FORM -->
+    <div id="forgotForm" class="hidden">
+      <div class="login-title">Reset Password</div>
+      <p class="login-desc">Enter your email and we'll send you a password reset link</p>
+
+      <form onsubmit="handleForgotPassword(event)">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="forgotEmail" class="form-input" placeholder="your@email.com" required>
+        </div>
+
+        <button type="submit" class="btn-submit" id="forgotBtn">Send Reset Link</button>
+        <button type="button" class="btn-secondary" onclick="showLogin()">← Back to Login</button>
+      </form>
+    </div>
+
+    <!-- RESET PASSWORD FORM (shown when user clicks reset link) -->
+    <div id="resetForm" class="hidden">
+      <div class="login-title">Set New Password</div>
+      <p class="login-desc">Enter your new password below</p>
+
+      <form onsubmit="handleResetPassword(event)">
+        <div class="form-group">
+          <label class="form-label">New Password</label>
+          <div class="password-toggle">
+            <input type="password" id="newPassword" class="form-input" placeholder="Min 6 characters" required minlength="6">
+            <button type="button" onclick="togglePassword('newPassword', this)">👁</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Confirm New Password</label>
+          <div class="password-toggle">
+            <input type="password" id="confirmNewPassword" class="form-input" placeholder="Re-enter password" required minlength="6">
+            <button type="button" onclick="togglePassword('confirmNewPassword', this)">👁</button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="resetBtn">Update Password</button>
+      </form>
     </div>
 
     <!-- REGISTER FORM -->
@@ -157,12 +202,24 @@
   function showLogin() {
     document.getElementById('loginForm').classList.remove('hidden');
     document.getElementById('registerForm').classList.add('hidden');
+    document.getElementById('forgotForm').classList.add('hidden');
+    document.getElementById('resetForm').classList.add('hidden');
     clearStatus();
   }
 
   function showRegister() {
     document.getElementById('loginForm').classList.add('hidden');
     document.getElementById('registerForm').classList.remove('hidden');
+    document.getElementById('forgotForm').classList.add('hidden');
+    document.getElementById('resetForm').classList.add('hidden');
+    clearStatus();
+  }
+
+  function showForgotPassword() {
+    document.getElementById('loginForm').classList.add('hidden');
+    document.getElementById('registerForm').classList.add('hidden');
+    document.getElementById('forgotForm').classList.remove('hidden');
+    document.getElementById('resetForm').classList.add('hidden');
     clearStatus();
   }
 
@@ -243,7 +300,26 @@
         throw authError;
       }
 
-      // 2. Create customer profile in customers table
+      // 2. Check if email confirmation is required
+      if (authData.user && !authData.session) {
+        // Email confirmation required — user must verify email first
+        // Try to auto-sign-in anyway (works if confirm_email is disabled)
+        const { data: signInData, error: signInError } = await supabaseClient.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
+        
+        if (signInError) {
+          // Email confirmation IS required
+          showStatus('Account created! Please check your email (' + email + ') to confirm your account, then login.', 'success');
+          btn.textContent = 'Create Account';
+          btn.disabled = false;
+          setTimeout(() => showLogin(), 3000);
+          return;
+        }
+      }
+
+      // 3. Create customer profile in customers table
       if (authData.user) {
         await supabaseClient.from('customers').upsert({
           id: authData.user.id,
@@ -336,6 +412,84 @@
       btn.disabled = false;
     }
   }
+
+  // ── FORGOT PASSWORD ──
+  async function handleForgotPassword(e) {
+    e.preventDefault();
+
+    const email = document.getElementById('forgotEmail').value.trim().toLowerCase();
+    const btn = document.getElementById('forgotBtn');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    try {
+      if (!supabaseClient) throw new Error('Service unavailable.');
+
+      const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + '/pages/login.html?reset=true'
+      });
+
+      if (error) throw error;
+
+      showStatus('Password reset link sent to ' + email + '. Check your inbox (and spam folder).', 'success');
+    } catch (err) {
+      showStatus(err.message || 'Failed to send reset link.', 'error');
+    } finally {
+      btn.textContent = 'Send Reset Link';
+      btn.disabled = false;
+    }
+  }
+
+  // ── RESET PASSWORD (after clicking email link) ──
+  async function handleResetPassword(e) {
+    e.preventDefault();
+
+    const password = document.getElementById('newPassword').value;
+    const confirm = document.getElementById('confirmNewPassword').value;
+
+    if (password !== confirm) {
+      showStatus('Passwords do not match.', 'error');
+      return;
+    }
+
+    if (password.length < 6) {
+      showStatus('Password must be at least 6 characters.', 'error');
+      return;
+    }
+
+    const btn = document.getElementById('resetBtn');
+    btn.textContent = 'Updating...';
+    btn.disabled = true;
+
+    try {
+      if (!supabaseClient) throw new Error('Service unavailable.');
+
+      const { error } = await supabaseClient.auth.updateUser({ password: password });
+
+      if (error) throw error;
+
+      showStatus('Password updated successfully! You can now login.', 'success');
+      setTimeout(() => showLogin(), 2000);
+    } catch (err) {
+      showStatus(err.message || 'Failed to update password.', 'error');
+    } finally {
+      btn.textContent = 'Update Password';
+      btn.disabled = false;
+    }
+  }
+
+  // ── CHECK IF THIS IS A PASSWORD RESET CALLBACK ──
+  (function checkResetToken() {
+    const params = new URLSearchParams(window.location.search);
+    const hash = window.location.hash;
+    
+    // Supabase sends reset token in URL hash or as ?reset=true after redirect
+    if (params.get('reset') === 'true' || hash.includes('type=recovery')) {
+      // Show reset password form
+      document.getElementById('loginForm').classList.add('hidden');
+      document.getElementById('resetForm').classList.remove('hidden');
+    }
+  })();
 
   // ── AUTO-REDIRECT IF ALREADY LOGGED IN ──
   (async function checkSession() {
