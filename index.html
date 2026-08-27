@@ -702,7 +702,7 @@
   grid.innerHTML = '';
   featured.forEach(p => {
     grid.innerHTML += `
-      <div class="prod-card reveal" style="position:relative;">
+      <div class="prod-card reveal" style="position:relative;cursor:pointer;" onclick="if(!event.target.closest('button,a.btn-view,.wishlist-btn'))window.location.href='pages/product.html?id=${p.id}'">
         <button class="wishlist-btn" data-product-id="${p.id}">
           <span class="wishlist-icon">♡</span>
         </button>
@@ -716,7 +716,7 @@
             <div style="display:flex;gap:8px;">
               <button class="quick-view-btn" data-product-id="${p.id}" style="position:relative;bottom:auto;left:auto;transform:none;opacity:1;">Quick</button>
               <a href="pages/product.html?id=${p.id}" class="btn-view">View</a>
-              <button class="btn-add" onclick="addToCartById(${p.id}, this)">Add</button>
+              <button class="btn-add" onclick="event.stopPropagation();addToCartById(${p.id}, this)">Add</button>
             </div>
           </div>
         </div>
