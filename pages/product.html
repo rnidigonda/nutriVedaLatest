@@ -10,6 +10,42 @@
 <link rel="stylesheet" href="../css/styles.css">
 <link rel="stylesheet" href="../css/reviews.css">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<style>
+  /* Product Image Thumbnails */
+  .pd-visual { position: relative; }
+  .pd-main-image { font-size: 8rem; text-align: center; padding: 40px; }
+  .pd-image-thumbs { display: flex; gap: 8px; justify-content: center; margin-top: 16px; }
+  .pd-thumb { width: 60px; height: 60px; border-radius: 8px; border: 2px solid #e0e0e0; display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; transition: border-color 0.2s; }
+  .pd-thumb.active { border-color: var(--forest); }
+  .pd-thumb:hover { border-color: var(--gold); }
+  
+  /* Accordion */
+  .pd-accordion { margin-top: 24px; border-top: 1px solid #eee; }
+  .pd-accordion-item { border-bottom: 1px solid #eee; }
+  .pd-accordion-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; cursor: pointer; font-weight: 600; font-size: 15px; color: var(--text-dark); }
+  .pd-accordion-header:hover { color: var(--forest); }
+  .pd-accordion-item.open .pd-accordion-header [data-lucide] { transform: rotate(180deg); }
+  .pd-accordion-body { padding: 0 0 16px; }
+  .pd-benefits-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .pd-benefits-list li { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-mid); }
+  .pd-shipping-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: var(--text-mid); }
+  .pd-shipping-list li { padding: 4px 0; }
+  
+  /* Trust badges with icons */
+  .pd-trust { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid #eee; }
+  .pd-trust-item { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--text-mid); background: var(--cream-light, #fefcf5); padding: 8px 12px; border-radius: 8px; }
+  
+  /* Sticky Add to Cart Bar */
+  .sticky-cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 12px 5%; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 -4px 20px rgba(0,0,0,0.1); z-index: 100; transform: translateY(100%); transition: transform 0.3s ease; }
+  .sticky-cart-bar.visible { transform: translateY(0); }
+  .sticky-cart-info { display: flex; flex-direction: column; }
+  .sticky-cart-name { font-size: 13px; font-weight: 600; color: var(--text-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
+  .sticky-cart-price { font-size: 16px; font-weight: 700; color: var(--forest); }
+  .sticky-cart-btn { padding: 12px 28px; background: var(--forest); color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; transition: background 0.2s; }
+  .sticky-cart-btn:hover { background: #1e4030; }
+  
+  @media (min-width: 900px) { .sticky-cart-bar { display: none; } }
+</style>
 </head>
 <body>
 <div class="cursor" id="cursor"></div>
@@ -105,12 +141,19 @@
       </div>
       <section class="product-detail">
         <div class="pd-grid">
-          <div class="pd-visual">${product.emoji}</div>
+          <div class="pd-visual">
+            <div class="pd-main-image">${product.emoji}</div>
+            <div class="pd-image-thumbs">
+              <div class="pd-thumb active">${product.emoji}</div>
+              <div class="pd-thumb" style="opacity:0.5;font-size:1.5rem;">📦</div>
+              <div class="pd-thumb" style="opacity:0.5;font-size:1.5rem;">📋</div>
+            </div>
+          </div>
           <div class="pd-info">
             <div class="pd-cat">${product.category}</div>
             <h1 class="pd-name">${product.name}</h1>
             <div class="pd-rating">
-              <div class="pd-stars">${'★'.repeat(5)}</div>
+              <div class="pd-stars">${'★'.repeat(Math.floor(product.rating))}${product.rating % 1 >= 0.5 ? '½' : ''}</div>
               <div class="pd-review-count">${product.rating}/5 · ${product.reviews} reviews</div>
             </div>
             <div class="pd-price-row">
@@ -134,19 +177,65 @@
               <button class="btn-buy-now" onclick="buyNow()">Buy Now — ₹${product.price.toLocaleString()}</button>
               <button class="btn-cart-full" onclick="addProductToCart()">+ Add to Cart</button>
             </div>
-            <div class="pd-benefits">
-              <h4>Key Benefits</h4>
-              <ul>${product.benefits.map(b => `<li>${b}</li>`).join('')}</ul>
+            
+            <!-- Accordion Sections -->
+            <div class="pd-accordion">
+              <div class="pd-accordion-item open">
+                <div class="pd-accordion-header" onclick="toggleAccordion(this)">
+                  <span>Key Benefits</span>
+                  <i data-lucide="chevron-down" style="width:18px;height:18px;transition:transform 0.3s;"></i>
+                </div>
+                <div class="pd-accordion-body">
+                  <ul class="pd-benefits-list">${product.benefits.map(b => `<li><i data-lucide="check-circle" style="width:14px;height:14px;color:var(--forest);flex-shrink:0;"></i> ${b}</li>`).join('')}</ul>
+                </div>
+              </div>
+              <div class="pd-accordion-item">
+                <div class="pd-accordion-header" onclick="toggleAccordion(this)">
+                  <span>How to Use</span>
+                  <i data-lucide="chevron-down" style="width:18px;height:18px;transition:transform 0.3s;"></i>
+                </div>
+                <div class="pd-accordion-body" style="display:none;">
+                  <p style="font-size:14px;color:var(--text-mid);line-height:1.7;">
+                    Take as directed on the packaging or as advised by a health professional. 
+                    Store in a cool, dry place away from direct sunlight. Best consumed within 6 months of opening.
+                  </p>
+                </div>
+              </div>
+              <div class="pd-accordion-item">
+                <div class="pd-accordion-header" onclick="toggleAccordion(this)">
+                  <span>Shipping & Returns</span>
+                  <i data-lucide="chevron-down" style="width:18px;height:18px;transition:transform 0.3s;"></i>
+                </div>
+                <div class="pd-accordion-body" style="display:none;">
+                  <ul class="pd-shipping-list">
+                    <li><strong>Free shipping</strong> on orders above ₹999</li>
+                    <li>Delivery within <strong>2-5 business days</strong> across India</li>
+                    <li><strong>7-day return policy</strong> for unopened products</li>
+                    <li>Cash on Delivery available (₹40 COD fee)</li>
+                  </ul>
+                </div>
+              </div>
             </div>
+            
             <div class="pd-trust">
-              <div class="pd-trust-item">✅ FSSAI Certified</div>
-              <div class="pd-trust-item">🚚 Free shipping ₹999+</div>
-              <div class="pd-trust-item">↩️ 7-day returns</div>
-              <div class="pd-trust-item">🔒 Secure payment</div>
+              <div class="pd-trust-item"><i data-lucide="shield-check" style="width:16px;height:16px;"></i> FSSAI Certified</div>
+              <div class="pd-trust-item"><i data-lucide="truck" style="width:16px;height:16px;"></i> Free shipping ₹999+</div>
+              <div class="pd-trust-item"><i data-lucide="refresh-cw" style="width:16px;height:16px;"></i> 7-day returns</div>
+              <div class="pd-trust-item"><i data-lucide="lock" style="width:16px;height:16px;"></i> Secure payment</div>
             </div>
           </div>
         </div>
-      </section>`;
+      </section>
+      
+      <!-- Sticky Add to Cart Bar (mobile) -->
+      <div class="sticky-cart-bar" id="stickyCartBar">
+        <div class="sticky-cart-info">
+          <span class="sticky-cart-name">${product.name}</span>
+          <span class="sticky-cart-price">₹${product.price.toLocaleString()}</span>
+        </div>
+        <button class="sticky-cart-btn" onclick="addProductToCart()">Add to Cart</button>
+      </div>
+    `;
 
     // Related products
     const related = PRODUCTS.filter(p => p.catKey === product.catKey && p.id !== product.id).slice(0, 3);
@@ -200,6 +289,35 @@
     addProductToCart();
     window.location.href = 'cart.html';
   }
+  
+  // Accordion toggle
+  function toggleAccordion(header) {
+    const item = header.parentElement;
+    const body = header.nextElementSibling;
+    const icon = header.querySelector('[data-lucide]');
+    const isOpen = item.classList.contains('open');
+    
+    if (isOpen) {
+      item.classList.remove('open');
+      body.style.display = 'none';
+      if (icon) icon.style.transform = 'rotate(0deg)';
+    } else {
+      item.classList.add('open');
+      body.style.display = 'block';
+      if (icon) icon.style.transform = 'rotate(180deg)';
+    }
+  }
+  
+  // Sticky Add to Cart bar on mobile scroll
+  window.addEventListener('scroll', function() {
+    const bar = document.getElementById('stickyCartBar');
+    if (!bar) return;
+    if (window.scrollY > 400) {
+      bar.classList.add('visible');
+    } else {
+      bar.classList.remove('visible');
+    }
+  });
   
   // Render product reviews
   if (product && typeof ProductReviews !== 'undefined') {
