@@ -706,7 +706,7 @@
           <button class="wishlist-btn" data-product-id="${p.id}">
             <span class="wishlist-icon">♡</span>
           </button>
-          <div class="aprod-img">${p.emoji}<div class="aprod-badge">${p.badge}</div></div>
+          <div class="aprod-img"><img src="../assets/products/product-${p.id}-1.jpg" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;border-radius:12px 12px 0 0;" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" loading="lazy"><span style="display:none;font-size:4rem;">${p.emoji}</span><div class="aprod-badge">${p.badge}</div></div>
           <div class="aprod-body">
             <div class="aprod-category">${p.category}</div>
             <div class="aprod-name">${p.name}</div>

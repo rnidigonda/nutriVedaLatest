@@ -130,6 +130,13 @@
     const disc = Math.round((1 - product.price/product.mrp)*100);
     const starsHtml = '★'.repeat(Math.floor(product.rating)) + (product.rating % 1 ? '½' : '');
 
+    // Image helper: check if real product images exist
+    const imgBase = '../assets/products/product-' + product.id;
+    const mainImg = `<img src="${imgBase}-1.jpg" alt="${product.name}" style="width:100%;max-width:400px;border-radius:12px;" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;font-size:8rem;">${product.emoji}</span>`;
+    const thumbs = [1,2,3,4].map(n => 
+      `<div class="pd-thumb${n===1?' active':''}" onclick="switchImage(${n})"><img src="${imgBase}-${n}.jpg" alt="${product.name} ${n}" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" onerror="this.parentElement.style.display='none'"></div>`
+    ).join('');
+
     document.getElementById('productContent').innerHTML = `
       <div class="page-header">
         <div class="breadcrumb">
@@ -142,12 +149,8 @@
       <section class="product-detail">
         <div class="pd-grid">
           <div class="pd-visual">
-            <div class="pd-main-image">${product.emoji}</div>
-            <div class="pd-image-thumbs">
-              <div class="pd-thumb active">${product.emoji}</div>
-              <div class="pd-thumb" style="opacity:0.5;font-size:1.5rem;">📦</div>
-              <div class="pd-thumb" style="opacity:0.5;font-size:1.5rem;">📋</div>
-            </div>
+            <div class="pd-main-image" id="pdMainImage">${mainImg}</div>
+            <div class="pd-image-thumbs">${thumbs}</div>
           </div>
           <div class="pd-info">
             <div class="pd-cat">${product.category}</div>
@@ -306,6 +309,17 @@
       body.style.display = 'block';
       if (icon) icon.style.transform = 'rotate(180deg)';
     }
+  }
+  
+  // Switch product image in gallery
+  function switchImage(num) {
+    const imgBase = '../assets/products/product-' + product.id;
+    const mainContainer = document.getElementById('pdMainImage');
+    if (mainContainer) {
+      mainContainer.innerHTML = `<img src="${imgBase}-${num}.jpg" alt="${product.name}" style="width:100%;max-width:400px;border-radius:12px;" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;font-size:8rem;">${product.emoji}</span>`;
+    }
+    // Update active thumb
+    document.querySelectorAll('.pd-thumb').forEach((t, i) => t.classList.toggle('active', i === num - 1));
   }
   
   // Sticky Add to Cart bar on mobile scroll
