@@ -326,11 +326,32 @@
     if (typeof lucide !== 'undefined') lucide.createIcons();
   } // end renderProductPage
 
-  // Wait for products to load from Supabase (fallback to local data.js), then render
-  if (window.NV_PRODUCTS_READY) {
-    window.NV_PRODUCTS_READY.then(renderProductPage);
+  function safeRender() {
+    try {
+      renderProductPage();
+    } catch (e) {
+      console.error('[NutriVeda] product render failed:', e);
+      // Fallback: at least attempt a basic render if PRODUCTS is available
+      const el = document.getElementById('productContent');
+      if (el && !el.innerHTML.trim()) {
+        el.innerHTML = '<div style="text-align:center;padding:120px 5%;"><h2 style="color:var(--forest);">Loading product…</h2></div>';
+      }
+    }
+  }
+
+  // Wait for products to load from Supabase (fallback to local data.js), then render.
+  // Also render immediately if PRODUCTS is already populated (data.js loaded).
+  if (window.NV_PRODUCTS_READY && typeof window.NV_PRODUCTS_READY.then === 'function') {
+    window.NV_PRODUCTS_READY.then(safeRender).catch(safeRender);
+    // Safety net: if the promise hangs, render from local data after a short delay
+    setTimeout(function () {
+      const el = document.getElementById('productContent');
+      if (el && !el.innerHTML.trim() && typeof PRODUCTS !== 'undefined' && PRODUCTS.length) {
+        safeRender();
+      }
+    }, 1500);
   } else {
-    renderProductPage();
+    safeRender();
   }
 
   let qty = 1;

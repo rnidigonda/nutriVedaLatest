@@ -184,6 +184,22 @@ function mapDbProductToUi(row) {
   };
 }
 
+// Copy DB products into the global PRODUCTS array (declared as const in data.js).
+// We mutate the existing array in place so all references stay valid. If data.js
+// hasn't loaded yet, retry shortly.
+function applyDbProducts() {
+  const mapped = window.__NV_DB_PRODUCTS;
+  if (!mapped || !mapped.length) return;
+  if (typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS)) {
+    PRODUCTS.length = 0;
+    mapped.forEach(p => PRODUCTS.push(p));
+    window.__NV_DB_APPLIED = true;
+  } else {
+    // data.js not parsed yet — retry on next tick
+    setTimeout(applyDbProducts, 30);
+  }
+}
+
 // Fetch all products from Supabase and replace the global PRODUCTS array.
 // Falls back silently to the hardcoded data.js PRODUCTS if the DB is
 // unavailable or returns nothing.
@@ -201,13 +217,11 @@ async function loadProductsFromDB() {
     if (error || !data || data.length === 0) return false;
 
     const mapped = data.map(mapDbProductToUi);
-    // Replace the global PRODUCTS contents in place so existing references stay valid
-    if (typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS)) {
-      PRODUCTS.length = 0;
-      mapped.forEach(p => PRODUCTS.push(p));
-    } else {
-      window.PRODUCTS = mapped;
-    }
+    // Stash mapped products; apply them into the global PRODUCTS array once it exists.
+    // (data.js declares `const PRODUCTS` and loads AFTER this script, so we must NOT
+    //  create our own window.PRODUCTS — that would cause a redeclaration SyntaxError.)
+    window.__NV_DB_PRODUCTS = mapped;
+    applyDbProducts();
     return true;
   } catch (e) {
     console.warn('[NutriVeda] Failed to load products from DB, using local data:', e.message || e);
@@ -674,8 +688,20 @@ initSupabase();
 // Kick off product loading right away and expose a promise pages can await.
 // Pages should render inside: NV_PRODUCTS_READY.then(renderProducts)
 window.NV_PRODUCTS_READY = (async function () {
-  const loaded = await loadProductsFromDB();
-  // Notify any listeners (pages that render on event rather than promise)
+  let loaded = false;
+  try {
+    loaded = await loadProductsFromDB();
+  } catch (e) {
+    console.warn('[NutriVeda] product load error:', e && (e.message || e));
+  }
+  // Ensure DB products are applied into the global array before resolving
+  if (loaded) {
+    for (let i = 0; i < 50 && !window.__NV_DB_APPLIED; i++) {
+      applyDbProducts();
+      if (window.__NV_DB_APPLIED) break;
+      await new Promise(r => setTimeout(r, 30));
+    }
+  }
   document.dispatchEvent(new CustomEvent('nv-products-ready', { detail: { fromDB: loaded } }));
   return loaded;
 })();
