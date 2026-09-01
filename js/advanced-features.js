@@ -654,7 +654,8 @@
     
     StickyCartBar.init();
     QuickView.init();
-    LiveSearch.init();
+    // LiveSearch.init(); // disabled: nav already provides a search button; the
+    // auto-injected box rendered awkwardly under the nav on pages without a <header>
     
     console.log('✓ All Advanced Features Loaded!');
   }
