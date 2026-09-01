@@ -11,15 +11,48 @@
 <link rel="stylesheet" href="../css/reviews.css">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <style>
-  /* Product Image Thumbnails */
+  /* Product Image Gallery */
   .pd-visual { position: sticky; top: 90px; }
-  .pd-main-image { text-align: center; padding: 20px; background: var(--cream-light, #fefcf5); border-radius: 16px; min-height: 400px; display: flex; align-items: center; justify-content: center; }
-  .pd-main-image img { width: 100%; max-width: 500px; height: auto; max-height: 500px; object-fit: contain; border-radius: 12px; }
-  .pd-image-thumbs { display: flex; gap: 10px; margin-top: 14px; }
-  .pd-thumb { width: 80px; height: 80px; border-radius: 10px; border: 2px solid #e0e0e0; overflow: hidden; cursor: pointer; transition: border-color 0.2s; flex-shrink: 0; }
+  .pd-main-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: var(--cream-light, #fefcf5);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-size: 8rem;
+  }
+  .pd-main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+  }
+  .pd-image-thumbs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .pd-thumb {
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+    border: 2px solid #e0e0e0;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.15s;
+    background: var(--cream-light, #fefcf5);
+  }
   .pd-thumb.active { border-color: var(--forest); border-width: 3px; }
-  .pd-thumb:hover { border-color: var(--gold); }
+  .pd-thumb:hover { border-color: var(--gold); transform: translateY(-2px); }
   .pd-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+  @media (max-width: 900px) {
+    .pd-visual { position: relative; top: 0; }
+    .pd-image-thumbs { grid-template-columns: repeat(4, 1fr); }
+  }
   
   /* Accordion */
   .pd-accordion { margin-top: 24px; border-top: 1px solid #eee; }
@@ -132,11 +165,11 @@
     const disc = Math.round((1 - product.price/product.mrp)*100);
     const starsHtml = '★'.repeat(Math.floor(product.rating)) + (product.rating % 1 ? '½' : '');
 
-    // Image helper: check if real product images exist
+    // Image gallery: supports up to 8 images per product
     const imgBase = '../assets/products/product-' + product.id;
-    const mainImg = `<img src="${imgBase}-1.jpg" alt="${product.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;font-size:8rem;">${product.emoji}</span>`;
-    const thumbs = [1,2,3,4].map(n => 
-      `<div class="pd-thumb${n===1?' active':''}" onclick="switchImage(${n})"><img src="${imgBase}-${n}.jpg" alt="${product.name} ${n}" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" onerror="this.parentElement.style.display='none'"></div>`
+    const mainImg = `<img src="${imgBase}-1.jpg" alt="${product.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;">${product.emoji}</span>`;
+    const thumbs = [1,2,3,4,5,6,7,8].map(n => 
+      `<div class="pd-thumb${n===1?' active':''}" data-img="${n}" onclick="switchImage(${n})"><img src="${imgBase}-${n}.jpg" alt="${product.name} ${n}" onerror="this.parentElement.style.display='none'"></div>`
     ).join('');
 
     document.getElementById('productContent').innerHTML = `
@@ -318,9 +351,12 @@
     const imgBase = '../assets/products/product-' + product.id;
     const mainContainer = document.getElementById('pdMainImage');
     if (mainContainer) {
-      mainContainer.innerHTML = `<img src="${imgBase}-${num}.jpg" alt="${product.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;font-size:8rem;">${product.emoji}</span>`;
+      mainContainer.innerHTML = `<img src="${imgBase}-${num}.jpg" alt="${product.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;">${product.emoji}</span>`;
     }
-    document.querySelectorAll('.pd-thumb').forEach((t, i) => t.classList.toggle('active', i === num - 1));
+    // Update active thumb by data-img attribute
+    document.querySelectorAll('.pd-thumb').forEach(t => {
+      t.classList.toggle('active', parseInt(t.dataset.img) === num);
+    });
   }
   
   // Sticky Add to Cart bar on mobile scroll
