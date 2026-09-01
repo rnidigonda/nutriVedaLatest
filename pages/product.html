@@ -124,18 +124,6 @@
 <script src="../js/common.js?v=2"></script>
 <script src="../js/reviews.js"></script>
 <script>
-  // Global error capture — surfaces any failure directly on the page
-  window.addEventListener('error', function (ev) {
-    var el = document.getElementById('productContent');
-    if (el && !el.innerHTML.trim()) {
-      el.innerHTML = '<div style="padding:120px 5%;text-align:center;">'
-        + '<h2 style="color:var(--forest);">Debug: script error</h2>'
-        + '<pre style="white-space:pre-wrap;color:#c0392b;max-width:800px;margin:16px auto;text-align:left;">'
-        + (ev.message || '') + '\n' + (ev.filename || '') + ':' + (ev.lineno || '') + '</pre></div>';
-    }
-  });
-</script>
-<script>
   const params = new URLSearchParams(window.location.search);
   const id = parseInt(params.get('id'));
   let product = null;
@@ -336,6 +324,7 @@
       ProductReviews.render('reviewsSection', product.id, product);
     }
     if (typeof lucide !== 'undefined') lucide.createIcons();
+    } // end else
   } // end renderProductPage
 
   function safeRender() {
