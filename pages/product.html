@@ -327,14 +327,20 @@
   } // end renderProductPage
 
   function safeRender() {
+    const el = document.getElementById('productContent');
     try {
+      if (typeof PRODUCTS === 'undefined' || !PRODUCTS.length) {
+        if (el) el.innerHTML = '<div style="text-align:center;padding:120px 5%;"><h2 style="color:var(--forest);">Loading product…</h2></div>';
+        return;
+      }
       renderProductPage();
     } catch (e) {
       console.error('[NutriVeda] product render failed:', e);
-      // Fallback: at least attempt a basic render if PRODUCTS is available
-      const el = document.getElementById('productContent');
-      if (el && !el.innerHTML.trim()) {
-        el.innerHTML = '<div style="text-align:center;padding:120px 5%;"><h2 style="color:var(--forest);">Loading product…</h2></div>';
+      if (el) {
+        el.innerHTML = '<div style="text-align:center;padding:120px 5%;">'
+          + '<h2 style="color:var(--forest);margin-bottom:12px;">Something went wrong</h2>'
+          + '<p style="color:#888;max-width:600px;margin:0 auto 20px;">' + (e && e.message ? e.message : e) + '</p>'
+          + '<a href="products.html" class="btn-primary" style="display:inline-flex;">Browse All Products</a></div>';
       }
     }
   }
