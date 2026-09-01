@@ -735,19 +735,27 @@
     if (typeof lucide !== 'undefined') lucide.createIcons();
   }
 
-  // Check URL params for category pre-selection
-  const urlParams = new URLSearchParams(window.location.search);
-  const urlCat = urlParams.get('cat');
-  if (urlCat) {
-    const cb = document.querySelector(`#categoryFilters input[value="${urlCat}"]`);
-    if (cb) {
-      cb.checked = true;
-      applyFilters();
+  // Wait for products to load from Supabase (falls back to local data.js), then render
+  function initProductsPage() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlCat = urlParams.get('cat');
+    if (urlCat) {
+      const cb = document.querySelector(`#categoryFilters input[value="${urlCat}"]`);
+      if (cb) {
+        cb.checked = true;
+        applyFilters();
+      } else {
+        renderProducts();
+      }
     } else {
       renderProducts();
     }
+  }
+
+  if (window.NV_PRODUCTS_READY) {
+    window.NV_PRODUCTS_READY.then(initProductsPage);
   } else {
-    renderProducts();
+    initProductsPage();
   }
 </script>
 </body>

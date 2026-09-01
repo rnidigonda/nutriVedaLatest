@@ -225,7 +225,7 @@
     initReveal();
   }
 
-  renderProducts();
+  if (window.NV_PRODUCTS_READY) { window.NV_PRODUCTS_READY.then(renderProducts); } else { renderProducts(); }
 </script>
 </body>
 </html>

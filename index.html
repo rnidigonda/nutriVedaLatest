@@ -696,33 +696,43 @@
   // Show skeleton while products load
   const grid = document.getElementById('featuredGrid');
   if (typeof SkeletonLoader !== 'undefined') SkeletonLoader.show('featuredGrid', 6);
-  
-  // Render featured products (first 6)
-  const featured = PRODUCTS.slice(0, 6);
-  grid.innerHTML = '';
-  featured.forEach(p => {
-    grid.innerHTML += `
-      <div class="prod-card reveal" style="position:relative;cursor:pointer;" onclick="if(!event.target.closest('button,a.btn-view,.wishlist-btn'))window.location.href='pages/product.html?id=${p.id}'">
-        <button class="wishlist-btn" data-product-id="${p.id}">
-          <span class="wishlist-icon">♡</span>
-        </button>
-        <div class="prod-img"><img src="assets/products/product-${p.id}-1.jpg" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;border-radius:12px 12px 0 0;" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" loading="lazy"><span style="display:none;font-size:4rem;">${p.emoji}</span><div class="prod-badge">${p.badge}</div></div>
-        <div class="prod-body">
-          <div class="prod-category">${p.category}</div>
-          <div class="prod-name">${p.name}</div>
-          <div class="prod-desc">${p.desc}</div>
-          <div class="prod-footer">
-            <div class="prod-price">₹${p.price.toLocaleString()} <small>₹${p.mrp.toLocaleString()}</small></div>
-            <div style="display:flex;gap:8px;">
-              <button class="quick-view-btn" data-product-id="${p.id}" style="position:relative;bottom:auto;left:auto;transform:none;opacity:1;">Quick</button>
-              <a href="pages/product.html?id=${p.id}" class="btn-view">View</a>
-              <button class="btn-add" onclick="event.stopPropagation();addToCartById(${p.id}, this)">Add</button>
+
+  function renderFeatured() {
+    // Prefer products flagged as featured; fall back to first 6
+    const featuredFlagged = PRODUCTS.filter(p => p.isFeatured);
+    const featured = (featuredFlagged.length >= 6 ? featuredFlagged : PRODUCTS).slice(0, 6);
+    grid.innerHTML = '';
+    featured.forEach(p => {
+      grid.innerHTML += `
+        <div class="prod-card reveal" style="position:relative;cursor:pointer;" onclick="if(!event.target.closest('button,a.btn-view,.wishlist-btn'))window.location.href='pages/product.html?id=${p.id}'">
+          <button class="wishlist-btn" data-product-id="${p.id}">
+            <span class="wishlist-icon">♡</span>
+          </button>
+          <div class="prod-img"><img src="assets/products/product-${p.id}-1.jpg" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;border-radius:12px 12px 0 0;" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" loading="lazy"><span style="display:none;font-size:4rem;">${p.emoji}</span><div class="prod-badge">${p.badge}</div></div>
+          <div class="prod-body">
+            <div class="prod-category">${p.category}</div>
+            <div class="prod-name">${p.name}</div>
+            <div class="prod-desc">${p.desc}</div>
+            <div class="prod-footer">
+              <div class="prod-price">₹${p.price.toLocaleString()} <small>₹${p.mrp.toLocaleString()}</small></div>
+              <div style="display:flex;gap:8px;">
+                <button class="quick-view-btn" data-product-id="${p.id}" style="position:relative;bottom:auto;left:auto;transform:none;opacity:1;">Quick</button>
+                <a href="pages/product.html?id=${p.id}" class="btn-view">View</a>
+                <button class="btn-add" onclick="event.stopPropagation();addToCartById(${p.id}, this)">Add</button>
+              </div>
             </div>
           </div>
-        </div>
-      </div>`;
-  });
-  initReveal();
+        </div>`;
+    });
+    initReveal();
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+  }
+
+  if (window.NV_PRODUCTS_READY) {
+    window.NV_PRODUCTS_READY.then(renderFeatured);
+  } else {
+    renderFeatured();
+  }
   
   // Show welcome message if user is logged in
   const firstName = localStorage.getItem('nv_user_first_name');

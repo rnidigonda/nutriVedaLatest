@@ -156,6 +156,65 @@ const ProductAPI = {
   }
 };
 
+// ─── PRODUCT DATA LOADER ────────────────────────────────
+// Maps a Supabase product row to the shape the UI expects
+// (matches the structure of the hardcoded PRODUCTS in data.js)
+function mapDbProductToUi(row) {
+  return {
+    id: row.id,
+    name: row.name,
+    slug: row.slug,
+    category: row.category_name,
+    catKey: row.cat_key,
+    emoji: row.emoji || '📦',
+    badge: row.badge || '',
+    price: row.price,
+    mrp: row.mrp,
+    rating: Number(row.rating) || 0,
+    reviews: row.review_count || 0,
+    desc: row.description || '',
+    tagline: row.tagline || '',
+    benefits: row.benefits || [],
+    tags: row.tags || [],
+    howToUse: row.how_to_use || '',
+    ingredients: row.ingredients || '',
+    storageInfo: row.storage_info || '',
+    shelfLife: row.shelf_life || '',
+    isFeatured: !!row.is_featured
+  };
+}
+
+// Fetch all products from Supabase and replace the global PRODUCTS array.
+// Falls back silently to the hardcoded data.js PRODUCTS if the DB is
+// unavailable or returns nothing.
+async function loadProductsFromDB() {
+  if (!supabaseClient) return false;
+  try {
+    // Fetch all active products (paginate to bypass default 1000 row cap safely)
+    const { data, error } = await supabaseClient
+      .from('products')
+      .select('*')
+      .eq('is_active', true)
+      .order('id', { ascending: true })
+      .limit(1000);
+
+    if (error || !data || data.length === 0) return false;
+
+    const mapped = data.map(mapDbProductToUi);
+    // Replace the global PRODUCTS contents in place so existing references stay valid
+    if (typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS)) {
+      PRODUCTS.length = 0;
+      mapped.forEach(p => PRODUCTS.push(p));
+    } else {
+      window.PRODUCTS = mapped;
+    }
+    return true;
+  } catch (e) {
+    console.warn('[NutriVeda] Failed to load products from DB, using local data:', e.message || e);
+    return false;
+  }
+}
+
 // ─── CART API ───────────────────────────────────────────
 const CartAPI = {
   async getItems() {
@@ -611,3 +670,12 @@ const OrdersAPI = {
 // ─── INITIALIZATION ─────────────────────────────────────
 // Initialize immediately (this script loads after the Supabase CDN)
 initSupabase();
+
+// Kick off product loading right away and expose a promise pages can await.
+// Pages should render inside: NV_PRODUCTS_READY.then(renderProducts)
+window.NV_PRODUCTS_READY = (async function () {
+  const loaded = await loadProductsFromDB();
+  // Notify any listeners (pages that render on event rather than promise)
+  document.dispatchEvent(new CustomEvent('nv-products-ready', { detail: { fromDB: loaded } }));
+  return loaded;
+})();

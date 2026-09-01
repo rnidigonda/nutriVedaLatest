@@ -126,7 +126,10 @@
 <script>
   const params = new URLSearchParams(window.location.search);
   const id = parseInt(params.get('id'));
-  const product = PRODUCTS.find(p => p.id === id);
+  let product = null;
+
+  function renderProductPage() {
+    product = PRODUCTS.find(p => p.id === id);
 
   if(!product) {
     document.getElementById('productContent').innerHTML = `
@@ -315,6 +318,19 @@
         </section>`;
       initReveal();
     }
+
+    // Render product reviews once the product is resolved
+    if (product && typeof ProductReviews !== 'undefined') {
+      ProductReviews.render('reviewsSection', product.id, product);
+    }
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+  } // end renderProductPage
+
+  // Wait for products to load from Supabase (fallback to local data.js), then render
+  if (window.NV_PRODUCTS_READY) {
+    window.NV_PRODUCTS_READY.then(renderProductPage);
+  } else {
+    renderProductPage();
   }
 
   let qty = 1;
@@ -379,11 +395,6 @@
       bar.classList.remove('visible');
     }
   });
-  
-  // Render product reviews
-  if (product && typeof ProductReviews !== 'undefined') {
-    ProductReviews.render('reviewsSection', product.id, product);
-  }
 </script>
 </body>
 </html>
