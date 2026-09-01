@@ -89,9 +89,16 @@
     text-align: center;
     color: var(--text-mid);
     font-size: 1rem;
-    margin-bottom: 20px;
+    margin: 20px 0;
     font-style: italic;
   }
+
+  /* Trim the tall green header on the products page */
+  .page-header { padding: 96px 5% 32px !important; }
+
+  /* Hide the stray search/focus outline artifact under the nav */
+  #searchModal, .search-modal { display: none !important; }
+  .search-icon:focus, .nav-search:focus { outline: none !important; }
 
   /* ── FILTER & SORT STYLES ── */
   .filter-sort-bar {
